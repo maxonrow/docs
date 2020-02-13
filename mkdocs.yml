@@ -15,8 +15,8 @@ nav:
     - Toolkits:
         - 'API reference SDK': 'mxw-SDKs.md'
         - 'Block Explorer for Testnet': 'https://max-scan.usdp.io/'
-        - 'Faucet': 'https://max-scan.usdp.io/'
-        - 'Tutorials': 'mxw-Tutorials.md'
+        - 'Faucet': 'mxw-faucet.md'
+        #- 'Tutorials': 'mxw-Tutorials.md'
 
     - FAQ: 'mxw-FAQ.md'
     - Community channels: 'mxw-Community-Channels.md'

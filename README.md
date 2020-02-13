@@ -1,4 +1,4 @@
-# Documentation - Maxonrow Blockchain version-latest
+# Documentation - Maxonrow Blockchain v1.0
 
 For full documentation visit [mkdocs.org](http://mkdocs.org).
 
