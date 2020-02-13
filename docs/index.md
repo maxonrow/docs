@@ -32,6 +32,6 @@ Continue reading below if you are interested:
 - [Run a Maxonrow Blockchain full node: ](https://www.maxonrow.com/ "Run a Maxonrow Blockchain full node: ")how to run a full node and become part of the p2p network of Maxonrow Blockchain.
 
 ### Acknowledgement
-Thanks to the [community, our partners and supporters](mxw-acknowledgement.md "community, our partners and supporters").
+Thanks to the [community, our partners and supporters](mxw-Acknowledgement.md "community, our partners and supporters").
 
 
