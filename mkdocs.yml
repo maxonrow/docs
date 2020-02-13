@@ -1,0 +1,26 @@
+site_name: Maxonrow Blockchain <br /> v1.0
+nav:
+    - Introduction:
+        - 'Overview': 'index.md'
+        - 'Installation': 'mxw-Installation.md'
+        - 'Quick Start': 'mxw-Quick-Start.md'
+
+    - Modules:
+        - 'List of Modules': 'mxw-Modules.md'
+
+    - Interfaces:
+        - 'Node CLI': 'mxw-Node-CLI.md'
+        - 'Node RPC': 'mxw-Node-RPC.md'
+
+    - Toolkits:
+        - 'API reference SDK': 'mxw-SDKs.md'
+        - 'Block Explorer for Testnet': 'https://max-scan.usdp.io/'
+        - 'Faucet': 'https://max-scan.usdp.io/'
+        - 'Tutorials': 'mxw-Tutorials.md'
+
+    - FAQ: 'mxw-FAQ.md'
+    - Community channels: 'mxw-Community-Channels.md'
+
+theme: readthedocs
+use_directory_urls: false
+site_favicon: favicon.ico
