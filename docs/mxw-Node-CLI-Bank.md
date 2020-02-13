@@ -23,11 +23,10 @@ To start the SDK module, define those relevant structs in the ./x/bank/msgs.go f
 Msgs define your application's state transitions. They are encoded and passed around the network wrapped in Txs. 
 Messages are "owned" by a single module, meaning they are routed to only one of your applications modules. 
 Each module has its own set of messages that it uses to update its subset of the chain state. 
-Maxonrow SDK relies on Cosmos SDK wraps and unwraps Msgs from Txs, which means developer only have to define the relevant Msgs. 
+Maxonrow SDK relies on Cosmos SDK wraps and unwraps Msgs from Txs, which means developer only have to define the relevant Msgs. <br/><br/>
 Msgs must satisfy the following interface:
 
-*** Interface type (Testing Purpose)
-![Image-1](pic001.png)  
+![Image-1](/pic/node_cli_bank-01.png)  
 
 
 ### Handlers
@@ -44,10 +43,9 @@ In this module you have ONE type of Msgs that users can send to interact with th
 The main core of a Maxonrow SDK module is a piece called the Keeper. 
 Each module's Keeper is responsible for CRUD operations to the main datastore of the application. 
 With more sophisticated applications, modules may have access to each other's Keepers 
-for cross-module interactions. In MVC terms this would be the "model". 
+for cross-module interactions. <br/>In MVC terms this would be the "model". 
 
-*** Each Get & Set method (Testing Purpose)
-![Image-1](pic001.png)  
+![Image-2](/pic/node_cli_bank-02.png)  
 
 
 ### Querier
@@ -70,5 +68,4 @@ The CLI for the Bank module is refered to file named sendtx.go which is located 
 The sendtx.go file contains SendTxCmd which is a standard method within the Maxonrow SDK, which will create a send tx and sign it with the given key.
 This function takes parameters from the Cobra CLI tool to create a new msg, sign it and submit it to the application to be processed. 
 
-*** Each Get & Set method (Testing Purpose)
-![Image-1](pic001.png)  
+![Image-3](/pic/node_cli_bank-03.png)  

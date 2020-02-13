@@ -73,11 +73,10 @@ Msgs define your application's state transitions.
 They are encoded and passed around the network wrapped in Txs. 
 Messages are "owned" by a single module, meaning they are routed to only one of your applications modules. 
 Each module has its own set of messages that it uses to update its subset of the chain state. 
-Maxonrow SDK relies on Cosmos SDK wraps and unwraps Msgs from Txs, which means developer only have to define the relevant Msgs. 
+Maxonrow SDK relies on Cosmos SDK wraps and unwraps Msgs from Txs, which means developer only have to define the relevant Msgs. <br/><br/>  
 Msgs must satisfy the following interface:
 
-*** Interface type (Testing Purpose)
-![Image-1](pic001.png)  
+![Image-1](/pic/node_cli_maintenance-01.png)   
 
 
 ### Handlers
@@ -101,10 +100,9 @@ can send to interact with the application state:
 The main core of a Maxonrow SDK module is a piece called the Keeper. 
 Each module's Keeper is responsible for CRUD operations to the main datastore of the application. 
 With more sophisticated applications, modules may have access to each other's Keepers 
-for cross-module interactions. In MVC terms this would be the "model". 
+for cross-module interactions.<br/>In MVC terms this would be the "model". 
 
-*** Each Get & Set method (Testing Purpose)
-![Image-1](pic001.png)  
+![Image-2](/pic/node_cli_maintenance-02.png)  
 
 
 ### Querier
@@ -134,15 +132,14 @@ Inside GetTxCmd we create a new module-specific command and call is maintenance.
 Each function takes parameters from the Cobra CLI tool to create a new msg, sign it and submit it to the application to be processed. 
 
 
-*** Each Get & Set method (Testing Purpose)
-![Image-1](pic001.png)  
+![Image-3](/pic/node_cli_maintenance-03.png)  
+
 
 ### query.go
-The query.go file contains similar Cobra commands that reserve a new name space for referencing our maintenance module. Instead of creating and submitting messages however, the query.go file creates queries and returns the results in human readable form, which handles below function:
+The query.go (refer module_client.go) file contains similar Cobra commands that reserve a new name space for referencing our maintenance module. Instead of creating and submitting messages however, the query.go file creates queries and returns the results in human readable form, which handles below function:
 
 * GetCmdGetProposal
 
-*** Each Get & Set method (Testing Purpose)
-![Image-1](pic001.png)  
+![Image-4](/pic/node_cli_maintenance-04.png)  
 
 

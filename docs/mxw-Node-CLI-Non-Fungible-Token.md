@@ -54,11 +54,10 @@ Msgs define your application's state transitions.
 They are encoded and passed around the network wrapped in Txs. 
 Messages are "owned" by a single module, meaning they are routed to only one of your applications modules. 
 Each module has its own set of messages that it uses to update its subset of the chain state. 
-Maxonrow SDK relies on Cosmos SDK wraps and unwraps Msgs from Txs, which means developer only have to define the relevant Msgs. 
+Maxonrow SDK relies on Cosmos SDK wraps and unwraps Msgs from Txs, which means developer only have to define the relevant Msgs.<br/><br/> 
 Msgs must satisfy the following interface:
 
-*** Interface type (Testing Purpose)
-![Image-1](pic001.png)  
+![Image-1](/pic/node_cli_nft-01.png)  
 
 
 
@@ -91,10 +90,10 @@ can send to interact with the application state:
 The main core of a Maxonrow SDK module is a piece called the Keeper. 
 Each module's Keeper is responsible for CRUD operations to the main datastore of the application. 
 With more sophisticated applications, modules may have access to each other's Keepers 
-for cross-module interactions. In MVC terms this would be the "model". 
+for cross-module interactions. <br/>In MVC terms this would be the "model". 
 
-*** Each Get & Set method (Testing Purpose)
-![Image-1](pic001.png)  
+![Image-2](/pic/node_cli_nft-02.png)  
+
 
 
 ### Querier

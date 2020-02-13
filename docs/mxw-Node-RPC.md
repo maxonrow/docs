@@ -108,9 +108,9 @@ Response:
 ```
 ### 6. APIs
 
-### 6.1 Query APIs
+#### 6.1 Query APIs
 
-### 6.1.1 Query ABCIInfo
+#### 6.1.1 Query ABCIInfo
 Get some info about the application.
 
 #### Return Type
@@ -145,7 +145,7 @@ The above command returns JSON structured like this:
 }
 ```
 
-### 6.1.2 ABCIQuery
+#### 6.1.2 ABCIQuery
 Query the application for some information.
 
 #### Parameters
@@ -201,7 +201,7 @@ The above command returns JSON structured like this:
 }
 ```
 
-### 6.1.3 Query Account
+#### 6.1.3 Query Account
 Get the account information on blockchain.
 
 #### Parameters
@@ -260,7 +260,7 @@ The above command returns JSON structured like this:
 }
 ```
 
-### 6.1.4 Query BlockResults
+#### 6.1.4 Query BlockResults
 BlockResults gets ABCIResults at a given height. If no height is provided, it will fetch results for the latest block. Results are for the height of the block containing the txs. Thus response.results[5] is the results of executing getBlock(h).Txs[5]
 
 #### Parameters
@@ -400,7 +400,7 @@ The above command returns JSON structured like this:
   }
 }
 ```
-### 6.1.5 Query Block
+#### 6.1.5 Query Block
 Get block at a given height. If no height is provided, it will fetch the latest block.
 
 #### Parameters
@@ -555,7 +555,7 @@ The above command returns JSON structured like this:
 }
 ```
 
-### 6.1.6 Query BlockchainInfo
+#### 6.1.6 Query BlockchainInfo
 Get block headers for minHeight <= height <= maxHeight. Block headers are returned in descending order (highest first).
 
 #### Parameters
@@ -700,7 +700,7 @@ The above command returns JSON structured like this:
 }
 ```
 
-### 6.1.7 Query BroadcastEvidence
+#### 6.1.7 Query BroadcastEvidence
 Broadcast evidence of the misbehavior.
 
 #### Parameters
@@ -731,7 +731,7 @@ The above command returns JSON structured like this:
   "jsonrpc": "2.0"
 }
 ```
-### 6.1.8 BroadcastTxAsync
+#### 6.1.8 BroadcastTxAsync
 This method just return transaction hash right away and there is no return from CheckTx or DeliverTx.
 
 #### Parameters
@@ -1138,7 +1138,7 @@ The above command returns JSON structured like this:
   }
 }
 ```
-### 6.1.9 BroadcastTxCommit
+#### 6.1.9 BroadcastTxCommit
 The transaction will be broadcasted and returns with the response from CheckTx and DeliverTx.
 SThis method will wait for both CheckTx and DeliverTx, so it is the slowest way to broadcast through RPC but offers the most accurate success/failure response.
 
@@ -1561,7 +1561,7 @@ The above command returns JSON structured like this:
   }
 }
 ```
-### 6.1.10 Query Commit
+#### 6.1.10 Query Commit
 Get block commit at a given height. If no height is provided, it will fetch the commit for the latest block.
 
 #### Parameters
@@ -1661,7 +1661,7 @@ The above command returns JSON structured like this:
 }
 ```
 
-### 6.1.11 Consensus Parameters
+#### 6.1.11 Consensus Parameters
 Get consensus parameters.
 
 
@@ -1712,7 +1712,7 @@ The above command returns JSON structured like this:
 }
 ```
 
-### 6.1.12 Query ConsensusState
+#### 6.1.12 Query ConsensusState
 ConsensusState returns a concise summary of the consensus state. This is just a snapshot of consensus state, and it will not persist.
 
 #### Return Type
@@ -1760,7 +1760,7 @@ The above command returns JSON structured like this:
 }
 ```
 
-### 6.1.13 Query DumpConsensusState
+#### 6.1.13 Query DumpConsensusState
 DumpConsensusState dumps consensus state. This is just a snapshot of consensus state, and it will not persist.
 
 #### Return Type
@@ -1872,7 +1872,7 @@ The above command returns JSON structured like this:
 ```
 
 
-### 6.1.14 Query GenesisFile
+#### 6.1.14 Query GenesisFile
 Get genesis file.
 
 #### Return Type
@@ -2369,7 +2369,7 @@ The above command returns JSON structured like this:
   }
 }
 ```
-### 6.1.15 Query Health
+#### 6.1.15 Query Health
 Get node health. Returns empty result (200 OK) on success, no response - in case of an error.
 
 #### Return Type
@@ -2392,7 +2392,7 @@ The above command returns JSON structured like this:
 }
 ```
 
-### 6.1.16 IsWhitelisted
+#### 6.1.16 IsWhitelisted
 Returns status of whitelisted.
 
 #### Parameters
@@ -2434,7 +2434,7 @@ The above command returns JSON structured like this:
 }
 ```
 
-### 6.1.17 Query LatestBlockHeight
+#### 6.1.17 Query LatestBlockHeight
 Get latest block height. 
 
 #### Return Type
@@ -2460,7 +2460,7 @@ The above command returns JSON structured like this:
   "result": "2366"
 }
 ```
-### 6.1.18 Query NetInfo
+#### 6.1.18 Query NetInfo
 Get network info.
 
 #### Return Type
@@ -2495,7 +2495,7 @@ The above command returns JSON structured like this:
   }
 }
 ```
-### 6.1.19 Query NumUnconfirmedTxs
+#### 6.1.19 Query NumUnconfirmedTxs
 Get number of unconfirmed transactions.
 
 #### Parameters
@@ -2533,7 +2533,7 @@ The above command returns JSON structured like this:
 }
 ```
 
-### 6.1.20 Query Fee
+#### 6.1.20 Query Fee
 Get the Fee Setting of a particular Tx.
 
 #### Parameters
@@ -2581,7 +2581,7 @@ The above command returns JSON structured like this:
   }
 }
 ```
-### 6.1.21 Query Status
+#### 6.1.21 Query Status
 Get Tendermint status including node info, pubkey, latest block hash, app hash, block height and time.
 
 #### Return Type
@@ -2641,7 +2641,7 @@ The above command returns JSON structured like this:
 }
 ```
 
-### 6.1.22 Query Tx
+#### 6.1.22 Query Tx
 Get transactions by hash. Tx allows you to query the transaction results. nil could mean the transaction is in the mempool, invalidated, or was not sent in the first place.
 
 #### Parameters
@@ -2727,7 +2727,7 @@ The above command returns JSON structured like this:
 }
 ```
 
-### 6.1.23 Query TxSearch
+#### 6.1.23 Query TxSearch
 TxSearch allows you to query for multiple transactions results.You could search transaction by its index. It returns a list of transactions (maximum ?per_page entries) and the total count.
 
 #### Enable Indexer
@@ -2828,7 +2828,7 @@ The above command returns JSON structured like this:
 }
 ```
 
-### 6.1.24 Query UnconfirmedTxs
+#### 6.1.24 Query UnconfirmedTxs
 Get list of unconfirmed transactions
 
 #### Parameters
@@ -2927,7 +2927,7 @@ The above command returns JSON structured like this:
 }
 ```
 
-### 6.1.26 Query Validator
+#### 6.1.26 Query Validator
 Query the information from a single validator
 
 #### Parameters
@@ -2994,7 +2994,7 @@ The above command returns JSON structured like this:
     }"
 }
 ```
-### 6.1.27 Query Version
+#### 6.1.27 Query Version
 Get the version of maxonrow running locally to compare against expected.
 
 
@@ -3025,15 +3025,9 @@ The above command returns JSON structured like this:
 }
 ```
 
+#### 6.2 Tx APIs
 
-
-
-
-
-
-### 6.2 Tx APIs
-
-### 6.2.1 DecodeTx
+#### 6.2.1 DecodeTx
 Return readable Transaction Data using tx hash value.
 
 #### Parameters
@@ -3120,7 +3114,7 @@ The above command returns JSON structured like this:
   }
 }
 ```
-### 6.2.2 EncodeAndBroadcastTxAsync
+#### 6.2.2 EncodeAndBroadcastTxAsync
 This method just return transaction hash right away and there is no return from CheckTx or DeliverTx.
 
 #### Parameters
@@ -3503,7 +3497,7 @@ The above command returns JSON structured like this:
 }
 ```
 
-### 6.2.3 EncodeAndBroadcastTxcommit
+#### 6.2.3 EncodeAndBroadcastTxcommit
 The transaction will be encoded and broadcasted before returns with the response from CheckTx and DeliverTx.
 
 This method will wait for both CheckTx and DeliverTx, so it is the slowest way to broadcast through RPC but offers the most accurate success/failure response.
@@ -3902,7 +3896,7 @@ The above command returns JSON structured like this:
   }
 }
 ```
-### 6.2.4 EncodeAndBroadcastTxsync
+#### 6.2.4 EncodeAndBroadcastTxsync
 The transaction will be encoded and broadcasted before returns with the response from CheckTx.
 Does not wait for DeliverTx result.
 
@@ -4287,7 +4281,7 @@ The above command returns JSON structured like this:
   }
 }
 ```
-### 6.2.5 EncodeTx
+#### 6.2.5 EncodeTx
 Return encoded Transaction Data using tx hash value.
 
 #### Parameters
@@ -4328,7 +4322,7 @@ The above command returns JSON structured like this:
   "result": "/QEoKBapCj12B33fCjcKFDQoWuk2pGU4GarppLtLbtWhG9W8EhTqPubm9ho7MoT6z09v+p+3UKu8yxoJCgNjaW4SAjExEhoKGAoDY2luEhE1MDAwMDAwMDAwMDAwMDAwMBpqCibrWumHIQOSGvBAKDWGJV1OcuIbs7MNxZhCLyoM6sIgvcY39Vcw1xJA1HdvhvAMNBFVZXm4LjmC2BEy41H/GBqcPrlnvEE5XOUQeSUMrnfGu6Hfxhj8se+3eeFZMuPHVZg1DvobWzAE4iIwdGVzdGluZyB0cmFuc2ZlciB3aXRoIDExY2luLCBmcm9tIGFjYy05IHRvIGFjYy04"
 }
 ```
-### 6.2.6 Subscribe
+#### 6.2.6 Subscribe
 Subscribe for events
 
 To tell which events you want, you need to provide a query. query is a
@@ -4372,7 +4366,7 @@ The above command returns JSON structured like this:
 }
 ```
 
-### 6.2.7 UnsubscribeAll
+#### 6.2.7 UnsubscribeAll
 Unsubscribe from all events
 
 
@@ -4397,7 +4391,7 @@ The above command returns JSON structured like this:
   "result": {}
 }
 ```
-### 6.2.8 Unsubscribe
+#### 6.2.8 Unsubscribe
 Unsubscribe from event
 
 #### Parameters

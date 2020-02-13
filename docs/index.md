@@ -1,4 +1,6 @@
 # Maxonrow Blockchain Documentation
+Maxonrow is the sole main chain service provider in the world to offer real-name identity verification for KYC process and AML safety measures. Its a blockchain powered by Tendermint & Cosmos-SDK. We utilize GDPOS (Governed Delegated Proof of Stake) as a consensus mechanism, which is a mechanism of equity entrustment unique to Maxonrow.
+
 The purpose of the new blockchain is to enables individuals and companies to make instantaneous transactions without an intermediary. Transaction information in the form of digital ‘blocks’ are stored and verified by distributed database on multiple computers (nodes) that are trusted and verified by the system—decentralized. These transactions information are immutable, therefore completely secure and valid.
 
 ### What can I do with Maxonrow Blockchain?
