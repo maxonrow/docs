@@ -29,7 +29,7 @@ Continue reading below if you are interested:
 
 - [Maxonrow Blockchain as a Block Chain:](https://www.maxonrow.com/ "Maxonrow Blockchain as a Block Chain:") about consensus, software stack, network layout and roles.
 - [Connect to Maxonrow Blockchain:](https://www.maxonrow.com/ "Connect to Maxonrow Blockchain:") how to connect to Maxonrow Blockchain via different ways.
-- [Run a Maxonrow Blockchain full node: ](https://www.maxonrow.com/ "Run a Maxonrow Blockchain full node: ")how to run a full node and become part of the p2p network of Maxonrow Blockchain.
+- [Run a Maxonrow Blockchain Full node: ](https://github.com/maxonrow/mxw-launch "Run a Maxonrow Blockchain full node: ")how to run a full node and become part of the p2p network of Maxonrow Blockchain.
 
 ### Acknowledgement
 Thanks to the [community, our partners and supporters](mxw-Acknowledgement.md "community, our partners and supporters").

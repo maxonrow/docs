@@ -1,19 +1,6 @@
 # Getting Started
 
-### Run a single node
-```sh
-# Build the binaries
-make build
-
-# Initialize configuration files and genesis file
-make init
-
-# Start the blockchain
-make start
-```
-
-
-### Running Full node
+### Running Full node with Validator 
 `MAXONROW` blockchain can be run as a full node, syncing it's state with another node or validator.
 
 ```sh
@@ -28,6 +15,17 @@ mxwd gentx --name acc-1 --home ~/.mxw
 # Start the node
 mxwd start --home ~/.mxw
 ```
+
+### Run a Single node that connect to Full node  
+```sh
+# Start the node by connecting to Full node via p2p.seeds 
+# which the value come from gentxs-memo of genesis.json inside Full node  
+mxwd start --home ~/.mxw_node4 --log_level info --p2p.seeds 
+
+```
+
+* [Testnets](https://github.com/githubckgoh1439/mxw-testnets "Maxonrow Testnets") : Run a Maxonrow Blockchain Full node 
+
 
 #### Examples of Query Account
 
