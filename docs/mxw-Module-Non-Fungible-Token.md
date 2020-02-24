@@ -18,34 +18,40 @@ will hold customs message types for the module.
 To start the SDK module, define those relevant structs in 
 the ./x/token/nonfungible/msgs.go file as below:
 
-* MsgCreateNonFungibleToken
+* MsgTypeCreateNonFungibleToken
 -- This is the message type used to create a non-fungible token. 
 
-* MsgSetNonFungibleTokenStatus
+* MsgTypeSetNonFungibleTokenStatus
 -- This is the message type used to update the status of a non-fungible token, 
   eg. Approve, Reject, Freeze or unfreeze, Approve-transfer-ownership, Reject-transfer-ownership
 
-* MsgTransferNonFungibleToken
+* MsgTypeTransferNonFungibleItem
 -- This is the message type used to transfer the item of a non-fungible token. 
 
-* MsgMintNonFungibleToken
+* MsgTypeMintNonFungibleItem
 -- This is the message type used to mint an item of a non-fungible token. 
 
-* MsgBurnNonFungibleToken
+* MsgTypeBurnNonFungibleItem
 -- This is the message type used to burn an item of a non-fungible token. 
 
-* MsgTransferNonFungibleTokenOwnership
+* MsgTypeTransferNonFungibleTokenOwnership
 -- This is the message type used to transfer-ownership of a non-fungible token. 
 
-* MsgAcceptNonFungibleTokenOwnership
+* MsgTypeAcceptNonFungibleTokenOwnership
 -- This is the message type used to accept-ownership of a non-fungible token. 
 
-* MsgSetNonFungibleItemStatus
+* MsgTypeSetNonFungibleItemStatus
 -- This is the message type used to update the status of an item of a non-fungible token, 
-  eg. Freeze or unfreeze  
+  eg. Freeze or unfreeze     
 
-* MsgEndorsement
+* MsgTypeEndorsement
 -- This is the message type used to endorse an item of a non-fungible token. 
+
+* MsgTypeUpdateItemMetadata
+-- This is the message type used to update metadata of a non-fungible token.
+
+* MsgTypeUpdateNFTMetadata
+-- This is the message type used to update item metadata of a non-fungible token.
 
 
 ### Msgs
@@ -69,18 +75,21 @@ in the transactions delivered in each block.
 Handlers determine what actions should be taken (eg. which stores need to get updated, how, and under what conditions) 
 when a given Msg is received. In MVC terms this would be the 'controller'.
 
-In this module you have NINE types of Msgs that users 
+In this module you have ELEVEN types of Msgs that users 
 can send to interact with the application state: 
 
-* MsgCreateNonFungibleToken 
-* MsgSetNonFungibleTokenStatus
-* MsgTransferNonFungibleToken
-* MsgMintNonFungibleToken
-* MsgBurnNonFungibleToken
-* MsgTransferNonFungibleTokenOwnership
-* MsgAcceptNonFungibleTokenOwnership
-* MsgSetNonFungibleItemStatus
-* MsgEndorsement
+
+* [MsgTypeCreateNonFungibleToken](mxw-NFTs_MsgTypeCreateNonFungibleToken.md "MsgTypeCreateNonFungibleToken")
+* [MsgTypeSetNonFungibleTokenStatus](mxw-NFTs_MsgTypeSetNonFungibleTokenStatus.md "MsgTypeSetNonFungibleTokenStatus")
+* [MsgTypeTransferNonFungibleItem](mxw-NFTs_MsgTypeTransferNonFungibleItem.md "MsgTypeTransferNonFungibleItem")
+* [MsgTypeMintNonFungibleItem](mxw-NFTs_MsgTypeMintNonFungibleItem.md "MsgTypeMintNonFungibleItem")
+* [MsgTypeBurnNonFungibleItem](mxw-NFTs_MsgTypeBurnNonFungibleItem.md "MsgTypeBurnNonFungibleItem")
+* [MsgTypeTransferNonFungibleTokenOwnership](mxw-NFTs_MsgTypeTransferNonFungibleTokenOwnership.md "MsgTypeTransferNonFungibleTokenOwnership")
+* [MsgTypeAcceptNonFungibleTokenOwnership](mxw-NFTs_MsgTypeAcceptNonFungibleTokenOwnership.md "MsgTypeAcceptNonFungibleTokenOwnership")
+* [MsgTypeSetNonFungibleItemStatus](mxw-NFTs_MsgTypeSetNonFungibleItemStatus.md "MsgTypeSetNonFungibleItemStatus")
+* [MsgTypeEndorsement](mxw-NFTs_MsgTypeEndorsement.md "MsgTypeEndorsement")
+* [MsgTypeUpdateItemMetadata](mxw-NFTs_MsgTypeUpdateItemMetadata.md "MsgTypeUpdateItemMetadata")
+* [MsgTypeUpdateNFTMetadata](mxw-NFTs_MsgTypeUpdateNFTMetadata.md "MsgTypeUpdateNFTMetadata")
 
 ** They will each have an associated Handler.
 

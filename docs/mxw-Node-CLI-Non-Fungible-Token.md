@@ -3,8 +3,7 @@
 ### Application Goals
 
 Non-Fungible Tokens are essentially inventory lists, where was CryptoKitties which 
-established the first standard called ERC-721. This allowed for an extreme variety of use cases because 
-the standard was as un-opinionated as possible as to exactly how the standard was used. 
+established the first standard called ERC-721. This allowed for an extreme variety of use cases because the standard was as un-opinionated as possible as to exactly how the standard was used. 
 That’s why we’ve been able to see such a wide range of uses that come from different industries, 
 eg. been used in invoices and domain names. That’s why at it’s core a Non-Fungible Token only cares about the unique identification number and the token’s place of origin (which makes them essentially inventory lists).
 
@@ -18,34 +17,40 @@ will hold customs message types for the module.
 To start the SDK module, define those relevant structs in 
 the ./x/token/nonfungible/msgs.go file as below:
 
-* MsgCreateNonFungibleToken
+* MsgTypeCreateNonFungibleToken
 -- This is the message type used to create a non-fungible token. 
 
-* MsgSetNonFungibleTokenStatus
+* MsgTypeSetNonFungibleTokenStatus
 -- This is the message type used to update the status of a non-fungible token, 
   eg. Approve, Reject, Freeze or unfreeze, Approve-transfer-ownership, Reject-transfer-ownership
 
-* MsgTransferNonFungibleToken
+* MsgTypeTransferNonFungibleItem
 -- This is the message type used to transfer the item of a non-fungible token. 
 
-* MsgMintNonFungibleToken
+* MsgTypeMintNonFungibleItem
 -- This is the message type used to mint an item of a non-fungible token. 
 
-* MsgBurnNonFungibleToken
+* MsgTypeBurnNonFungibleItem
 -- This is the message type used to burn an item of a non-fungible token. 
 
-* MsgTransferNonFungibleTokenOwnership
+* MsgTypeTransferNonFungibleTokenOwnership
 -- This is the message type used to transfer-ownership of a non-fungible token. 
 
-* MsgAcceptNonFungibleTokenOwnership
+* MsgTypeAcceptNonFungibleTokenOwnership
 -- This is the message type used to accept-ownership of a non-fungible token. 
 
-* MsgSetNonFungibleItemStatus
+* MsgTypeSetNonFungibleItemStatus
 -- This is the message type used to update the status of an item of a non-fungible token, 
-  eg. Freeze or unfreeze  
+  eg. Freeze or unfreeze, Transferable,     
 
-* MsgEndorsement
+* MsgTypeEndorsement
 -- This is the message type used to endorse an item of a non-fungible token. 
+
+* MsgTypeUpdateItemMetadata
+-- This is the message type used to update metadata of a non-fungible token.
+
+* MsgTypeUpdateNFTMetadata
+-- This is the message type used to update item metadata of a non-fungible token.
 
 
 ### Msgs
@@ -72,15 +77,17 @@ when a given Msg is received. In MVC terms this would be the 'controller'.
 In this module you have NINE types of Msgs that users 
 can send to interact with the application state: 
 
-* MsgCreateNonFungibleToken 
-* MsgSetNonFungibleTokenStatus
-* MsgTransferNonFungibleToken
-* MsgMintNonFungibleToken
-* MsgBurnNonFungibleToken
-* MsgTransferNonFungibleTokenOwnership
-* MsgAcceptNonFungibleTokenOwnership
-* MsgSetNonFungibleItemStatus
-* MsgEndorsement
+* MsgTypeCreateNonFungibleToken
+* MsgTypeSetNonFungibleTokenStatus
+* MsgTypeTransferNonFungibleItem
+* MsgTypeMintNonFungibleItem
+* MsgTypeBurnNonFungibleItem
+* MsgTypeTransferNonFungibleTokenOwnership
+* MsgTypeAcceptNonFungibleTokenOwnership
+* MsgTypeSetNonFungibleItemStatus
+* MsgTypeEndorsement
+* MsgTypeUpdateItemMetadata
+* MsgTypeUpdateNFTMetadata
 
 ** They will each have an associated Handler.
 
