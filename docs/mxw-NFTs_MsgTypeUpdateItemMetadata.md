@@ -2,6 +2,8 @@
 
 This is the message type used to update item metadata of a non-fungible token.
 
+
+
 #### Parameters
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
@@ -44,6 +46,8 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | itemID | string | Item ID| | 
 
 
-
+#### Remarks :
+* <span style="color:red;font-size:13px">Token which Modifiable Flag is TRUE, Item owner allowed to modify item-metadata.</span>
+* <span style="color:red;font-size:13px">Token which Modifiable Flag is FALSE, only Token owner allowed to modify the item-metadata.</span>
 
 

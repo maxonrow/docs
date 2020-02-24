@@ -51,3 +51,8 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | to | string | Item owner| | 
 | itemID | string | Item ID| | 
 
+
+#### Remarks :
+* <span style="color:red;font-size:13px">Token which Public Flag is TRUE can only be minted to same user.</span>
+* <span style="color:red;font-size:13px">Token which Mint-limit Flag set to ZERO, any items can be minted without the limitation. Otherwise, will base on the threshold of this setting.</span> 
+

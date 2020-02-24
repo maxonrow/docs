@@ -2,6 +2,7 @@
 
 This is the message type used to transfer the item of a non-fungible token.
 
+
 #### Parameters
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
@@ -43,4 +44,9 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | from | string | Item owner| | 
 | to | string | New item owner| | 
 | itemID | string | Item ID| | 
+
+
+#### Remarks :
+* <span style="color:red;font-size:13px">
+Token which Transfer-limit Flag set to a certain threshold, number of items that can be transferrable need to follow this constraint.</span>
 

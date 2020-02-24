@@ -6,7 +6,7 @@ This is the message type used to endorse an item of a non-fungible token.
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
 | symbol | string | true   | Token symbol, which must be unique| | 
-| from | string | true   | Signer| | 
+| from | string | true   | Endorser| | 
 | itemID | string | true   | Item ID, which must be unique| | 
 
 
@@ -40,7 +40,7 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
 | symbol | string | Token symbol, which must be unique| | 
-| owner | string | Token owner| | 
+| owner | string | Endorser| | 
 | itemID | string | Item ID| | 
 
 

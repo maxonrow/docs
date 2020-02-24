@@ -42,7 +42,7 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
 | symbol | string | Token symbol, which must be unique| | 
-| owner | string | Token owner| | 
+| owner | string | Item owner| | 
 | itemID | string | Item ID| | 
 
 
