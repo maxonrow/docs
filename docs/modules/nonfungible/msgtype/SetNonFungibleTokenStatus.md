@@ -1,10 +1,11 @@
-# MsgTypeSetNonFungibleTokenStatus
-
 This is the message type used to update the status of a non-fungible token, 
   eg. Approve, Reject, Freeze or unfreeze, Approve-transfer-ownership, Reject-transfer-ownership
 
 
-#### Parameters
+## Parameters
+
+The message type contains the following parameters:
+
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
 | owner | string | true   | Item owner| | 
@@ -110,10 +111,98 @@ This is the message type used to update the status of a non-fungible token,
 
 ```
 
-#### Listening to events of MsgTypeSetNonFungibleTokenStatus
-1. This tutorial describes how to create maxonrow events for scanner base on approve token after emitted by a network.
+## Handler
 
-![Image-1](/en/latest/pic_module/MsgTypeSetNonFungibleTokenStatus_01.png)  
+The role of the handler is to define what action(s) needs to be taken when this MsgTypeSetNonFungibleTokenStatus message is received.
+
+In the file (./x/token/nonfungible/handler.go) start with the following code:
+
+![Image-1](../pic/MintNonFungibleItem_01.png)
+
+
+NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
+
+First, you define the actual logic for handling the MsgTypeSetNonFungibleTokenStatus-ApproveToken message in handleMsgSetNonFungibleTokenStatus:
+
+![Image-2](../pic/SetNonFungibleTokenStatus_07.png)
+
+
+In this function, requirements need to be met before emitted by the network.  
+
+* A valid Token.
+* Token must not be approved.
+* Signer must be authorised.
+* Action of Re-approved is not allowed.
+
+
+Second, you define the actual logic for handling the MsgTypeSetNonFungibleTokenStatus-RejectToken message in handleMsgSetNonFungibleTokenStatus:
+
+![Image-2](../pic/SetNonFungibleTokenStatus_08.png)
+
+
+In this function, requirements need to be met before emitted by the network.  
+
+* A valid Token.
+* Token must not be approved.
+* Signer must be authorised.
+* Action of Re-reject is not allowed.
+
+
+Thirth, you define the actual logic for handling the MsgTypeSetNonFungibleTokenStatus-FreezeToken message in handleMsgSetNonFungibleTokenStatus:
+
+![Image-2](../pic/SetNonFungibleTokenStatus_09.png)
+
+
+In this function, requirements need to be met before emitted by the network.  
+
+* A valid Token.
+* Token must not be freeze
+* Signer must be authorised.
+* Action of Re-freeze is not allowed.
+
+
+Next, you define the actual logic for handling the MsgTypeSetNonFungibleTokenStatus-UnfreezeToken message in handleMsgSetNonFungibleTokenStatus:
+
+![Image-2](../pic/SetNonFungibleTokenStatus_10.png)
+
+
+In this function, requirements need to be met before emitted by the network.  
+
+* A valid Token.
+* Token must be freeze.
+* Signer must be authorised.
+* Action of Re-unfreeze is not allowed.
+
+Next, you define the actual logic for handling the MsgTypeSetNonFungibleTokenStatus-ApproveTransferTokenOwnership message in handleMsgSetNonFungibleTokenStatus:
+
+![Image-2](../pic/SetNonFungibleTokenStatus_11.png)
+
+
+In this function, requirements need to be met before emitted by the network.  
+
+* A valid Token.
+* Token with TransferTokenOwnership flag equals to true.
+* Signer must be authorised.
+* Action of Re-approve transfer token-ownership is not allowed.
+
+Last, you define the actual logic for handling the MsgTypeSetNonFungibleTokenStatus-RejectTransferTokenOwnership message in handleMsgSetNonFungibleTokenStatus:
+
+![Image-2](../pic/SetNonFungibleTokenStatus_12.png)
+
+
+In this function, requirements need to be met before emitted by the network.  
+
+* A valid Token.
+* Token TransferTokenOwnershipFlag equals to true.
+* Signer must be authorised.
+* Action of Re-reject transfer token-ownership is not allowed.
+
+
+## Events
+#### 1.
+This tutorial describes how to create maxonrow events for scanner base on approve token after emitted by a network.
+
+![Image-1](../pic/SetNonFungibleTokenStatus_01.png)  
 
 
 #### Usage
@@ -129,10 +218,10 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | owner | string | Token owner| | 
 
 
+#### 2.
+This tutorial describes how to create maxonrow events for scanner base on reject token after emitted by a network.
 
-2. This tutorial describes how to create maxonrow events for scanner base on reject token after emitted by a network.
-
-![Image-2](/en/latest/pic_module/MsgTypeSetNonFungibleTokenStatus_02.png)  
+![Image-2](../pic/SetNonFungibleTokenStatus_02.png)  
 
 #### Usage
 This MakeMxwEvents create maxonrow events, by accepting :
@@ -147,9 +236,10 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | owner | string | Token owner| | 
 
 
-3. This tutorial describes how to create maxonrow events for scanner base on freeze token after emitted by a network.
+#### 3.
+This tutorial describes how to create maxonrow events for scanner base on freeze token after emitted by a network.
 
-![Image-3](/en/latest/pic_module/MsgTypeSetNonFungibleTokenStatus_03.png)  
+![Image-3](../pic/SetNonFungibleTokenStatus_03.png)  
 
 
 #### Usage
@@ -165,10 +255,10 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | owner | string | Token owner| | 
 
 
+#### 4.
+This tutorial describes how to create maxonrow events for scanner base on unfreeze token after emitted by a network.
 
-4. This tutorial describes how to create maxonrow events for scanner base on unfreeze token after emitted by a network.
-
-![Image-4](/en/latest/pic_module/MsgTypeSetNonFungibleTokenStatus_04.png)  
+![Image-4](../pic/SetNonFungibleTokenStatus_04.png)  
 
 
 #### Usage
@@ -184,10 +274,10 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | owner | string | Token owner| | 
 
 
+#### 5.
+This tutorial describes how to create maxonrow events for scanner base on approve transfer token-ownership after emitted by a network.
 
-5. This tutorial describes how to create maxonrow events for scanner base on approve transfer token-ownership after emitted by a network.
-
-![Image-5](/en/latest/pic_module/MsgTypeSetNonFungibleTokenStatus_05.png)  
+![Image-5](../pic/SetNonFungibleTokenStatus_05.png)  
 
 
 #### Usage
@@ -204,10 +294,10 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | newOwner | string | New token owner| | 
 
 
+#### 6.
+This tutorial describes how to create maxonrow events for scanner base on reject transfer token-ownership after emitted by a network.
 
-6. This tutorial describes how to create maxonrow events for scanner base on reject transfer token-ownership after emitted by a network.
-
-![Image-6](/en/latest/pic_module/MsgTypeSetNonFungibleTokenStatus_06.png)  
+![Image-6](../pic/SetNonFungibleTokenStatus_06.png)  
 
 
 #### Usage
@@ -222,4 +312,3 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | symbol | string | Token symbol, which must be unique| | 
 | owner | string | Token owner| | 
 | newOwner | string | New token owner| | 
-

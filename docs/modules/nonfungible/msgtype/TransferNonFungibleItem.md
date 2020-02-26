@@ -1,9 +1,10 @@
-# MsgTypeTransferNonFungibleItem
-
 This is the message type used to transfer the item of a non-fungible token.
 
 
-#### Parameters
+## Parameters
+
+The message type contains the following parameters:
+
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
 | symbol | string | true   | Token symbol, which must be unique| | 
@@ -25,10 +26,34 @@ This is the message type used to transfer the item of a non-fungible token.
 }
 ```
 
-#### Listening to events of MsgTypeTransferNonFungibleItem
+## Handler
+
+The role of the handler is to define what action(s) needs to be taken when this MsgTypeTransferNonFungibleItem message is received.
+
+In the file (./x/token/nonfungible/handler.go) start with the following code:
+
+![Image-1](../pic/MintNonFungibleItem_01.png)
+
+
+NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
+Now, you need to define the actual logic for handling the MsgTypeTransferNonFungibleItem message in handleMsgTransferNonFungibleItem:
+
+![Image-2](../pic/TransferNonFungibleItem_02.png)
+
+
+In this function, requirements need to be met before emitted by the network.  
+
+* A valid Token.
+* Token transferable flag equals to true and not in freeze condition.
+* Token which Transfer-limit Flag set to a certain threshold, number of items that can be transferrable need to follow this constraint.
+* Signer must be a valid item owner.
+* Action of Re-transfer is not allowed.
+
+
+## Events
 This tutorial describes how to create maxonrow events for scanner on this after emitted by a network.
 
-![Image-1](/en/latest/pic_module/MsgTypeTransferNonFungibleItem.png)  
+![Image-1](../pic/TransferNonFungibleItem_03.png)  
 
 
 #### Usage
@@ -44,9 +69,4 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | from | string | Item owner| | 
 | to | string | New item owner| | 
 | itemID | string | Item ID| | 
-
-
-#### Remarks :
-* <span style="color:red;font-size:13px">
-Token which Transfer-limit Flag set to a certain threshold, number of items that can be transferrable need to follow this constraint.</span>
 

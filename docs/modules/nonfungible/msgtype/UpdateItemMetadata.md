@@ -1,10 +1,9 @@
-# MsgTypeUpdateItemMetadata
-
 This is the message type used to update item metadata of a non-fungible token.
 
+## Parameters
 
+The message type contains the following parameters:
 
-#### Parameters
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
 | symbol | string | true   | Token symbol, which must be unique| | 
@@ -26,10 +25,36 @@ This is the message type used to update item metadata of a non-fungible token.
 }
 ```
 
-#### Listening to events of MsgTypeUpdateItemMetadata
+## Handler
+
+The role of the handler is to define what action(s) needs to be taken when this MsgTypeUpdateItemMetadata message is received.
+
+In the file (./x/token/nonfungible/handler.go) start with the following code:
+
+![Image-1](../pic/MintNonFungibleItem_01.png)
+
+
+NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
+Now, you need to define the actual logic for handling the MsgTypeUpdateItemMetadata message in handleMsgUpdateItemMetadata:
+
+![Image-2](../pic/UpdateItemMetadata_02.png)
+
+
+In this function, requirements need to be met before emitted by the network.  
+
+* A valid Token.
+* Token not in freeze condition.
+* Token which Modifiable Flag is TRUE, Item owner allowed to modify item-metadata.
+* Token which Modifiable Flag is FALSE, only Token owner allowed to modify the item-metadata.
+* A valid Item ID which not in freeze condition.
+* Signer must be valid item owner.
+* Action of Re-update is allowed.
+
+
+## Events
 This tutorial describes how to create maxonrow events for scanner on this after emitted by a network.
 
-![Image-1](/en/latest/pic_module/MsgTypeUpdateItemMetadata.png)  
+![Image-1](../pic/UpdateItemMetadata_03.png)  
 
 
 #### Usage
@@ -44,10 +69,5 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | symbol | string | Token symbol, which must be unique| | 
 | owner | string | Item owner| | 
 | itemID | string | Item ID| | 
-
-
-#### Remarks :
-* <span style="color:red;font-size:13px">Token which Modifiable Flag is TRUE, Item owner allowed to modify item-metadata.</span>
-* <span style="color:red;font-size:13px">Token which Modifiable Flag is FALSE, only Token owner allowed to modify the item-metadata.</span>
 
 

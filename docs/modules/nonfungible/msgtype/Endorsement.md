@@ -1,8 +1,9 @@
-# MsgTypeEndorsement
-
 This is the message type used to endorse an item of a non-fungible token.
 
-#### Parameters
+## Parameters
+
+The message type contains the following parameters:
+
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
 | symbol | string | true   | Token symbol, which must be unique| | 
@@ -24,10 +25,32 @@ This is the message type used to endorse an item of a non-fungible token.
 
 ```
 
-#### Listening to events of MsgTypeEndorsement
+## Handler
+
+The role of the handler is to define what action(s) needs to be taken when this MsgTypeEndorsement message is received.
+
+In the file (./x/token/nonfungible/handler.go) start with the following code:
+
+![Image-1](../pic/MintNonFungibleItem_01.png)
+
+
+NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
+Now, you need to define the actual logic for handling the MsgTypeEndorsement message in handleMsgEndorsement:
+
+![Image-2](../pic/Endorsement_02.png)
+
+
+In this function, requirements need to be met before emitted by the network.  
+
+* A valid Item ID.
+* Signer must be a valid endorser.
+* Action of Re-endorse process is allowed.
+
+
+## Events
 This tutorial describes how to create maxonrow events for scanner on this after emitted by a network.
 
-![Image-1](/en/latest/pic_module/MsgTypeEndorsement.png)  
+![Image-1](../pic/Endorsement_03.png)  
 
 
 #### Usage
@@ -42,5 +65,4 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | symbol | string | Token symbol, which must be unique| | 
 | owner | string | Endorser| | 
 | itemID | string | Item ID| | 
-
 

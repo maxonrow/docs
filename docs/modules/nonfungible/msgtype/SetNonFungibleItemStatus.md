@@ -1,11 +1,10 @@
-# MsgTypeSetNonFungibleItemStatus
-
 This is the message type used to update the status of an item of a non-fungible token, 
   eg. Freeze or unfreeze
 
+## Parameters
 
+The message type contains the following parameters:
 
-#### Parameters
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
 | owner | string | true   | Item owner| | 
@@ -65,10 +64,47 @@ This is the message type used to update the status of an item of a non-fungible 
 
 ```
 
-#### Listening to events of MsgTypeSetNonFungibleItemStatus
-1. This tutorial describes how to create maxonrow events for scanner base on freeze-item after emitted by a network.
+## Handler
 
-![Image-1](/en/latest/pic_module/MsgTypeSetNonFungibleItemStatus_01.png)  
+The role of the handler is to define what action(s) needs to be taken when this MsgTypeSetNonFungibleItemStatus message is received.
+
+In the file (./x/token/nonfungible/handler.go) start with the following code:
+
+![Image-1](../pic/MintNonFungibleItem_01.png)
+
+
+NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
+Now, you define the actual logic for handling the MsgTypeSetNonFungibleItemStatus-FreezeNonFungibleItem message in handleMsgSetNonFungibleItemStatus:
+
+![Image-2](../pic/SetNonFungibleItemStatus_03.png)
+
+
+In this function, requirements need to be met before emitted by the network.  
+
+* A valid Token.
+* A valid Item ID which must not be freeze.
+* Signer must be authorised.
+* Action of Re-freeze-item is not allowed.
+
+Next, you define the actual logic for handling the MsgTypeSetNonFungibleItemStatus-UnfreezeNonFungibleItem message in handleMsgSetNonFungibleItemStatus:
+
+![Image-2](../pic/SetNonFungibleItemStatus_04.png)
+
+
+In this function, requirements need to be met before emitted by the network.  
+
+* A valid Token.
+* A valid Item ID which must be freeze.
+* Signer must be authorised.
+* Action of Re-unfreeze-item is not allowed.
+
+
+## Events
+
+#### 1.
+This tutorial describes how to create maxonrow events for scanner base on freeze-item after emitted by a network.
+
+![Image-1](../pic/SetNonFungibleItemStatus_01.png)  
 
 
 #### Usage
@@ -85,9 +121,10 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | itemID | string | Item ID| | 
 
 
-2. This tutorial describes how to create maxonrow events for scanner base on unfreeze-item after emitted by a network.
+#### 2.
+This tutorial describes how to create maxonrow events for scanner base on unfreeze-item after emitted by a network.
 
-![Image-2](/en/latest/pic_module/MsgTypeSetNonFungibleItemStatus_02.png)  
+![Image-2](../pic/SetNonFungibleItemStatus_02.png)  
 
 
 #### Usage
@@ -102,4 +139,3 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | symbol | string | Token symbol, which must be unique| | 
 | owner | string | Signer| | 
 | itemID | string | Item ID| | 
-

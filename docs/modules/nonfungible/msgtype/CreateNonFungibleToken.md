@@ -1,8 +1,9 @@
-# MsgTypeCreateNonFungibleToken
-
 This is the message type used to create a non-fungible token.
 
-#### Parameters
+## Parameters
+
+The message type contains the following parameters:
+
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
 | name | string | true   | Token name| | 
@@ -39,10 +40,32 @@ This is the message type used to create a non-fungible token.
 
 ```
 
-#### Listening to events of MsgTypeCreateNonFungibleToken
+## Handler
+
+The role of the handler is to define what action(s) needs to be taken when this MsgTypeCreateNonFungibleToken message is received.
+
+In the file (./x/token/nonfungible/handler.go) start with the following code:
+
+![Image-1](../pic/MintNonFungibleItem_01.png)
+
+
+NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
+Now, you need to define the actual logic for handling the MsgTypeCreateNonFungibleToken message in handleMsgCreateNonFungibleToken:
+
+![Image-2](../pic/CreateNonFungibleToken_02.png)
+
+
+In this function, requirements need to be met before emitted by the network.  
+
+* Token must be unique and not existed.
+* Token owner must be authorised.
+* A valid Fee will be charged base on this.
+* Action of Re-create is not allowed.
+
+## Events
 This tutorial describes how to create maxonrow events for scanner on this after emitted by a network.
 
-![Image-1](/en/latest/pic_module/MsgTypeCreateNonFungibleToken.png)  
+![Image-1](../pic/CreateNonFungibleToken_03.png)  
 
 
 #### Usage
@@ -58,6 +81,4 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | owner | string | Token owner| | 
 | to | string | Fee-collector| | 
 | value | bignumber | Fee amount to be paid| | 
-
-
 
