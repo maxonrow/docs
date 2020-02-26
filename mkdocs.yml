@@ -6,7 +6,7 @@ nav:
         - 'Quick Start': 'mxw-Quick-Start.md'
 
     - Modules:
-        - 'List of Modules': 'mxw-Modules.md'
+        - 'List of Modules': 'modules/mxw-Modules.md'
 
     - Interfaces:
         - 'Node CLI': 'mxw-Node-CLI.md'
