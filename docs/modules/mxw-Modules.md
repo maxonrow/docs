@@ -1,4 +1,4 @@
-# MXW Modules
+# Maxonrow Modules
 
 In this section, you will learn how these simple requirements translate to application design.
 
@@ -57,11 +57,11 @@ Each module will expose its queries accordingly.
 ### List of Modules
 Here are those modules that can be used in Maxonrow SDK applications, along with their respective documentation and tutorials:
 
-* [Bank](mxw-Module-Bank.md "What is Bank?")
-* [KYC](mxw-Module-Kyc.md "What is KYC?")
-* [Maintenance](mxw-Module-Maintenance.md "What is Maintenance?") 
-* [Fee Settings](mxw-Module-Fee-Setting.md "What is Fee Settings?") 
-* [Nameservice](mxw-Module-Nameservice.md "What is Nameservice?")
-* [Fungible Token](mxw-Module-Fungible-Token.md "What is Fungible Token?")
+* Bank
+* KYC
+* Maintenance 
+* Fee Settings 
+* Nameservice
+* Fungible Token
 * [Non-fungible Token](nonfungible/nonfungible.md "What is Non-fungible Token?")
 

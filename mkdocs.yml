@@ -2,7 +2,7 @@ site_name: Maxonrow Blockchain <br /> v1.0
 nav:
     - Introduction:
         - 'Overview': 'index.md'
-        - 'Installation': 'mxw-Installation.md'
+        - 'Compilation': 'mxw-Installation.md'
         - 'Quick Start': 'mxw-Quick-Start.md'
 
     - Modules:
