@@ -62,10 +62,10 @@ Now, you need to define the actual logic for handling the MsgTypeCreateFungibleT
 
 In this function, requirements need to be met before emitted by the network.  
 
-* xxToken must be unique and not existed.
-* xxToken owner must be authorised.
-* xxA valid Fee will be charged base on this.
-* xxAction of Re-create is not allowed.
+* Token must be unique.
+* Token owner must be authorised.
+* A valid Fee will be charged base on this.
+* Action of Re-create is not allowed.
 
 ## Events
 This tutorial describes how to create maxonrow events for scanner on this after emitted by a network.

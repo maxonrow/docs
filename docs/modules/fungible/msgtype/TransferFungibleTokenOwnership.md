@@ -43,10 +43,10 @@ Now, you need to define the actual logic for handling the MsgTypeTransferFungibl
 
 In this function, requirements need to be met before emitted by the network.  
 
-* xxA valid Token.
-* xxToken must be approved, and not yet be freeze.
-* xxSigner must be valid token owner
-* xxAction of Re-transfer-ownership is not allowed.
+* A valid Token.
+* Token must be approved, and not yet be freeze.
+* Signer must be valid token owner
+* Action of Re-transfer-ownership is not allowed.
 
 
 ## Events

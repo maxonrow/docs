@@ -2,7 +2,7 @@ This takes an account address and returns whether been whitelisted.
 
 After the router is defined, define the inputs and responses for this queryTokenData:
 
-![Image-2](../pic/queryTokenData.png)
+![Image-2](../pic/queryIsWhitelisted.png)
 
 
 Notes on the above code:
@@ -22,6 +22,7 @@ For the output of Token, the normal Token struct is already JSON marshalable, bu
 | prove | bool | false | false    | Include proofs of the transactions inclusion in the block, if true |
 
 
+
 #### Example
 In this example, we will explain how to query token data with abci_query. 
 
@@ -34,7 +35,7 @@ curl 'http://localhost:26657/'
 {
     "method": "abci_query",
     "params": [
-    	"/custom/kyc/is_whitelisted/xxTNFT-E2",
+    	"/custom/kyc/is_whitelisted/mxw1md4u2zxz2ne5vsf9t4uun7q2k0nc3ly5g22dne",
     	"",
     	"0",
     	false
@@ -57,12 +58,11 @@ The above command returns JSON structured like this:
             "info": "",
             "index": "0",
             "key": null,
-            "value": "eyJGbGFncyI6MTE1LCJOYW1lIjoiVGVzdE5vbkZ1bmdpYmxlVG9rZW4iLCJTeW1ib2wiOiJUTkZULUUyIiwiT3duZXIiOiJteHcxeDVjZjh5OTludGpjOGNqbTAwejYwM3lmcXd6eHcybWF3ZW1mNzMiLCJOZXdPd25lciI6IiIsIlByb3BlcnRpZXMiOiIiLCJNZXRhZGF0YSI6InRva2VuIG1ldGFkYXRhIiwiVG90YWxTdXBwbHkiOiIxIiwiVHJhbnNmZXJMaW1pdCI6IjIiLCJNaW50TGltaXQiOiIyIiwiRW5kb3JzZXJMaXN0IjpbIm14dzFmOHIwazVwN3M4NWt2N2phdHd2bXBhcnR5eTJqMHMyMHkwcDB5ayIsIm14dzFrOXN4ejBoM3llaDB1em14ZXQycm1zajd4ZTV6ZzU0ZXE3dmhsYSJdfQ==",
+            "value": "VHJ1ZQ==",
             "proof": null,
-            "height": "746",
+            "height": "36",
             "codespace": ""
         }
     }
 }
 ```
-

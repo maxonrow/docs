@@ -43,11 +43,11 @@ Now, you need to define the actual logic for handling the MsgTypeBurnFungibleTok
 
 In this function, requirements need to be met before emitted by the network.  
 
-* XXA valid Token.
-* XXToken must be approved before this, and not be freeze. Also burnable flag must equals to true.
-* XXA valid Item ID.
-* XXSigner who is the Item owner need to be authorised to do this process.
-* XXAction of Re-burn is not allowed.
+* A valid Token.
+* A valid Token account.
+* Token must be approved before this, and not be freeze. Also burnable flag must equals to true.
+* Signer who is the Token owner need to be authorised to do this process.
+* Action of Re-burn is allowed if the balance amount is enough to do burning.
 
 
 ## Events
@@ -60,16 +60,14 @@ This tutorial describes how to create maxonrow events for scanner on this after 
 This MakeMxwEvents create maxonrow events, by accepting :
 
 * Custom Event Signature : using BurnedFungibleToken(string,string,string,bignumber)
-* Item owner
+* Token owner
 * Event Parameters as below: 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
 | symbol | string | Token symbol, which must be unique| | 
-| owner | string | Item owner| | 
+| owner | string | Token owner| | 
 | account | string | Account address| | 
 | value | string | value| | 
 
---ntyt ???
-symbol, owner.String(), "mxw000000000000000000000000000000000000000", value.String()
 

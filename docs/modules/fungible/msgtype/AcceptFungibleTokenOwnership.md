@@ -39,11 +39,11 @@ Now, you need to define the actual logic for handling the MsgTypeAcceptFungibleT
 
 In this function, requirements need to be met before emitted by the network.  
 
-* XXA valid Token.
-* XXA valid Token owner.
-* XXA valid New token owner.
-* XXToken must be approved and not be freeze.
-* XXAction of Re-accept-ownership is not allowed.
+* A valid Token.
+* A valid Token owner.
+* A valid New token owner.
+* Token must be approved and not be freeze.
+* Action of Re-accept-ownership is not allowed.
 
 
 ## Events

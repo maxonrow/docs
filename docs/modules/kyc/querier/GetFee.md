@@ -2,7 +2,7 @@ This takes a fee setting and returns the fee setting info.
 
 After the router is defined, define the inputs and responses for this queryTokenData:
 
-![Image-2](../pic/queryTokenData.png)
+![Image-2](../pic/queryGetFee.png)
 
 
 Notes on the above code:
@@ -11,7 +11,6 @@ This query request ONE path-parameter which refer to token-symbol.
 The output type should be something that is both JSON marshalable and stringable (implements the Golang fmt.Stringer interface). The returned bytes should be the JSON encoding of the output result.
 
 For the output of Token, the normal Token struct is already JSON marshalable, but we need to add a .String() method on it.
-
 
 #### Parameters
 | Name | Type | Default | Required | Description                 |
@@ -22,6 +21,7 @@ For the output of Token, the normal Token struct is already JSON marshalable, bu
 | prove | bool | false | false    | Include proofs of the transactions inclusion in the block, if true |
 
 
+-dx
 #### Example
 In this example, we will explain how to query token data with abci_query. 
 
@@ -34,7 +34,7 @@ curl 'http://localhost:26657/'
 {
     "method": "abci_query",
     "params": [
-    	"/custom/kyc/get_fee/xxTNFT-E2",
+    	"/custom/kyc/get_fee/zero",
     	"",
     	"0",
     	false
@@ -42,7 +42,6 @@ curl 'http://localhost:26657/'
     "id": 0,
     "jsonrpc": "2.0"
 }
-
 ```
 
 The above command returns JSON structured like this: 
@@ -52,15 +51,15 @@ The above command returns JSON structured like this:
     "id": 0,
     "result": {
         "response": {
-            "code": 0,
-            "log": "",
+            "code": 1,
+            "log": "{\"codespace\":\"sdk\",\"code\":1,\"message\":\"Invalid percentage: 0.05\"}",
             "info": "",
             "index": "0",
             "key": null,
-            "value": "eyJGbGFncyI6MTE1LCJOYW1lIjoiVGVzdE5vbkZ1bmdpYmxlVG9rZW4iLCJTeW1ib2wiOiJUTkZULUUyIiwiT3duZXIiOiJteHcxeDVjZjh5OTludGpjOGNqbTAwejYwM3lmcXd6eHcybWF3ZW1mNzMiLCJOZXdPd25lciI6IiIsIlByb3BlcnRpZXMiOiIiLCJNZXRhZGF0YSI6InRva2VuIG1ldGFkYXRhIiwiVG90YWxTdXBwbHkiOiIxIiwiVHJhbnNmZXJMaW1pdCI6IjIiLCJNaW50TGltaXQiOiIyIiwiRW5kb3JzZXJMaXN0IjpbIm14dzFmOHIwazVwN3M4NWt2N2phdHd2bXBhcnR5eTJqMHMyMHkwcDB5ayIsIm14dzFrOXN4ejBoM3llaDB1em14ZXQycm1zajd4ZTV6ZzU0ZXE3dmhsYSJdfQ==",
+            "value": null,
             "proof": null,
-            "height": "746",
-            "codespace": ""
+            "height": "36",
+            "codespace": "sdk"
         }
     }
 }

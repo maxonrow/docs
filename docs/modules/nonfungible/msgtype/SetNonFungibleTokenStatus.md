@@ -193,7 +193,7 @@ Last, you define the actual logic for handling the MsgTypeSetNonFungibleTokenSta
 In this function, requirements need to be met before emitted by the network.  
 
 * A valid Token.
-* Token TransferTokenOwnershipFlag equals to true.
+* Token TransferTokenOwnership flag equals to true.
 * Signer must be authorised.
 * Action of Re-reject transfer token-ownership is not allowed.
 

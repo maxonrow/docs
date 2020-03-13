@@ -43,11 +43,12 @@ Now, you need to define the actual logic for handling the MsgTypeTransferFungibl
 
 In this function, requirements need to be met before emitted by the network.  
 
-* xxA valid Token.
-* xxToken transferable flag equals to true and not in freeze condition.
-* xxToken which Transfer-limit Flag set to a certain threshold, number of items that can be transferrable need to follow this constraint.
-* xxSigner must be a valid item owner.
-* xxAction of Re-transfer is not allowed.
+* A valid Token.
+* Signer must be a valid token owner.
+* Current token owner's account is not in freeze condition.
+* New token owner's account is not in freeze condition.
+* Current token owner must have enough balance in order to do transfer amount to New token owner
+* Action of Re-transfer is allowed if have enough balance.
 
 
 ## Events

@@ -45,12 +45,11 @@ Now, you need to define the actual logic for handling the MsgTypeMintFungibleTok
 
 In this function, requirements need to be met before emitted by the network.  
 
-* xxA valid Token.
-* xxToken must be approved, and not yet be freeze.
-* xxToken which Public Flag equals to true can only be minted to same user.
-* xxToken which Mint-limit Flag set to ZERO, any items can be minted without the limitation. Otherwise, will base on the threshold of this setting.
-* xxA valid Item ID which must be unique.
-* xxAction of Re-mint is not allowed.
+* A valid Token.
+* Token which Mint Flag equals to true and must be approved, and not yet be freeze.
+* Token can only be minted by token-creator.
+* Token with Max-Supply bigger than ZERO is known as Fixed-Supply, which need do validate between Total-Supply and Max-Supply. Else is known as Dynamic-Supply.
+* Action of Re-mint is allowed if not yet reached the total-supply-limit (as Fixed-Supply).
 
 
 ## Events
@@ -70,5 +69,5 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | ---- | ---- | --------------------------- |
 | symbol | string | Token symbol, which must be unique| | 
 | owner | string | Token owner| | 
-| to | string | Item owner| | 
+| to | string | Account owner| | 
 | value | string | value| | 

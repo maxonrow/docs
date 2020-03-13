@@ -9,7 +9,7 @@ In this section, you will learn how these simple requirements translate to appli
 In this module which consists of EIGHT types of messages that users 
 can send to interact with the application state: 
 
-* [MsgTypeCreateFungibleToken](msgtype/CreateNonFungibleToken.md "MsgCreateFungibleToken") -- This is the msg type used to create the fungible token. 
+* [MsgTypeCreateFungibleToken](msgtype/CreateFungibleToken.md "MsgCreateFungibleToken") -- This is the msg type used to create the fungible token. 
 * [MsgTypeSetFungibleTokenStatus](msgtype/SetFungibleTokenStatus.md "MsgSetFungibleTokenStatus") -- This is the msg type used to set the status of a fungible token. 
 * [MsgTypeTransferFungibleToken](msgtype/TransferFungibleToken.md "MsgTransferFungibleToken") -- This is the msg type used to transfer the item of fungible token.
 * [MsgTypeMintFungibleToken](msgtype/MintFungibleToken.md "MsgMintFungibleToken") -- This is the msg type used to mint a new item of fungible token. 
