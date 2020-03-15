@@ -1,13 +1,4 @@
-This is the msg type used to create or update the system fee setting. Eg. “default”, “zero”, “transfer” and etc.
-
-
-<!-- type MsgSysFeeSetting struct {
-	Name       string              `json:"name"`
-	Min        sdkTypes.Coins      `json:"min"`
-	Max        sdkTypes.Coins      `json:"max"`
-	Percentage string              `json:"percentage"`
-	Issuer     sdkTypes.AccAddress `json:"issuer"`
-} -->
+This is the message type used to create or update the system fee setting. Eg. “default”, “zero”, “transfer” and etc.
 
 
 ## Parameters

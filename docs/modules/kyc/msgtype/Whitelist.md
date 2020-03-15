@@ -83,7 +83,6 @@ type Payload struct {
 
 ```
 
--dx
 ## Handler
 
 The role of the handler is to define what action(s) needs to be taken when this MsgTypeBurnNonFungibleItem message is received.
@@ -114,14 +113,13 @@ This tutorial describes how to create maxonrow events for scanner on this after 
 #### Usage
 This MakeMxwEvents create maxonrow events, by accepting :
 
-* Custom Event Signature : using xxBurnedFungibleToken(string,string,string,bignumber)
-* Item owner
+* Custom Event Signature : using KycWhitelisted(string,string)
+* Signer
 * Event Parameters as below: 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
-| symbol | string | Token symbol, which must be unique| | 
-| owner | string | Item owner| | 
+| signer | string | Account address| | 
 | account | string | Account address| |
-| value | string | value| | 
+
 

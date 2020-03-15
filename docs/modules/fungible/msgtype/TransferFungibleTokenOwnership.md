@@ -1,5 +1,4 @@
-MsgTypeTransferFungibleTokenOwnership
-This is the msg type used to transfer the ownership of a fungible token.
+This is the message type used to transfer the ownership of a fungible token.
 
 
 ## Parameters

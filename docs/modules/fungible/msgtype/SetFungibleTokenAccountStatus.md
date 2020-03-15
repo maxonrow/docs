@@ -1,6 +1,4 @@
-MsgTypeSetFungibleTokenAccountStatus
-
-This is the msg type used to set the account status of a fungible token.
+This is the message type used to set the account status of a fungible token.
 
 ## Parameters
 
@@ -18,17 +16,17 @@ The message type contains the following parameters:
 | ---- | ---- | -------- | --------------------------- |
 | tokenAccount | TokenAccount | true   | Token account| | 
 | pub_key | nil | true   | crypto.PubKey| | 
-| signature | []byte | true   | signature| | 
+| signature | []byte | true   | Signature| | 
 
 
 #### Token Account Information
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
 | from | string | true   | Token owner| | 
-| nonce | string | true   | nonce signature| | 
-| status | string | true   | status, eg. freeze or unfreeze | | 
-| symbol | string | true   | Token-symbol| | 
-| to | string | true   | account address| | 
+| nonce | string | true   | Nonce| | 
+| status | string | true   | Status, eg. freeze or unfreeze | | 
+| symbol | string | true   | Token symbol| | 
+| to | string | true   | Token account address| | 
 
 
 
@@ -142,5 +140,3 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | ---- | ---- | --------------------------- |
 | symbol | string | Token symbol, which must be unique| | 
 | owner | string | Token owner| | 
-
-

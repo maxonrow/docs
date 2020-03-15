@@ -1,6 +1,6 @@
 This takes a account and symbol then returns account data.
 
-After the router is defined, define the inputs and responses for this queryItemData:
+After the router is defined, define the inputs and responses for this queryAccount:
 
 ![Image-2](../pic/queryAccount.png)
 
@@ -10,7 +10,7 @@ Notes on the above code:
 This query request TWO path-parameters which refer to token-symbol and account. 
 The output type should be something that is both JSON marshalable and stringable (implements the Golang fmt.Stringer interface). The returned bytes should be the JSON encoding of the output result.
 
-For the output of Item, the normal Item struct is already JSON marshalable, but we need to add a .String() method on it.
+For the output of Account, the normal Account struct is already JSON marshalable, but we need to add a .String() method on it.
 
 #### Parameters
 | Name | Type | Default | Required | Description                 |

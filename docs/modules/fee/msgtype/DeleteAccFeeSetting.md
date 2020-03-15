@@ -1,4 +1,4 @@
-This is the msg type used to delete the fee setting.
+This is the message type used to delete the fee setting.
 
 
 <!-- type MsgDeleteAccFeeSetting struct {

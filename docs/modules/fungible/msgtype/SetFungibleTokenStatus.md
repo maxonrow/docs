@@ -1,4 +1,4 @@
-This is the msg type used to set the status of a fungible token.
+This is the message type used to set the status of a fungible token.
 
 
 ## Parameters
@@ -17,25 +17,25 @@ The message type contains the following parameters:
 | ---- | ---- | -------- | --------------------------- |
 | token | TokenData | true   | Token data| | 
 | pub_key | nil | true   | crypto.PubKey| | 
-| signature | []byte | true   | signature| | 
+| signature | []byte | true   | Signature| | 
 
 
 #### Token Data Information
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
 | from | string | true   | Token owner| | 
-| nonce | string | true   | nonce signature| | 
-| status | string | true   | status, eg. freeze or unfreeze | | 
-| symbol | string | true   | Token-symbol| | 
-| burnable | bool | true   | flag of burnable| | 
+| nonce | string | true   | Nonce| | 
+| status | string | true   | Status, eg. freeze or unfreeze | | 
+| symbol | string | true   | Token symbol| | 
+| burnable | bool | true   | Flag of burnable| | 
 | tokenFees,omitempty | []TokenFee | true   | Fee Setting information| | 
 
 
 #### Token Fee Information
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
-| action | string | true   | action | | 
-| feeName | string | true   | fee setting| | 
+| action | string | true   | Action | | 
+| feeName | string | true   | Fee setting| | 
 
 
 
@@ -272,4 +272,4 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | ---- | ---- | --------------------------- |
 | symbol | string | Token symbol, which must be unique| | 
 | owner | string | Token owner| | 
-| newOwner | null | NULL| | 
+| newOwner | string | New token owner| | 

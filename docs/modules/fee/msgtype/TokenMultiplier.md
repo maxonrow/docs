@@ -1,10 +1,4 @@
-This is the msg type used to create, update the token fee multiplier.
-
-<!-- type MsgTokenMultiplier struct {
-	Multiplier string              `json:"multiplier"`
-	Issuer     sdkTypes.AccAddress `json:"issuer"`
-} -->
-
+This is the message type used to create, update the token fee multiplier.
 
 ## Parameters
 

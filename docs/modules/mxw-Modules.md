@@ -57,13 +57,12 @@ Each module will expose its queries accordingly.
 ### List of Modules
 Here are those modules that can be used in Maxonrow SDK applications, along with their respective documentation and tutorials:
 
-* [Bank](bank/bank.md "What is Bank?")
-* [KYC](kyc/kyc.md "What is KYC?")
-* [Maintenance](maintenance/maintenance.md "What is Maintenance?")
-* [Fee Settings](fee/fee.md "What is Fee Settings?")
-* [Nameservice](nameservice/nameservice.md "What is Nameservice?")
+* Bank
+* KYC
+* Maintenance
+* Fee Settings
+* Nameservice
 * [Fungible Token](fungible/fungible.md "What is Fungible Token?")
 * [Non-fungible Token](nonfungible/nonfungible.md "What is Non-fungible Token?")
-* [Multisignature](multiSig/multiSig.md "What is Multisignature?")
 
 

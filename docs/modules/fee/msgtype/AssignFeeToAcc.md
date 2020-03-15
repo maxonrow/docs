@@ -1,10 +1,4 @@
-This is the msg type used to assign fee setting to account.
-
-<!-- type MsgAssignFeeToAcc struct {
-	FeeName string              `json:"fee_name"`
-	Account sdkTypes.AccAddress `json:"account"`
-	Issuer  sdkTypes.AccAddress `json:"issuer"`
-} -->
+This is the message type used to assign fee setting to account.
 
 ## Parameters
 
@@ -13,7 +7,7 @@ The message type contains the following parameters:
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
 | fee_name | string | true   | Fee setting| | 
-| account| string | true   | Receiver account address | | 
+| account| string | true   | Fee account address | | 
 | issuer| string | true   | Issuer account address | | 
 
 
@@ -65,7 +59,7 @@ This MakeMxwEvents create maxonrow events, by accepting :
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
-| account | string | Account| | 
+| account | string | Fee account address| | 
 | signer | string | Account address| | 
 
 

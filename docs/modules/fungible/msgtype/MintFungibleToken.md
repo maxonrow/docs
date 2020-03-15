@@ -1,4 +1,4 @@
-This is the message type used to mint an item of a non-fungible token.
+This is the message type used to mint the amount of fungible token to an account owner.
 
 ## Parameters
 
@@ -8,10 +8,8 @@ The message type contains the following parameters:
 | ---- | ---- | -------- | --------------------------- |
 | symbol | string | true   | Token symbol, which must be unique| | 
 | owner | string | true   | Token owner| | 
-| to | string | true   | Item owner| | 
-| value | int | true   | value| | 
-| metadata | string | true   | Metadata of item| | 
-
+| to | string | true   | Token account owner| | 
+| value | int | true   | Mint value| | 
 
 
 #### Example
@@ -68,6 +66,6 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
 | symbol | string | Token symbol, which must be unique| | 
-| owner | string | Token owner| | 
-| to | string | Account owner| | 
-| value | string | value| | 
+| owner | string | Token account owner| | 
+| to | string | Token account owner| | 
+| value | string | Mint value| | 

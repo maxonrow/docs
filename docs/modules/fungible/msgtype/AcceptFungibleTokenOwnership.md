@@ -1,4 +1,4 @@
-This is the msg type used to accept the ownership of a fungible token.
+This is the message type used to accept the ownership of a fungible token.
 
 ## Parameters
 
@@ -62,5 +62,5 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
 | symbol | string | Token symbol, which must be unique| | 
-| from | string | Token owner| | 
+| from | string | New token owner| | 
 

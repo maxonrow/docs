@@ -1,10 +1,5 @@
-This is the msg type used to assign fee setting to message.
+This is the message type used to assign fee setting to message.
 
-<!-- type MsgAssignFeeToMsg struct {
-	FeeName string              `json:"fee_name"`
-	MsgType string              `json:"msg_type"`
-	Issuer  sdkTypes.AccAddress `json:"issuer"`
-} -->
 
 ## Parameters
 
@@ -14,7 +9,7 @@ The message type contains the following parameters:
 | ---- | ---- | -------- | --------------------------- |
 | fee_name | string | true   | Fee setting| | 
 | msg_type | string | true   | Message type| | 
-| issuer | string | true   | Issuer Account address| | 
+| issuer | string | true   | Issuer account address| | 
 
 
 
@@ -62,7 +57,7 @@ This tutorial describes how to create maxonrow events for scanner on this after 
 This MakeMxwEvents create maxonrow events, by accepting :
 
 * Custom Event Signature : using CreatedTxFeeSetting(string,string)
-* Owner address
+* Signer
 * Event Parameters as below: 
 
 

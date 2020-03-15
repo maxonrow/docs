@@ -4,18 +4,6 @@ This is the message type used to create coin transfers transaction.
 
 The message type contains the following parameters:
 
-<!-- 
-type MsgMxwSend struct {
-	sdkBank.MsgSend
-} 
-
-type MsgSend struct {
-	FromAddress sdk.AccAddress `json:"from_address" yaml:"from_address"`
-	ToAddress   sdk.AccAddress `json:"to_address" yaml:"to_address"`
-	Amount      sdk.Coins      `json:"amount" yaml:"amount"`
-}
--->
-
 
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |

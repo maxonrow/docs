@@ -1,4 +1,4 @@
-This is the msg type used to assign fee setting to token by token action and token symbol.
+This is the message type used to assign fee setting to token by token action and token symbol.
 
 <!-- type MsgAssignFeeToToken struct {
 	FeeName string              `json:"fee_name"`
@@ -14,10 +14,10 @@ The message type contains the following parameters:
 
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
-| fee_name | string | true   | Fee Setting| | 
+| fee_name | string | true   | Fee setting| | 
 | symbol | string | true   | Token| | 
-| action | string | true   | Action| | 
-| issuer | string | true   | Issuer Account address| | 
+| action | string | true   | Action types| | 
+| issuer | string | true   | Issuer account address| | 
 
 
 -dx
@@ -65,7 +65,7 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
 | signer | string | Account address| | 
-| symbol | string | token| | 
+| symbol | string | Token| | 
 
 
 

@@ -10,7 +10,7 @@ Notes on the above code:
 This query request ONE path-parameter which refer to token-symbol. 
 The output type should be something that is both JSON marshalable and stringable (implements the Golang fmt.Stringer interface). The returned bytes should be the JSON encoding of the output result.
 
-For the output of Token, the normal Token struct is already JSON marshalable, but we need to add a .String() method on it.
+For the output of TokenData, the normal TokenData struct is already JSON marshalable, but we need to add a .String() method on it.
 
 
 #### Parameters

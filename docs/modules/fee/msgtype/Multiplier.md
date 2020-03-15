@@ -1,11 +1,4 @@
-This is the msg type used to create, update the system fee multiplier.
-
-
-<!-- type MsgMultiplier struct {
-	Multiplier string              `json:"multiplier"`
-	Issuer     sdkTypes.AccAddress `json:"issuer"`
-} -->
-
+This is the message type used to create, update the system fee multiplier.
 
 
 ## Parameters

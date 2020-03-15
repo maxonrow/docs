@@ -1,4 +1,4 @@
-This is the msg type used to create the fungible token.
+This is the message type used to create the fungible token.
 
 ## Parameters
 
@@ -8,11 +8,11 @@ The message type contains the following parameters:
 | ---- | ---- | -------- | --------------------------- |
 | name | string | true   | Token name| | 
 | symbol | string | true   | Token symbol, which must be unique| | 
-| decimals | int | true   | decimals value| | 
+| decimals | int | true   | Decimals value| | 
 | metadata | string | true   | Metadata of token| | 
-| fixedSupply | bool | true   | fixedSupply value| | 
+| fixedSupply | bool | true   | Fixed Supply value| | 
 | owner | string | true   | Token owner| | 
-| maxSupply | int | true   | maxSupply value| | 
+| maxSupply | int | true   | Maximum Supply value| | 
 | fee | Fee | true   | Fee information| | 
 
 

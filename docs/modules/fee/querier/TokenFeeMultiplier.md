@@ -7,10 +7,10 @@ After the router is defined, define the inputs and responses for this queryToken
 
 Notes on the above code:
 
-This query request ONE path-parameter. 
+This query request ZERO path-parameter. 
 The output type should be something that is both JSON marshalable and stringable (implements the Golang fmt.Stringer interface). The returned bytes should be the JSON encoding of the output result.
 
-For the output of Token, the normal Token struct is already JSON marshalable, but we need to add a .String() method on it.
+For the output of TokenFeeMultiplier, the normal TokenFeeMultiplier struct is already JSON marshalable, but we need to add a .String() method on it.
 
 #### Parameters
 | Name | Type | Default | Required | Description                 |
@@ -22,7 +22,7 @@ For the output of Token, the normal Token struct is already JSON marshalable, bu
 
 
 #### Example
-In this example, we will explain how to query token data with abci_query. 
+In this example, we will explain how to query TokenFeeMultiplier with abci_query. 
 
 Run the command with the JSON request body:
 ```

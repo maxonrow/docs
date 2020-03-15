@@ -65,4 +65,3 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | to | string | Account address| | 
 | value | string | KYC address| | 
 
-

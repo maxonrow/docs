@@ -1,5 +1,10 @@
-This is the msg type used to burn the item of fungible token.
+This is the message type used to burn the amount of fungible token of an account owner.
 
+<!-- type MsgBurnFungibleToken struct {
+	Symbol string              `json:"symbol"`
+	Value  sdkTypes.Uint       `json:"value"`
+	From   sdkTypes.AccAddress `json:"from"`
+} -->
 
 ## Parameters
 
@@ -8,8 +13,8 @@ The message type contains the following parameters:
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
 | symbol | string | true   | Token symbol, which must be unique| | 
-| value | string | true   | value| | 
-| itemID | string | true   | Properties of token| | 
+| value | string | true   | Burn value| | 
+| from | string | true   | Token account owner| | 
 
 
 #### Example
@@ -66,8 +71,8 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
 | symbol | string | Token symbol, which must be unique| | 
-| owner | string | Token owner| | 
-| account | string | Account address| | 
-| value | string | value| | 
+| owner | string | Token account owner| | 
+| account | string | Token account owner| | 
+| value | string | Burn value| | 
 
 

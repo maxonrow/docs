@@ -1,4 +1,4 @@
-This takes fee-setting and returns the Transfer Fee.
+This takes fee setting and amount then returns Transfer Fee.
 
 After the router is defined, define the inputs and responses for this queryGetTransferFee:
 
@@ -7,7 +7,7 @@ After the router is defined, define the inputs and responses for this queryGetTr
 
 Notes on the above code:
 
-This query request TWO path-parameters which refer to FeeSetting and Amount. 
+This query request TWO path-parameters which refer to fee setting and amount. 
 The output type should be something that is both JSON marshalable and stringable (implements the Golang fmt.Stringer interface). The returned bytes should be the JSON encoding of the output result.
 
 For the output of Item, the normal Item struct is already JSON marshalable, but we need to add a .String() method on it.
@@ -22,7 +22,7 @@ For the output of Item, the normal Item struct is already JSON marshalable, but 
 
 
 #### Example
-In this example, we will explain how to query item data with abci_query. 
+In this example, we will explain how to query GetTransferFee with abci_query. 
 
 Run the command with the JSON request body:
 ```
