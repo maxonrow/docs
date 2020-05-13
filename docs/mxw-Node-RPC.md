@@ -180,11 +180,25 @@ type ResponseQuery struct {
 ```
 
 #### Example
-In this example, we will explain how to query account info with abci_query. 1. Generate query key To get the correct key you need to ： The query key is : "account:" || address in hex. The first part is in ASCII.
+In this example, we will explain how to query fee-setting info with abci_query. 
 
 Run the command with the JSON request body:
 ```
 curl 'http://localhost:26657/'
+```
+
+```
+{
+    "method": "abci_query",
+    "params": [
+    	"custom/token/get_fee/default",
+    	"",
+    	"0",
+    	false
+    	],
+    "id": 0,
+    "jsonrpc": "2.0"
+}
 ```
 
 The above command returns JSON structured like this: 
@@ -194,8 +208,7 @@ The above command returns JSON structured like this:
   "id": 0,
   "result": {
     "response": {
-      "value": "eyJuYW1lIjoiZGVmYXVsdCIsIm1pbiI6W3siZGVub20iOiJjaW4iLCJhbW91bnQiOiIxMDAwMDAwMDAwMDAwMDAwMCJ9XSwibWF4IjpbeyJkZW5vbSI6ImNpbiIsImFtb3VudCI6IjEwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAifV0sInBlcmNlbnRhZ2UiOiIwLjA1IiwiaXNzdWVyIjoibXh3MXVyYXp6NnZ1bGRqcDA5Z3R6ZnQwbncya3V2MjVsMDc5M2M2bTl3In0=",
-      "height": "2834"
+      "value": "W3siYW1vdW50IjoiMjAwMDAwMDAwIiwiZGVub20iOiJjaW4ifV0="
     }
   }
 }
