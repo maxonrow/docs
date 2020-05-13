@@ -110,15 +110,15 @@ This tutorial describes how to create maxonrow events for scanner base on freeze
 #### Usage
 This MakeMxwEvents create maxonrow events, by accepting :
 
-* Custom Event Signature : using FrozenNonFungibleItem(string,string,string) 
-* Signer
-* Event Parameters as below: 
+* eventSignature : Custom Event Signature that using FrozenNonFungibleItem(string,string,string) 
+* owner : Signer
+* eventParam : Event Parameters as below 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
 | symbol | string | Token symbol, which must be unique| | 
-| owner | string | Signer| | 
 | itemID | string | Item ID| | 
+| owner | string | Signer| | 
 
 
 #### 2.
@@ -130,12 +130,12 @@ This tutorial describes how to create maxonrow events for scanner base on unfree
 #### Usage
 This MakeMxwEvents create maxonrow events, by accepting :
 
-* Custom Event Signature : using UnfreezeNonFungibleItem(string,string,string) 
-* Signer
-* Event Parameters as below: 
+* eventSignature : Custom Event Signature that using UnfreezeNonFungibleItem(string,string,string) 
+* owner : Signer
+* eventParam : Event Parameters as below 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
 | symbol | string | Token symbol, which must be unique| | 
-| owner | string | Signer| | 
 | itemID | string | Item ID| | 
+| owner | string | Signer| | 

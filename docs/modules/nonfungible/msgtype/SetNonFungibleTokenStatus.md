@@ -208,9 +208,9 @@ This tutorial describes how to create maxonrow events for scanner base on approv
 #### Usage
 This MakeMxwEvents create maxonrow events, by accepting :
 
-* Custom Event Signature : using ApprovedNonFungibleToken(string,string) 
-* Token owner
-* Event Parameters as below: 
+* eventSignature : Custom Event Signature that using ApprovedNonFungibleToken(string,string)
+* signer : Signer
+* eventParam : Event Parameters as below 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
@@ -226,9 +226,9 @@ This tutorial describes how to create maxonrow events for scanner base on reject
 #### Usage
 This MakeMxwEvents create maxonrow events, by accepting :
 
-* Custom Event Signature : using RejectedNonFungibleToken(string,string) 
-* Token owner
-* Event Parameters as below: 
+* eventSignature : Custom Event Signature that using RejectedNonFungibleToken(string,string)
+* signer : Signer
+* eventParam : Event Parameters as below 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
@@ -245,9 +245,9 @@ This tutorial describes how to create maxonrow events for scanner base on freeze
 #### Usage
 This MakeMxwEvents create maxonrow events, by accepting :
 
-* Custom Event Signature : using FrozenNonFungibleToken(string,string) 
-* Token owner
-* Event Parameters as below: 
+* eventSignature : Custom Event Signature that using FrozenNonFungibleToken(string,string)
+* signer : Signer
+* eventParam : Event Parameters as below 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
@@ -264,9 +264,9 @@ This tutorial describes how to create maxonrow events for scanner base on unfree
 #### Usage
 This MakeMxwEvents create maxonrow events, by accepting :
 
-* Custom Event Signature : using UnfreezeNonFungibleToken(string,string) 
-* Token owner
-* Event Parameters as below: 
+* eventSignature : Custom Event Signature that using UnfreezeNonFungibleToken(string,string)
+* signer : Signer
+* eventParam : Event Parameters as below 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
@@ -283,9 +283,9 @@ This tutorial describes how to create maxonrow events for scanner base on approv
 #### Usage
 This MakeMxwEvents create maxonrow events, by accepting :
 
-* Custom Event Signature : using ApprovedTransferNonFungibleTokenOwnership(string,string,string) 
-* Token owner
-* Event Parameters as below: 
+* eventSignature : Custom Event Signature that using ApprovedTransferNonFungibleTokenOwnership(string,string,string)
+* from : Signer
+* eventParam : Event Parameters as below 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
@@ -303,12 +303,13 @@ This tutorial describes how to create maxonrow events for scanner base on reject
 #### Usage
 This MakeMxwEvents create maxonrow events, by accepting :
 
-* Custom Event Signature : using RejectedTransferNonFungibleTokenOwnership(string,string,string) 
-* Token owner
-* Event Parameters as below: 
+* eventSignature : Custom Event Signature that using RejectedTransferNonFungibleTokenOwnership(string,string,string)
+* from : Signer
+* eventParam : Event Parameters as below 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
 | symbol | string | Token symbol, which must be unique| | 
 | owner | string | Token owner| | 
 | newOwner | string | New token owner| | 
+

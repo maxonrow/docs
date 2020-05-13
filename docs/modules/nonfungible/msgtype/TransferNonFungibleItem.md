@@ -59,14 +59,14 @@ This tutorial describes how to create maxonrow events for scanner on this after 
 #### Usage
 This MakeMxwEvents create maxonrow events, by accepting :
 
-* Custom Event Signature : using TransferredNonFungibleItem(string,string,string,string)
-* Item owner
-* Event Parameters as below: 
+* eventSignature : Custom Event Signature that using TransferredNonFungibleItem(string,string,string,string)
+* from : Item owner
+* eventParam : Event Parameters as below 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
 | symbol | string | Token symbol, which must be unique| | 
+| itemID | string | Item ID| | 
 | from | string | Item owner| | 
 | to | string | New item owner| | 
-| itemID | string | Item ID| | 
 

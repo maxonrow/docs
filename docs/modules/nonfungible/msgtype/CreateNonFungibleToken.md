@@ -71,9 +71,9 @@ This tutorial describes how to create maxonrow events for scanner on this after 
 #### Usage
 This MakeMxwEvents create maxonrow events, by accepting :
 
-* Custom Event Signature : using CreatedNonFungibleToken(string,string,string,bignumber)
-* Token owner
-* Event Parameters as below: 
+* eventSignature : Custom Event Signature that using CreatedNonFungibleToken(string,string,string,bignumber)
+* from : Token owner
+* eventParam : Event Parameters as below 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
