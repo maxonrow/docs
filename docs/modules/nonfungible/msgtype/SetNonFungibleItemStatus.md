@@ -25,9 +25,17 @@ The message type contains the following parameters:
 | ---- | ---- | -------- | --------------------------- |
 | from | string | true   | Item owner| | 
 | nonce | string | true   | nonce signature| | 
-| status | string | true   | status, eg. freeze or unfreeze | | 
+| status | string | true   | There are two type of status, which include FREEZE_ITEM, UNFREEZE_ITEM. All this keywords must be matched while come to this message type | | 
 | symbol | string | true   | Token-symbol| | 
 | itemID | string | true   | Item ID| | 
+
+#### status details
+* While come to process of set FREEZE_ITEM, a valid token with a valid Item ID which already been approved 
+and yet to be frozen must be signed by authorised Signer with valid signature will be proceed. 
+Item ID which already been frozen is not allowed to do re-submit.
+* While come to process of set UNFREEZE_ITEM, a valid token with a valid Item ID which already been 
+approved and frozen must be signed by authorised Signer with valid signature will be proceed. 
+Item ID which already been unfreeze is not allowed to do re-submit.
 
 
 #### Example
