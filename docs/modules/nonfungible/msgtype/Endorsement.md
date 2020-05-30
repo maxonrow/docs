@@ -1,4 +1,5 @@
 This is the message type used to endorse an item of a non-fungible token.
+The user can write into the MEMO field that indicate what kind of remarks/comments wish to be input, while come to item endorsement process. However, the limitation of this MEMO can only be 128 bytes.
 
 ## Parameters
 
