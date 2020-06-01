@@ -62,7 +62,7 @@ Here are those modules that can be used in Maxonrow SDK applications, along with
 * Maintenance
 * Fee Settings
 * Nameservice
-* [Fungible Token](fungible/fungible.md "What is Fungible Token?")
+* Fungible Token
 * [Non-fungible Token](nonfungible/nonfungible.md "What is Non-fungible Token?")
 
 
