@@ -60,7 +60,7 @@ Example
 
 `Handler`
 
-The role of the handler is to define what action(s) needs to be taken when this MsgTypeCreateNonFungibleToken message is received.
+The role of the handler is to define what action(s) needs to be taken when this `MsgCreateNonFungibleToken` message is received.
 
 In the file (./x/token/nonfungible/handler.go) start with the following code:
 
@@ -68,7 +68,7 @@ In the file (./x/token/nonfungible/handler.go) start with the following code:
 
 
 NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
-Now, you need to define the actual logic for handling the MsgTypeCreateNonFungibleToken message in handleMsgCreateNonFungibleToken:
+Now, you need to define the actual logic for handling the `MsgCreateNonFungibleToken` message in `handleMsgCreateNonFungibleToken`:
 
 ![Image-2](pic/CreateNonFungibleToken_02.png)
 
@@ -134,94 +134,83 @@ Token Data Information
 | ---- | ---- | -------- | --------------------------- |
 | from | string | true   | Token owner| | 
 | nonce | string | true   | nonce signature| | 
-| status | string | true   | There are different type of status, which include APPROVE, REJECT, FREEZE, UNFREEZE, APPROVE_TRANFER_TOKEN_OWNERSHIP, REJECT_TRANFER_TOKEN_OWNERSHIP. All this keywords must be matched while come to this message type | | 
+| status | string | true   | There are different type of status, which include `APPROVE`, `REJECT`, `FREEZE`, `UNFREEZE`, `APPROVE_TRANFER_TOKEN_OWNERSHIP`, `REJECT_TRANFER_TOKEN_OWNERSHIP`. All this keywords must be matched while come to this message type | | 
 | symbol | string | true   | Token-symbol| | 
 | transferLimit | string | true   | Item transfer Limit setting| | 
 | mintLimit | string | true   | Item mint Limit setting| | 
-| burnable | bool | true   | flag of Item burnable setting, either TRUE or FALSE| | 
-| transferable | bool | true   | flag of Item transferable setting, either TRUE or FALSE| | 
-| modifiable | bool | true   | flag of Item modifiable setting, either TRUE or FALSE| |
-| pub | bool | true   | flag of public setting, either TRUE or FALSE| | 
+| burnable | bool | true   | flag of Item burnable setting, either `TRUE` or `FALSE`| | 
+| transferable | bool | true   | flag of Item transferable setting, either `TRUE` or `FALSE`| | 
+| modifiable | bool | true   | flag of Item modifiable setting, either `TRUE` or `FALSE`| |
+| pub | bool | true   | flag of public setting, either `TRUE` or `FALSE`| | 
 | tokenFees | []TokenFee | true   | Fee Setting information| | 
 | endorserList | []string | true   | Endorser list| | 
 
 
-`status details`
+`status`
 
-* While come to process of set APPROVE, a valid new token which yet to be approved must be signed by authorised Signer
-with valid signature will be proceed along with a valid Fee setting scheme that been provided. 
-Token which already been approved is not allowed to do re-submit.
-* While come to process of set REJECT, a valid new token which yet to be approved must be signed by authorised Signer
-with valid signature will be proceed. Token which already been rejected is not allowed to do re-submit.
-* While come to process of set FREEZE, a valid token which already been approved must be signed by authorised Signer
-with valid signature will be proceed. Token which already been frozen is not allowed to do re-submit.
-* While come to process of set UNFREEZE, a valid token which already been approved and frozen must be signed by authorised Signer with valid signature will be proceed. Token which already been unfreeze is not allowed to do re-submit.
-* While come to process of set APPROVE_TRANFER_TOKEN_OWNERSHIP, a valid token which TransferTokenOwnership flag equals to true must be signed by authorised Signer with valid signature will be proceed. Token which already been approved for transfer token-ownership is not allowed to do re-submit.
-* While come to process of set REJECT_TRANFER_TOKEN_OWNERSHIP, a valid token which TransferTokenOwnership flag equals to true must be signed by authorised Signer with valid signature will be proceed. 
-Token which already been rejected for transfer token-ownership is not allowed to do re-submit.
+| status | Details                 |
+| -------- | --------------------------- |
+| APPROVE  | A valid new token which yet to be approved must be signed by authorised Signer with valid signature will be proceed along with a valid Fee setting scheme that been provided. Token which already been approved is not allowed to do re-submit.| | 
+| REJECT  | A valid new token which yet to be approved must be signed by authorised Signer with valid signature will be proceed. Token which already been rejected is not allowed to do re-submit.| | 
+| FREEZE  | A valid token which already been approved must be signed by authorised Signer with valid signature will be proceed. Token which already been frozen is not allowed to do re-submit.| | 
+| UNFREEZE  | A valid token which already been approved and frozen must be signed by authorised Signer with valid signature will be proceed. Token which already been unfreeze is not allowed to do re-submit.| | 
+| APPROVE_TRANFER_TOKEN_OWNERSHIP  | A valid token which TransferTokenOwnership flag equals to `TRUE` must be signed by authorised Signer with valid signature will be proceed. Token which already been approved for transfer token-ownership is not allowed to do re-submit.| | 
+| REJECT_TRANFER_TOKEN_OWNERSHIP  | A valid token which TransferTokenOwnership flag equals to `TRUE` must be signed by authorised Signer with valid signature will be proceed. Token which already been rejected for transfer token-ownership is not allowed to do re-submit.| | 
 
-`transferLimit details`
 
-For the Item transfer-limit setting, only applicable while come to process of set APPROVE base on this particular token-symbol. Once exceeded this limits, will received an alert said that 'TRANSFER limit existed' and 
-is not allowed to proceed the relevant request. However, if transfer-limit is set to ZERO, that means not allowed to transfer for this particular item. Need to be aware while come to this setting.
 
-`mintLimit details`
+`transferLimit`
 
-For the Item mint-limit setting, only applicable while come to process of set APPROVE base on this particular token-symbol. Once exceeded this limits, will received an alert said that 'TRANSFER limit existed' and 
-is not allowed to proceed the relevant request. However, if mint-limit is set to ZERO, that means is NO LIMITATION on the minting for this particular item. Need to be aware while come to this setting.
+For the Item transfer-limit setting, system is expecting a value of number string by user input and this only applicable while come to process of set APPROVE base on this particular token-symbol. Once exceeded this limits, will received an alert said that `TRANSFER limit existed` and is not allowed to proceed the relevant request. However, if transfer-limit is set to ZERO, that means not allowed to transfer for this particular item. Upon the process of approval, this setting is not allowed to do any update again. User need to be aware while come to this setting.
 
-`burnable details`
+`mintLimit`
 
-* For the burnable equals TRUE, system allowed to proceed during burn-item process.
+For the Item mint-limit setting, system is expecting a value of number string by user input and this only applicable while come to process of set APPROVE base on this particular token-symbol. Once exceeded this limits, will received an alert said that `TRANSFER limit existed` and is not allowed to proceed the relevant request. However, if mint-limit is set to ZERO, that means is NO LIMITATION on the minting for this particular item. Upon the process of approval, this setting is not allowed to do any update again. User need to be aware while come to this setting.
+
+`burnable`
+
+* For the burnable equals `TRUE`, system allowed to proceed during burn-item process.
 Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting 
-and also will be set as one of the token flag components during approve-token or freeze-token or unfreeze-token process.
-* For the burnable equals FALSE, system NOT allowed to proceed during burn-item process with an alert of 'Invalid token action'. Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting and also will not be set as one of the token flag components during approve-token or freeze-token or unfreeze-token process.
+and also will be set as one of the token flag components during approve-token process. Upon the process of approval, this setting is not allowed to do any update again. User need to be aware while come to this setting.
+* For the burnable equals `FALSE`, system NOT allowed to proceed during burn-item process with an alert of `Invalid token action`. Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting and also will not be set as one of the token flag components during approve-token process.
+Upon the process of approval, this setting is not allowed to do any update again. User need to be aware while come to this setting.
 
-`transferable details`
+`transferable`
 
-* For the transferable equals TRUE, system allowed to proceed during transfer-item process.
+* For the transferable equals `TRUE`, system allowed to proceed during transfer-item process.
 Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting 
-and also will be set as one of the token flag components during approve-token.
-* For the transferable equals FALSE, system NOT allowed to proceed during transfer-item process with an alert of 'Invalid token action'.
-Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting 
-and also will not be set as one of the token flag components during approve-token.
+and also will be set as one of the token flag components during approve-token process. Upon the process of approval, this setting is not allowed to do any update again. User need to be aware while come to this setting.
+* For the transferable equals `FALSE`, system NOT allowed to proceed during transfer-item process with an alert of `Invalid token action`. Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting and also will not be set as one of the token flag components during approve-token process.
+Upon the process of approval, this setting is not allowed to do any update again. User need to be aware while come to this setting.
 
 
-`modifiable details`
+`modifiable`
 
-* For the modifiable equals TRUE, system will also validate Item Owner must equals to relevant signer during Update Item Metadata process. If not, with an alert of 'Token item not modifiable'.
-Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting 
-and also will be set as one of the token flag components during approve-token or freeze-token or unfreeze-token.
-
-* For the modifiable equals FALSE, system will also validate signer must equals to token-Owner during Update Item Metadata process. If not, with an alert of 'Token item not modifiable'.
-Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting 
-and also will not be set as one of the token flag components during approve-token or freeze-token or unfreeze-token.
+* For the modifiable equals `TRUE`, system will also validate Item Owner must equals to relevant signer during Update Item Metadata process. If not, with an alert of 'Token item not modifiable'. Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting and also will be set as one of the token flag components during approve-token process. Upon the process of approval, this setting is not allowed to do any update again. User need to be aware while come to this setting.
+* For the modifiable equals `FALSE`, system will also validate signer must equals to token-Owner during Update Item Metadata process. If not, with an alert of `Token item not modifiable`. Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting and also will not be set as one of the token flag components during approve-token process. Upon the process of approval, this setting is not allowed to do any update again. User need to be aware while come to this setting.
 
 
-`pub details`
 
-* For the public equals TRUE, system will validate signer must equals to new item-owner during Mint Item process.
-If not, with an alert of 'Public token can only be minted to oneself'.
+`pub`
+
+* For the public equals `TRUE`, system will validate minter must equals to new item-owner during Mint Item process.
+If not, with an alert of `Public token can only be minted to oneself`.
 Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting 
 and also will be set as one of the token flag components during approve-token or freeze-token or unfreeze-token.
-* For the public equals FALSE, system will validate signer must equals to token-owner during Mint Item process. 
+* For the public equals `FALSE`, system will validate minter must equals to token-owner during Mint Item process. 
 If not, with an alert of 'Invalid token minter'.
 Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting 
 and also will not be set as one of the token flag components during approve-token or freeze-token or unfreeze-token.
 
-`tokenFees details`
+`tokenFees`
 
-While come to process of approve-token, the feeName value will be set for different action 
-types which inside the tokenPayload of the current token : 
-eg. transfer-item, mint-item, burn-item, transfer-token-Ownership, accept-token-Ownership.
+This input value is compulsory while come to process of approve-token. The feeName value will be set for different action types which inside the tokenPayload of the current token : eg. transfer-item, mint-item, burn-item, transfer-token-Ownership, accept-token-Ownership. This fee setting name in testnet can refer to this
+`https://alloys-rpc.maxonrow.com/debug/fee_info?`
 
 
-`endorserList details`
+`endorserList`
 
-For the public equals TRUE, system will do verification on the current signer whether come from the endorser list during Item Endorsement process.
-If not, with an alert of 'Invalid endorser'.
-Howevere if endorser list is set to empty, system will not do this validation during endorsement-item process. 
-Prior to this, this endorser list will be set as one of the token flag components during approve-token.
+For the endorser list, system is expecting value of wallet address if provided by user during the approve-token process. Meanwhile, system will do verification on the current signer whether come from the endorser list during Item Endorsement process if public equals `TRUE`. If not, with an alert of `Invalid endorser`. Howevere if endorser list is set to empty, then anyone with valid wallet address can proceed for the endorsement-item process. Prior to this, this endorser list will be set as one of the token flag components during approve-token process.
 
 
 Token Fee Information
@@ -300,7 +289,7 @@ Example
 
 `Handler`
 
-The role of the handler is to define what action(s) needs to be taken when this MsgTypeSetNonFungibleTokenStatus message is received.
+The role of the handler is to define what action(s) needs to be taken when this `MsgSetNonFungibleTokenStatus` message is received.
 
 In the file (./x/token/nonfungible/handler.go) start with the following code:
 
@@ -309,7 +298,7 @@ In the file (./x/token/nonfungible/handler.go) start with the following code:
 
 NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
 
-First, you define the actual logic for handling the MsgTypeSetNonFungibleTokenStatus-ApproveToken message in handleMsgSetNonFungibleTokenStatus:
+First, you define the actual logic for handling the `MsgSetNonFungibleTokenStatus` - ApproveToken message in `handleMsgSetNonFungibleTokenStatus`:
 
 ![Image-2](pic/SetNonFungibleTokenStatus_07.png)
 
@@ -322,7 +311,7 @@ In this function, requirements need to be met before emitted by the network.
 * Action of Re-approved is not allowed.
 
 
-Second, you define the actual logic for handling the MsgTypeSetNonFungibleTokenStatus-RejectToken message in handleMsgSetNonFungibleTokenStatus:
+Second, you define the actual logic for handling the MsgSetNonFungibleTokenStatus-RejectToken message in handleMsgSetNonFungibleTokenStatus:
 
 ![Image-2](pic/SetNonFungibleTokenStatus_08.png)
 
@@ -335,7 +324,7 @@ In this function, requirements need to be met before emitted by the network.
 * Action of Re-reject is not allowed.
 
 
-Thirth, you define the actual logic for handling the MsgTypeSetNonFungibleTokenStatus-FreezeToken message in handleMsgSetNonFungibleTokenStatus:
+Thirth, you define the actual logic for handling the MsgSetNonFungibleTokenStatus-FreezeToken message in handleMsgSetNonFungibleTokenStatus:
 
 ![Image-2](pic/SetNonFungibleTokenStatus_09.png)
 
@@ -348,7 +337,7 @@ In this function, requirements need to be met before emitted by the network.
 * Action of Re-freeze is not allowed.
 
 
-Next, you define the actual logic for handling the MsgTypeSetNonFungibleTokenStatus-UnfreezeToken message in handleMsgSetNonFungibleTokenStatus:
+Next, you define the actual logic for handling the MsgSetNonFungibleTokenStatus-UnfreezeToken message in handleMsgSetNonFungibleTokenStatus:
 
 ![Image-2](pic/SetNonFungibleTokenStatus_10.png)
 
@@ -360,7 +349,7 @@ In this function, requirements need to be met before emitted by the network.
 * Signer must be authorised.
 * Action of Re-unfreeze is not allowed.
 
-Next, you define the actual logic for handling the MsgTypeSetNonFungibleTokenStatus-ApproveTransferTokenOwnership message in handleMsgSetNonFungibleTokenStatus:
+Next, you define the actual logic for handling the MsgSetNonFungibleTokenStatus-ApproveTransferTokenOwnership message in handleMsgSetNonFungibleTokenStatus:
 
 ![Image-2](pic/SetNonFungibleTokenStatus_11.png)
 
@@ -372,7 +361,7 @@ In this function, requirements need to be met before emitted by the network.
 * Signer must be authorised.
 * Action of Re-approve transfer token-ownership is not allowed.
 
-Last, you define the actual logic for handling the MsgTypeSetNonFungibleTokenStatus-RejectTransferTokenOwnership message in handleMsgSetNonFungibleTokenStatus:
+Last, you define the actual logic for handling the MsgSetNonFungibleTokenStatus-RejectTransferTokenOwnership message in handleMsgSetNonFungibleTokenStatus:
 
 ![Image-2](pic/SetNonFungibleTokenStatus_12.png)
 
@@ -533,7 +522,7 @@ Example
 
 `Handler`
 
-The role of the handler is to define what action(s) needs to be taken when this MsgTypeTransferNonFungibleItem message is received.
+The role of the handler is to define what action(s) needs to be taken when this `MsgTransferNonFungibleItem` message is received.
 
 In the file (./x/token/nonfungible/handler.go) start with the following code:
 
@@ -541,7 +530,7 @@ In the file (./x/token/nonfungible/handler.go) start with the following code:
 
 
 NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
-Now, you need to define the actual logic for handling the MsgTypeTransferNonFungibleItem message in handleMsgTransferNonFungibleItem:
+Now, you need to define the actual logic for handling the `MsgTransferNonFungibleItem` message in `handleMsgTransferNonFungibleItem`:
 
 ![Image-2](pic/TransferNonFungibleItem_02.png)
 
@@ -615,7 +604,7 @@ Example
 
 `Handler`
 
-The role of the handler is to define what action(s) needs to be taken when this MsgTypeMintNonFungibleItem message is received.
+The role of the handler is to define what action(s) needs to be taken when this `MsgMintNonFungibleItem` message is received.
 
 In the file (./x/token/nonfungible/handler.go) start with the following code:
 
@@ -623,7 +612,7 @@ In the file (./x/token/nonfungible/handler.go) start with the following code:
 
 
 NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
-Now, you need to define the actual logic for handling the MsgTypeMintNonFungibleItem message in handleMsgMintNonFungibleItem:
+Now, you need to define the actual logic for handling the `MsgMintNonFungibleItem` message in `handleMsgMintNonFungibleItem`:
 
 ![Image-2](pic/MintNonFungibleItem_02.png)
 
@@ -693,7 +682,7 @@ Example
 
 `Handler`
 
-The role of the handler is to define what action(s) needs to be taken when this MsgTypeBurnNonFungibleItem message is received.
+The role of the handler is to define what action(s) needs to be taken when this `MsgBurnNonFungibleItem` message is received.
 
 In the file (./x/token/nonfungible/handler.go) start with the following code:
 
@@ -701,7 +690,7 @@ In the file (./x/token/nonfungible/handler.go) start with the following code:
 
 
 NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
-Now, you need to define the actual logic for handling the MsgTypeBurnNonFungibleItem message in handleMsgBurnNonFungibleItem:
+Now, you need to define the actual logic for handling the `MsgBurnNonFungibleItem` message in `handleMsgBurnNonFungibleItem`:
 
 ![Image-2](pic/BurnNonFungibleItem_02.png)
 
@@ -768,7 +757,7 @@ Example
 
 `Handler`
 
-The role of the handler is to define what action(s) needs to be taken when this MsgTypeTransferNonFungibleTokenOwnership message is received.
+The role of the handler is to define what action(s) needs to be taken when this `MsgTransferNonFungibleTokenOwnership` message is received.
 
 In the file (./x/token/nonfungible/handler.go) start with the following code:
 
@@ -776,7 +765,7 @@ In the file (./x/token/nonfungible/handler.go) start with the following code:
 
 
 NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
-Now, you need to define the actual logic for handling the MsgTypeTransferNonFungibleTokenOwnership message in handleMsgTransferNonFungibleTokenOwnership:
+Now, you need to define the actual logic for handling the `MsgTransferNonFungibleTokenOwnership` message in `handleMsgTransferNonFungibleTokenOwnership`:
 
 ![Image-2](pic/TransferNonFungibleTokenOwnership_02.png)
 
@@ -839,7 +828,7 @@ Example
 
 `Handler`
 
-The role of the handler is to define what action(s) needs to be taken when this MsgTypeAcceptNonFungibleTokenOwnership message is received.
+The role of the handler is to define what action(s) needs to be taken when this `MsgAcceptNonFungibleTokenOwnership` message is received.
 
 In the file (./x/token/nonfungible/handler.go) start with the following code:
 
@@ -847,7 +836,7 @@ In the file (./x/token/nonfungible/handler.go) start with the following code:
 
 
 NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
-Now, you need to define the actual logic for handling the MsgTypeAcceptNonFungibleTokenOwnership message in handleMsgTypeAcceptNonFungibleTokenOwnership:
+Now, you need to define the actual logic for handling the `MsgAcceptNonFungibleTokenOwnership` message in `handleMsgAcceptNonFungibleTokenOwnership`:
 
 ![Image-2](pic/AcceptNonFungibleTokenOwnership_01.png)
 
@@ -912,16 +901,16 @@ Item Details Information
 | ---- | ---- | -------- | --------------------------- |
 | from | string | true   | Item owner| | 
 | nonce | string | true   | nonce signature| | 
-| status | string | true   | There are two type of status, which include FREEZE_ITEM, UNFREEZE_ITEM. All this keywords must be matched while come to this message type | | 
+| status | string | true   | There are two type of status, which include `FREEZE_ITEM`, `UNFREEZE_ITEM`. All this keywords must be matched while come to this message type | | 
 | symbol | string | true   | Token-symbol| | 
 | itemID | string | true   | Item ID| | 
 
-`status details`
+`status`
 
-* While come to process of set FREEZE_ITEM, a valid token with a valid Item ID which already been approved 
+* While come to process of set `FREEZE_ITEM`, a valid token with a valid Item ID which already been approved 
 and yet to be frozen must be signed by authorised Signer with valid signature will be proceed. 
 Item ID which already been frozen is not allowed to do re-submit.
-* While come to process of set UNFREEZE_ITEM, a valid token with a valid Item ID which already been 
+* While come to process of set `UNFREEZE_ITEM`, a valid token with a valid Item ID which already been 
 approved and frozen must be signed by authorised Signer with valid signature will be proceed. 
 Item ID which already been unfreeze is not allowed to do re-submit.
 
@@ -962,7 +951,7 @@ Example
 
 `Handler`
 
-The role of the handler is to define what action(s) needs to be taken when this MsgTypeSetNonFungibleItemStatus message is received.
+The role of the handler is to define what action(s) needs to be taken when this `MsgSetNonFungibleItemStatus` message is received.
 
 In the file (./x/token/nonfungible/handler.go) start with the following code:
 
@@ -970,7 +959,7 @@ In the file (./x/token/nonfungible/handler.go) start with the following code:
 
 
 NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
-Now, you define the actual logic for handling the MsgTypeSetNonFungibleItemStatus-FreezeNonFungibleItem message in handleMsgSetNonFungibleItemStatus:
+Now, you define the actual logic for handling the `MsgSetNonFungibleItemStatus` - FreezeNonFungibleItem message in `handleMsgSetNonFungibleItemStatus`:
 
 ![Image-2](pic/SetNonFungibleItemStatus_03.png)
 
@@ -982,7 +971,7 @@ In this function, requirements need to be met before emitted by the network.
 * Signer must be authorised.
 * Action of Re-freeze-item is not allowed.
 
-Next, you define the actual logic for handling the MsgTypeSetNonFungibleItemStatus-UnfreezeNonFungibleItem message in handleMsgSetNonFungibleItemStatus:
+Next, you define the actual logic for handling the MsgSetNonFungibleItemStatus-UnfreezeNonFungibleItem message in handleMsgSetNonFungibleItemStatus:
 
 ![Image-2](pic/SetNonFungibleItemStatus_04.png)
 
@@ -1068,7 +1057,7 @@ Example
 
 `Handler`
 
-The role of the handler is to define what action(s) needs to be taken when this MsgTypeEndorsement message is received.
+The role of the handler is to define what action(s) needs to be taken when this `MsgEndorsement` message is received.
 
 In the file (./x/token/nonfungible/handler.go) start with the following code:
 
@@ -1076,7 +1065,7 @@ In the file (./x/token/nonfungible/handler.go) start with the following code:
 
 
 NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
-Now, you need to define the actual logic for handling the MsgTypeEndorsement message in handleMsgEndorsement:
+Now, you need to define the actual logic for handling the `MsgEndorsement` message in `handleMsgEndorsement`:
 
 ![Image-2](pic/Endorsement_02.png)
 
@@ -1141,7 +1130,7 @@ Example
 
 `Handler`
 
-The role of the handler is to define what action(s) needs to be taken when this MsgTypeUpdateItemMetadata message is received.
+The role of the handler is to define what action(s) needs to be taken when this `MsgUpdateItemMetadata` message is received.
 
 In the file (./x/token/nonfungible/handler.go) start with the following code:
 
@@ -1149,7 +1138,7 @@ In the file (./x/token/nonfungible/handler.go) start with the following code:
 
 
 NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
-Now, you need to define the actual logic for handling the MsgTypeUpdateItemMetadata message in handleMsgUpdateItemMetadata:
+Now, you need to define the actual logic for handling the `MsgUpdateItemMetadata` message in `handleMsgUpdateItemMetadata`:
 
 ![Image-2](pic/UpdateItemMetadata_02.png)
 
@@ -1158,8 +1147,8 @@ In this function, requirements need to be met before emitted by the network.
 
 * A valid Token.
 * Token not in freeze condition.
-* Token which Modifiable Flag is TRUE, Item owner allowed to modify item-metadata.
-* Token which Modifiable Flag is FALSE, only Token owner allowed to modify the item-metadata.
+* Token which Modifiable Flag is `TRUE`, Item owner allowed to modify item-metadata.
+* Token which Modifiable Flag is `FALSE`, only Token owner allowed to modify the item-metadata.
 * A valid Item ID which not in freeze condition.
 * Signer must be valid item owner.
 * Action of Re-update is allowed.
@@ -1214,7 +1203,7 @@ Example
 
 `Handler`
 
-The role of the handler is to define what action(s) needs to be taken when this MsgTypeUpdateNFTMetadata message is received.
+The role of the handler is to define what action(s) needs to be taken when this `MsgUpdateNFTMetadata` message is received.
 
 In the file (./x/token/nonfungible/handler.go) start with the following code:
 
@@ -1222,7 +1211,7 @@ In the file (./x/token/nonfungible/handler.go) start with the following code:
 
 
 NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
-Now, you need to define the actual logic for handling the MsgTypeUpdateNFTMetadata message in handleMsgUpdateNFTMetadata:
+Now, you need to define the actual logic for handling the `MsgUpdateNFTMetadata` message in `handleMsgUpdateNFTMetadata`:
 
 ![Image-2](pic/UpdateNFTMetadata_02.png)
 
