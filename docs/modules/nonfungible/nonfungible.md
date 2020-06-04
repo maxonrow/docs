@@ -150,14 +150,12 @@ Token Data Information
 
 | status | Details                 |
 | -------- | --------------------------- |
-| APPROVE  | A valid new token which yet to be approved must be signed by authorised Signer with valid signature will be proceed along with a valid Fee setting scheme that been provided. Token which already been approved is not allowed to do re-submit.| | 
-| REJECT  | A valid new token which yet to be approved must be signed by authorised Signer with valid signature will be proceed. Token which already been rejected is not allowed to do re-submit.| | 
-| FREEZE  | A valid token which already been approved must be signed by authorised Signer with valid signature will be proceed. Token which already been frozen is not allowed to do re-submit.| | 
-| UNFREEZE  | A valid token which already been approved and frozen must be signed by authorised Signer with valid signature will be proceed. Token which already been unfreeze is not allowed to do re-submit.| | 
-| APPROVE_TRANFER_TOKEN_OWNERSHIP  | A valid token which TransferTokenOwnership flag equals to `TRUE` must be signed by authorised Signer with valid signature will be proceed. Token which already been approved for transfer token-ownership is not allowed to do re-submit.| | 
-| REJECT_TRANFER_TOKEN_OWNERSHIP  | A valid token which TransferTokenOwnership flag equals to `TRUE` must be signed by authorised Signer with valid signature will be proceed. Token which already been rejected for transfer token-ownership is not allowed to do re-submit.| | 
-
-
+| APPROVE  | A valid new token which yet to be approved must be signed by authorised Signer with valid signature will be proceed along with a valid Fee setting scheme that been provided, this also along with the approval from authorised address of issuer and provider parties. Token which already been approved is not allowed to do re-submit.| | 
+| REJECT  | A valid new token which yet to be approved must be signed by authorised Signer with valid signature will be proceed, this also along with the approval from authorised address of issuer and provider parties. Token which already been rejected is not allowed to do re-submit.| | 
+| FREEZE  | A valid token which already been approved must be signed by authorised Signer with valid signature will be proceed, this also along with the approval from authorised address of issuer and provider parties. Token which already been frozen is not allowed to do re-submit.| | 
+| UNFREEZE  | A valid token which already been approved and frozen must be signed by authorised Signer with valid signature will be proceed, this also along with the approval from authorised address of issuer and provider parties. Token which already been unfreeze is not allowed to do re-submit.| | 
+| APPROVE_TRANFER_TOKEN_OWNERSHIP  | A valid token which TransferTokenOwnership flag equals to `TRUE` must be signed by authorised Signer with valid signature will be proceed, this also along with the approval from authorised address of issuer and provider parties. Token which already been approved for transfer token-ownership is not allowed to do re-submit.| | 
+| REJECT_TRANFER_TOKEN_OWNERSHIP  | A valid token which TransferTokenOwnership flag equals to `TRUE` must be signed by authorised Signer with valid signature will be proceed, this also along with the approval from authorised address of issuer and provider parties. Token which already been rejected for transfer token-ownership is not allowed to do re-submit.| | 
 
 `transferLimit`
 
@@ -907,13 +905,10 @@ Item Details Information
 
 `status`
 
-* While come to process of set `FREEZE_ITEM`, a valid token with a valid Item ID which already been approved 
-and yet to be frozen must be signed by authorised Signer with valid signature will be proceed. 
-Item ID which already been frozen is not allowed to do re-submit.
-* While come to process of set `UNFREEZE_ITEM`, a valid token with a valid Item ID which already been 
-approved and frozen must be signed by authorised Signer with valid signature will be proceed. 
-Item ID which already been unfreeze is not allowed to do re-submit.
-
+| status | Details                 |
+| -------- | --------------------------- |
+| FREEZE_ITEM  | A valid token with a valid Item ID which already been approved and yet to be frozen must be signed by authorised Signer with valid signature will be proceed, this also along with the approval from authorised address of issuer and provider parties. Item ID which already been frozen is not allowed to do re-submit.| | 
+| UNFREEZE_ITEM  | A valid token with a valid Item ID which already been approved and frozen must be signed by authorised Signer with valid signature will be proceed, this also along with the approval from authorised address of issuer and provider parties. Item ID which already been unfreeze is not allowed to do re-submit.| | 
 
 Example
 ```
