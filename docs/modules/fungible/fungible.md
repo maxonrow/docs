@@ -20,12 +20,25 @@ The message type contains the following parameters:
 | ---- | ---- | -------- | --------------------------- |
 | name | string | true   | Token name| |
 | symbol | string | true   | Token symbol, which must be unique| |
-| decimals | int | true   | Decimals value| |
+| decimals | int | true   | Value of decimal places for token| |
 | metadata | string | true   | Metadata of token| |
 | fixedSupply | bool | true   | Fixed Supply value| |
 | owner | string | true   | Token owner| |
 | maxSupply | int | true   | Maximum Supply value| |
 | fee | Fee | true   | Fee information| |
+
+`fixedSupply`
+
+* For the fixedSupply equals `TRUE`, token NOT allowed for minting. The limit of the maxSupply can be ZERO or greater than ZERO. 
+* For the fixedSupply equals `FALSE`, means this is dynamic supply. This allowed to mint with any amount of token but not allowed more than the maxSupply limit.
+* Upon the process of approval, User NOT allowed to update this setting again.
+
+`maxSupply`
+
+* User must input the number as numeric type during this process, which the value can be set as ZERO or greater than ZERO.
+* For dynamic supply, the amount of token be minted can not exceed the maxSupply limit. 
+* Upon the process of approval, User NOT allowed to update this setting again.
+
 
 
 Fee Information
@@ -241,6 +254,21 @@ Token Data Information
 | UNFREEZE  | A valid token which already been approved and frozen must be signed by authorised KYC Signer with valid signature will be proceed. Token which already been unfreeze is not allowed to do re-submit.| | 
 | APPROVE_TRANFER_TOKEN_OWNERSHIP  | A valid token which TransferTokenOwnership flag equals to true must be signed by authorised KYC Signer with valid signature will be proceed. Token which already been approved for transfer token-ownership is not allowed to do re-submit.| | 
 | REJECT_TRANFER_TOKEN_OWNERSHIP  | A valid token which TransferTokenOwnership flag equals to true must be signed by authorised KYC Signer with valid signature will be proceed. Token which already been rejected for transfer token-ownership is not allowed to do re-submit.| | 
+
+
+`burnable`
+
+* For the burnable equals `TRUE`, user allowed to proceed during burn-item process. 
+* For the burnable equals `FALSE`, user NOT allowed to proceed during burn-item process with an alert of `Invalid token action`. 
+* Upon the process of approval, User NOT allowed to update this setting again.
+
+`tokenFees`
+
+* This input value is compulsory while come to process of approve-token. 
+* The feeName value will be set for different action types which inside the tokenPayload of the current token : eg. transfer-item, mint-item, * * burn-item, transfer-token-Ownership, accept-token-Ownership. 
+* Example of this can refer to `https://alloys-rpc.maxonrow.com/debug/fee_info?`
+* Upon the process of approval, User NOT allowed to update this setting again.
+
 
 
 Token Fee Information

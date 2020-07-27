@@ -248,56 +248,60 @@ Token Data Information
 
 `transferLimit`
 
-For the Item transfer-limit setting, system is expecting a value of number string by user input and this only applicable while come to process of set APPROVE base on this particular token-symbol. Once exceeded this limits, will received an alert said that `TRANSFER limit existed` and is not allowed to proceed the relevant request. However, if transfer-limit is set to ZERO, that means not allowed to transfer for this particular item. Upon the process of approval, this setting is not allowed to do any update again. User need to be aware while come to this setting.
+* User must input the number as string type during the process of set APPROVE of a token-symbol. 
+* Once exceeded this setting limits, will received an alert of `TRANSFER limit existed`. 
+* If transfer-limit is set to ZERO, that means not allowed to do any transfer. 
+* Upon the process of approval, User NOT allowed to update this setting again.
 
 `mintLimit`
 
-For the Item mint-limit setting, system is expecting a value of number string by user input and this only applicable while come to process of set APPROVE base on this particular token-symbol. Once exceeded this limits, will received an alert said that `TRANSFER limit existed` and is not allowed to proceed the relevant request. However, if mint-limit is set to ZERO, that means is NO LIMITATION on the minting for this particular item. Upon the process of approval, this setting is not allowed to do any update again. User need to be aware while come to this setting.
+* User must input the number as string type during the process of set APPROVE of a token-symbol. 
+* Once exceeded this setting limits, will received an alert of `MINT limit existed`. 
+* If mint-limit is set to ZERO, that means is NO LIMITATION on the minting for this.
+* Upon the process of approval, User NOT allowed to update this setting again.
+
 
 `burnable`
 
-* For the burnable equals `TRUE`, system allowed to proceed during burn-item process.
-Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting 
-and also will be set as one of the token flag components during approve-token process. Upon the process of approval, this setting is not allowed to do any update again. User need to be aware while come to this setting.
-* For the burnable equals `FALSE`, system NOT allowed to proceed during burn-item process with an alert of `Invalid token action`. Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting and also will not be set as one of the token flag components during approve-token process.
-Upon the process of approval, this setting is not allowed to do any update again. User need to be aware while come to this setting.
+* For the burnable equals `TRUE`, user allowed to proceed during burn-item process. 
+* For the burnable equals `FALSE`, user NOT allowed to proceed during burn-item process with an alert of `Invalid token action`. 
+* Upon the process of approval, User NOT allowed to update this setting again.
 
 `transferable`
 
-* For the transferable equals `TRUE`, system allowed to proceed during transfer-item process.
-Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting 
-and also will be set as one of the token flag components during approve-token process. Upon the process of approval, this setting is not allowed to do any update again. User need to be aware while come to this setting.
-* For the transferable equals `FALSE`, system NOT allowed to proceed during transfer-item process with an alert of `Invalid token action`. Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting and also will not be set as one of the token flag components during approve-token process.
-Upon the process of approval, this setting is not allowed to do any update again. User need to be aware while come to this setting.
+* For the transferable equals `TRUE`, user allowed to proceed during transfer-item process.
+* For the transferable equals `FALSE`, user NOT allowed to proceed during transfer-item process with an alert of `Invalid token action`.
+* Upon the process of approval, User NOT allowed to update this setting again.
 
 
 `modifiable`
 
-* For the modifiable equals `TRUE`, system will also validate Item Owner must equals to relevant signer during Update Item Metadata process. If not, with an alert of 'Token item not modifiable'. Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting and also will be set as one of the token flag components during approve-token process. Upon the process of approval, this setting is not allowed to do any update again. User need to be aware while come to this setting.
-* For the modifiable equals `FALSE`, system will also validate signer must equals to token-Owner during Update Item Metadata process. If not, with an alert of `Token item not modifiable`. Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting and also will not be set as one of the token flag components during approve-token process. Upon the process of approval, this setting is not allowed to do any update again. User need to be aware while come to this setting.
-
+* For the modifiable equals `TRUE`, will validate Item Owner must equals to relevant signer during Update Item Metadata process. If not, with an alert of 'Token item not modifiable'.
+* For the modifiable equals `FALSE`, will validate signer must equals to token-Owner during Update Item Metadata process. If not, with an alert of `Token item not modifiable`. 
+* Upon the process of approval, User NOT allowed to update this setting again.
 
 
 `pub`
 
-* For the public equals `TRUE`, system will validate minter must equals to new item-owner during Mint Item process.
+* For the public equals `TRUE`, will validate minter must equals to new item-owner during Mint Item process.
 If not, with an alert of `Public token can only be minted to oneself`.
-Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting 
-and also will be set as one of the token flag components during approve-token or freeze-token or unfreeze-token.
-* For the public equals `FALSE`, system will validate minter must equals to token-owner during Mint Item process. 
+* For the public equals `FALSE`, will validate minter must equals to token-owner during Mint Item process. 
 If not, with an alert of 'Invalid token minter'.
-Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting 
-and also will not be set as one of the token flag components during approve-token or freeze-token or unfreeze-token.
+* Upon the process of approval, User NOT allowed to update this setting again.
+
 
 `tokenFees`
 
-This input value is compulsory while come to process of approve-token. The feeName value will be set for different action types which inside the tokenPayload of the current token : eg. transfer-item, mint-item, burn-item, transfer-token-Ownership, accept-token-Ownership. This fee setting name in testnet can refer to this
-`https://alloys-rpc.maxonrow.com/debug/fee_info?`
+* This input value is compulsory while come to process of approve-token. 
+* The feeName value will be set for different action types which inside the tokenPayload of the current token : eg. transfer-item, mint-item, * * burn-item, transfer-token-Ownership, accept-token-Ownership. 
+* Example of this can refer to `https://alloys-rpc.maxonrow.com/debug/fee_info?`
+* Upon the process of approval, User NOT allowed to update this setting again.
 
 
 `endorserList`
 
-For the endorser list, system is expecting value of wallet address if provided by user during the approve-token process. Meanwhile, system will do verification on the current signer whether come from the endorser list during Item Endorsement process. If not, with an alert of `Invalid endorser`. Howevere if endorser list is set to empty, then anyone with valid wallet address can proceed for the endorsement-item process. Prior to this, this endorser list will be set as one of the token flag components during approve-token process.
+* User can provide the list with the correct wallet address. Invalid signer that NOT within the endorser list will received an alert of `Invalid endorser`. 
+* If endorser list is set to empty, then anyone with valid wallet address can proceed for the endorsement-item process. 
 
 
 Token Fee Information
@@ -2174,7 +2178,7 @@ NewHandler is essentially a sub-router that directs messages coming into this mo
 Now, you need to define the actual logic for handling the `MsgEndorsement` message in `handleMsgEndorsement`:
 
 ```
-func (k *Keeper) MakeEndorsement(ctx sdkTypes.Context, symbol string, from sdkTypes.AccAddress, itemID string) sdkTypes.Result {
+func (k *Keeper) MakeEndorsement(ctx sdkTypes.Context, symbol string, from sdkTypes.AccAddress, itemID, metadata string) sdkTypes.Result {
 
 	// validation of exisisting owner account
 	ownerWalletAccount := k.accountKeeper.GetAccount(ctx, from)
@@ -2187,8 +2191,8 @@ func (k *Keeper) MakeEndorsement(ctx sdkTypes.Context, symbol string, from sdkTy
 		return types.ErrTokenInvalid().Result()
 	}
 
-	eventParam := []string{symbol, string(itemID), from.String()}
-	eventSignature := "EndorsedNonFungibleItem(string,string,string)"
+	eventParam := []string{symbol, string(itemID), from.String(), metadata}
+	eventSignature := "EndorsedNonFungibleItem(string,string,string,string)"
 
 	accountSequence := ownerWalletAccount.GetSequence()
 	resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
@@ -2199,6 +2203,7 @@ func (k *Keeper) MakeEndorsement(ctx sdkTypes.Context, symbol string, from sdkTy
 	}
 
 }
+
 
 ```
 
@@ -2214,15 +2219,15 @@ In this function, requirements need to be met before emitted by the network.
 This tutorial describes how to create maxonrow events for scanner on this after emitted by a network.
 
 ```
-eventParam := []string{symbol, string(itemID), from.String()}
-eventSignature := "EndorsedNonFungibleItem(string,string,string)"
+eventParam := []string{symbol, string(itemID), from.String(), metadata}
+eventSignature := "EndorsedNonFungibleItem(string,string,string,string)"
 
 accountSequence := ownerWalletAccount.GetSequence()
 resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
 
 return sdkTypes.Result{
-    Events: types.MakeMxwEvents(eventSignature, from.String(), eventParam),
-    Log:    resultLog.String(),
+	Events: types.MakeMxwEvents(eventSignature, from.String(), eventParam),
+	Log:    resultLog.String(),
 }
 ```
 
@@ -2239,6 +2244,7 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | symbol | string | Token symbol, which must be unique| | 
 | itemID | string | Item ID| | 
 | from | string | Endorser| | 
+| metadata | string | metadata| | 
 
 
 
@@ -2740,12 +2746,13 @@ func NewQuerier(cdc *codec.Codec, keeper *Keeper, feeKeeper *fee.Keeper) sdkType
 			return queryTokenData(cdc, ctx, path[1:], req, keeper)
 		case QueryItemData:
 			return queryItemData(cdc, ctx, path[1:], req, keeper)
+		case QueryEndorserList:
+			return queryEndorserList(cdc, ctx, path[1:], req, keeper)
 		default:
 			return nil, sdkTypes.ErrUnknownRequest("unknown token query endpoint")
 		}
 	}
 }
-
 ```
 
 This module will expose few queries:
@@ -2999,6 +3006,91 @@ The above command returns JSON structured like this:
             "value": "eyJJRCI6Ijc3MDA5OSIsIlByb3BlcnRpZXMiOiJwcm9wZXJ0aWVzIiwiTWV0YWRhdGEiOiJtZXRhZGF0YSIsIlRyYW5zZmVyTGltaXQiOiIwIiwiRnJvemVuIjpmYWxzZX0=",
             "proof": null,
             "height": "754",
+            "codespace": ""
+        }
+    }
+}
+```
+
+### EndorserList
+This query the available endorser list.
+
+After the router is defined, define the inputs and responses for this queryEndorserList:
+
+```
+func queryEndorserList(cdc *codec.Codec, ctx sdkTypes.Context, path []string, _ abci.RequestQuery, keeper *Keeper) ([]byte, sdkTypes.Error) {
+	if len(path) != 1 {
+		return nil, sdkTypes.ErrUnknownRequest(fmt.Sprintf("Invalid path %s", strings.Join(path, "/")))
+	}
+
+	symbol := path[0]
+
+	endorserList := keeper.GetEndorserList(ctx, symbol)
+	if endorserList != nil {
+		return cdc.MustMarshalJSON(endorserList), nil
+	}
+
+	return nil, nil
+}
+```
+
+Notes on the above code:
+
+This query request ONE path-parameter which refer to token-symbol.
+The output type should be something that is both JSON marshalable and stringable (implements the Golang fmt.Stringer interface). The returned bytes should be the JSON encoding of the output result.
+
+For the output of EndorserList, the normal EndorserList struct is already JSON marshalable, but we need to add a .String() method on it.
+
+
+`Parameters`
+
+| Name | Type | Default | Required | Description                 |
+| ---- | ---- | ------- | -------- | --------------------------- |
+| path | string | false | false    | Path to the data (eg. "/a/b/c") |
+| data | []byte | false | true     | Data |
+| height | int64 | 0 | false    | Height (0 means latest) |
+| prove | bool | false | false    | Include proofs of the transactions inclusion in the block, if true |
+
+
+`Example`
+
+In this example, we will explain how to query token list with abci_query. 
+
+Run the command with the JSON request body:
+```
+curl 'http://localhost:26657/'
+```
+
+```
+{
+    "method": "abci_query",
+    "params": [
+    	"/custom/nonFungible/get_endorser_list/TNFT-E2",
+    	"",
+    	"0",
+    	false
+    	],
+    "id": 0,
+    "jsonrpc": "2.0"
+}
+
+```
+
+The above command returns JSON structured like this: 
+```
+{
+    "jsonrpc": "2.0",
+    "id": 0,
+    "result": {
+        "response": {
+            "code": 0,
+            "log": "",
+            "info": "",
+            "index": "0",
+            "key": null,
+            "value": "eyJGbGFncyI6MTE1LCJOYW1lIjoiVGVzdE5vbkZ1bmdpYmxlVG9rZW4iLCJTeW1ib2wiOiJUTkZULUUyIiwiT3duZXIiOiJteHcxeDVjZjh5OTludGpjOGNqbTAwejYwM3lmcXd6eHcybWF3ZW1mNzMiLCJOZXdPd25lciI6IiIsIlByb3BlcnRpZXMiOiIiLCJNZXRhZGF0YSI6InRva2VuIG1ldGFkYXRhIiwiVG90YWxTdXBwbHkiOiIxIiwiVHJhbnNmZXJMaW1pdCI6IjIiLCJNaW50TGltaXQiOiIyIiwiRW5kb3JzZXJMaXN0IjpbIm14dzFmOHIwazVwN3M4NWt2N2phdHd2bXBhcnR5eTJqMHMyMHkwcDB5ayIsIm14dzFrOXN4ejBoM3llaDB1em14ZXQycm1zajd4ZTV6ZzU0ZXE3dmhsYSJdfQ==",
+            "proof": null,
+            "height": "746",
             "codespace": ""
         }
     }
