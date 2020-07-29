@@ -248,12 +248,12 @@ Token Data Information
 
 | status | Details                 |
 | -------- | --------------------------- |
-| APPROVE  | A valid new token which yet to be approved must be signed by authorised KYC Signer with valid signature will be proceed along with a valid Fee setting scheme that been provided. Token which already been approved is not allowed to do re-submit.| | 
-| REJECT  | A valid new token which yet to be approved must be signed by authorised KYC Signer with valid signature will be proceed. Token which already been rejected is not allowed to do re-submit.| | 
-| FREEZE  | A valid token which already been approved must be signed by authorised KYC Signer with valid signature will be proceed. Token which already been frozen is not allowed to do re-submit.| | 
-| UNFREEZE  | A valid token which already been approved and frozen must be signed by authorised KYC Signer with valid signature will be proceed. Token which already been unfreeze is not allowed to do re-submit.| | 
-| APPROVE_TRANFER_TOKEN_OWNERSHIP  | A valid token which TransferTokenOwnership flag equals to true must be signed by authorised KYC Signer with valid signature will be proceed. Token which already been approved for transfer token-ownership is not allowed to do re-submit.| | 
-| REJECT_TRANFER_TOKEN_OWNERSHIP  | A valid token which TransferTokenOwnership flag equals to true must be signed by authorised KYC Signer with valid signature will be proceed. Token which already been rejected for transfer token-ownership is not allowed to do re-submit.| | 
+| APPROVE  | Authorised KYC Signer sign the new token for approval purpose after approved by authorised issuer and provider parties, together with the valid Fee setting scheme. Token which already been approved is not allowed to do re-submit.| | 
+| REJECT  | Authorised KYC Signer sign the new token for reject purpose after approved by authorised issuer and provider parties, together with the valid Fee setting scheme. Token which already been rejected is not allowed to do re-submit.| | 
+| FREEZE  | Authorised KYC Signer sign the token which already been approved for freeze purpose after approved by authorised issuer and provider parties. Token which already been frozen is not allowed to do re-submit.| | 
+| UNFREEZE  | Authorised KYC Signer sign the token which already been approved and frozen for unfreeze purpose after approved by authorised issuer and provider parties. Token which already been unfreeze is not allowed to do re-submit.| |
+| APPROVE_TRANFER_TOKEN_OWNERSHIP  | Authorised KYC Signer sign the token which TransferTokenOwnership flag equals to `TRUE` for approval purpose, after approved by authorised issuer and provider parties. Token which already been approved for transfer token-ownership is not allowed to do re-submit.| | 
+| REJECT_TRANFER_TOKEN_OWNERSHIP  | Authorised KYC Signer sign the token which TransferTokenOwnership flag equals to `TRUE` for reject purpose, after approved by authorised issuer and provider parties. Token which already been rejected for transfer token-ownership is not allowed to do re-submit.| |  
 
 
 `burnable`
