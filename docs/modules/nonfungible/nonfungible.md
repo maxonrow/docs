@@ -239,12 +239,12 @@ Token Data Information
 
 | status | Details                 |
 | -------- | --------------------------- |
-| APPROVE  | Authorised KYC Signer sign the new token for approval purpose after approved by authorised issuer and provider parties, together with the valid Fee setting scheme. Token which already been approved is not allowed to do re-submit.| | 
-| REJECT  | Authorised KYC Signer sign the new token for reject purpose after approved by authorised issuer and provider parties, together with the valid Fee setting scheme. Token which already been rejected is not allowed to do re-submit.| | 
-| FREEZE  | Authorised KYC Signer sign the token which already been approved for freeze purpose after approved by authorised issuer and provider parties. Token which already been frozen is not allowed to do re-submit.| | 
-| UNFREEZE  | Authorised KYC Signer sign the token which already been approved and frozen for unfreeze purpose after approved by authorised issuer and provider parties. Token which already been unfreeze is not allowed to do re-submit.| |
-| APPROVE_TRANFER_TOKEN_OWNERSHIP  | Authorised KYC Signer sign the token which TransferTokenOwnership flag equals to `TRUE` for approval purpose, after approved by authorised issuer and provider parties. Token which already been approved for transfer token-ownership is not allowed to do re-submit.| | 
-| REJECT_TRANFER_TOKEN_OWNERSHIP  | Authorised KYC Signer sign the token which TransferTokenOwnership flag equals to `TRUE` for reject purpose, after approved by authorised issuer and provider parties. Token which already been rejected for transfer token-ownership is not allowed to do re-submit.| |  
+| APPROVE  | Upon approval on transaction, token need to be approved by issuer, provider, middleware. Once approved, token is not allowed to do re-submit.| | 
+| REJECT  | Upon reject on transaction, token need to be approved by issuer, provider, middleware. Once rejected, token is not allowed to do re-submit.| | 
+| FREEZE  | Upon freeze on transaction, valid token need to be approved by issuer, provider, middleware. Once frozen, token is not allowed to do re-submit.| | 
+| UNFREEZE  | Upon unfreeze on transaction, valid token need to be approved by issuer, provider, middleware. Once unfreeze, token is not allowed to do re-submit.| |
+| APPROVE_TRANFER_TOKEN_OWNERSHIP  | Upon approval transfer-ownership on transaction, valid token need to be approved by issuer, provider, middleware. Once approved for transfer token-ownership, token is not allowed to do re-submit.| | 
+| REJECT_TRANFER_TOKEN_OWNERSHIP  | Upon reject transfer-ownership on transaction, valid token need to be approved by issuer, provider, middleware. Once rejected for transfer token-ownership, token is not allowed to do re-submit.| |  
 
 `transferLimit`
 
