@@ -1,3 +1,0 @@
-# Faucet
-
-To be defined.
