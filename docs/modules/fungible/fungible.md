@@ -209,7 +209,7 @@ This MakeMxwEvents create maxonrow events, by accepting :
 
 
 ### MsgSetFungibleTokenStatus
-This is the message type used to set the status of a fungible token.
+This is the message type used to update the status of a fungible token, eg. Approve, Reject, Freeze or unfreeze, Approve-transfer-ownership, Reject-transfer-ownership. This type of transaction require issuer, provider and middleware signature.
 
 
 `Parameters`
@@ -248,12 +248,12 @@ Token Data Information
 
 | status | Details                 |
 | -------- | --------------------------- |
-| APPROVE  | Upon approval on transaction, token need to be approved by issuer, provider, middleware. Once approved, token is not allowed to do re-submit.| | 
-| REJECT  | Upon reject on transaction, token need to be approved by issuer, provider, middleware. Once rejected, token is not allowed to do re-submit.| | 
-| FREEZE  | Upon freeze on transaction, valid token need to be approved by issuer, provider, middleware. Once frozen, token is not allowed to do re-submit.| | 
-| UNFREEZE  | Upon unfreeze on transaction, valid token need to be approved by issuer, provider, middleware. Once unfreeze, token is not allowed to do re-submit.| |
-| APPROVE_TRANFER_TOKEN_OWNERSHIP  | Upon approval transfer-ownership on transaction, valid token need to be approved by issuer, provider, middleware. Once approved for transfer token-ownership, token is not allowed to do re-submit.| | 
-| REJECT_TRANFER_TOKEN_OWNERSHIP  | Upon reject transfer-ownership on transaction, valid token need to be approved by issuer, provider, middleware. Once rejected for transfer token-ownership, token is not allowed to do re-submit.| |    
+| APPROVE  | If status set to APPROVE, this is to approve the token. Once approved, only then token able to perform token action for example: mint, burn, transfer and etc. Additionally, the properties, Fee Setting information, transfer Limit, mint Limit, burnable, transferable, modifiable, pub is mutable.| |
+| REJECT  | If status set to REJECT, this is to reject the token. Once rejected, same token NOT allowed to perform any token action like: mint, burn, transfer and etc.| | 
+| FREEZE  | If status set to FREEZE, this is to freeze the token. Once frozen, same token NOT allowed to perform any token action like: mint, burn and so on. | | 
+| UNFREEZE  | If status set to UNFREEZE, this is to unfreeze the token. Once unfreeze, same token allowed to perform token action like mint, burn, transfer and so on.| |
+| APPROVE_TRANFER_TOKEN_OWNERSHIP  | If status set to APPROVE_TRANFER_TOKEN_OWNERSHIP, this is to approve the transfer-ownership of the token. Once approved for transfer token-ownership, same token allowed to perform action of transfer-ownership to another party.| | 
+| REJECT_TRANFER_TOKEN_OWNERSHIP  | If status set to REJECT_TRANFER_TOKEN_OWNERSHIP, this is to reject the transfer-ownership of the token. Once rejected for transfer token-ownership, same token NOT allowed to perform action of transfer-ownership.| |   
 
 
 `burnable`
