@@ -248,24 +248,24 @@ Token Data Information
 
 | status | Details                 |
 | -------- | --------------------------- |
-| APPROVE  | If status set to `APPROVE`, this is to approve the token. Once approved, only then the token able to perform token action for example: mint, burn, transfer and etc. Additionally, the burnable flag is mutable.| |
-| REJECT  | If status set to `REJECT`, this is to reject the token. Once rejected, same token NOT allowed to perform any token action like: mint, burn, transfer and etc.| | 
-| FREEZE  | If status set to `FREEZE`, this is to freeze the token. Once frozen, same token NOT allowed to perform any token action like: mint, burn and so on. | | 
+| APPROVE  | If status set to `APPROVE`, this is to approve the token. Once approved, only then the token able to perform token action for example: mint, burn, transfer and etc. Additionally, the properties, burnable is mutable.| |
+| REJECT  | If status set to `REJECT`, this is to reject the token. Once rejected, the token NOT allowed to perform any token action like: mint, burn, transfer and etc.| | 
+| FREEZE  | If status set to `FREEZE`, this is to freeze the token. Once frozen, the token NOT allowed to perform any token action like: mint, burn and so on. | | 
 | UNFREEZE  | If status set to `UNFREEZE`, this is to unfreeze the token. Once unfreeze, only then the token allowed to perform token action like mint, burn, transfer and so on.| |
-| APPROVE_TRANFER_TOKEN_OWNERSHIP  | If status set to `APPROVE_TRANFER_TOKEN_OWNERSHIP`, this is to approve the transfer-ownership of the token. Once approved for transfer token-ownership, only then the token allowed to perform action of transfer-ownership to another party.| | 
-| REJECT_TRANFER_TOKEN_OWNERSHIP  | If status set to `REJECT_TRANFER_TOKEN_OWNERSHIP`, this is to reject the transfer-ownership of the token. Once rejected for transfer token-ownership, same token NOT allowed to perform action of transfer-ownership.| |     
+| APPROVE_TRANFER_TOKEN_OWNERSHIP  | If status set to `APPROVE_TRANFER_TOKEN_OWNERSHIP`, this is to approve the transfer-ownership of the token. Once approved, only then the new owner can accept the ownership of token.| | 
+| REJECT_TRANFER_TOKEN_OWNERSHIP  | If status set to `REJECT_TRANFER_TOKEN_OWNERSHIP`, this is to reject the transfer-ownership of the token. Once rejected, the token NOT allowed to perform any action.| |   
 
 
 `burnable`
 
-* For the burnable equals `TRUE`, user allowed to proceed during burn-item process. 
-* For the burnable equals `FALSE`, user NOT allowed to proceed during burn-item process with an alert of `Invalid token action`. 
+* For the burnable equals `TRUE`, user allowed to proceed during burn process. 
+* For the burnable equals `FALSE`, user NOT allowed to proceed during burn process with an alert of `Invalid token action`. 
 * Upon the process of approval, User NOT allowed to update this setting again.
 
 `tokenFees`
 
 * This input value is compulsory while come to process of approve-token. 
-* The feeName value will be set for different action types which inside the tokenPayload of the current token : eg. transfer-item, mint-item, * * burn-item, transfer-token-Ownership, accept-token-Ownership. 
+* The feeName value will be set for different action types which inside the tokenPayload of the current token : eg. transfer, mint, burn, transfer-token-Ownership, accept-token-Ownership. 
 * Example of this can refer to `https://alloys-rpc.maxonrow.com/debug/fee_info?`
 * Upon the process of approval, User NOT allowed to update this setting again.
 
