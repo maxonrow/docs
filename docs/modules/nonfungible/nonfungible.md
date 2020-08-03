@@ -243,7 +243,7 @@ Token Data Information
 | FREEZE  | If status set to `FREEZE`, this is to freeze the token. Once frozen, the token NOT allowed to perform any token action like: mint, burn and so on. | | 
 | UNFREEZE  | If status set to `UNFREEZE`, this is to unfreeze the token. Once unfreeze, only then the token allowed to perform token action like mint, burn, transfer and so on.| |
 | APPROVE_TRANFER_TOKEN_OWNERSHIP  | If status set to `APPROVE_TRANFER_TOKEN_OWNERSHIP`, this is to approve the transfer-ownership of the token. Once approved, only then the new owner can accept the ownership of token.| | 
-| REJECT_TRANFER_TOKEN_OWNERSHIP  | If status set to `REJECT_TRANFER_TOKEN_OWNERSHIP`, this is to reject the transfer-ownership of the token. Once rejected, the token NOT allowed to perform any action.| |   
+| REJECT_TRANFER_TOKEN_OWNERSHIP  | If status set to `REJECT_TRANFER_TOKEN_OWNERSHIP`, this is to reject the transfer-ownership of the token. Once rejected, can not do transfer-token-ownership to new party.| |   
 
 `transferLimit`
 
