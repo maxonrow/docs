@@ -282,9 +282,9 @@ Token Data Information
 
 `pub`
 
-* For the public equals `TRUE`, will validate minter must equals to new item-owner during Mint Item process.
+* For the public equals `TRUE`, will validate minter must equals to `token-owner` during Mint Item process.
 If not, with an alert of `Public token can only be minted to oneself`.
-* For the public equals `FALSE`, will validate minter must equals to token-owner during Mint Item process. 
+* For the public equals `FALSE`, will validate minter must equals to `new item-owner` during Mint Item process. 
 If not, with an alert of `Invalid token minter`.
 * Upon the process of approval, User NOT allowed to update this setting again.
 
