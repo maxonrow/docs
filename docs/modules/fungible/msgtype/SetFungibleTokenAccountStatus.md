@@ -1,6 +1,6 @@
 This is the message type used to set the account status of a fungible token.
 
-## Parameters
+`Parameters`
 
 The message type contains the following parameters:
 
@@ -11,7 +11,8 @@ The message type contains the following parameters:
 | signatures | []Signature | true   | Array of Signature| |
 
 
-#### Account Payload Information
+Account Payload Information
+
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
 | tokenAccount | TokenAccount | true   | Token account| |
@@ -19,18 +20,25 @@ The message type contains the following parameters:
 | signature | []byte | true   | Signature| |
 
 
-#### Token Account Information
+Token Account Information
+
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
 | from | string | true   | Token owner| |
-| nonce | string | true   | Nonce| |
-| status | string | true   | Status, eg. freeze or unfreeze | |
-| symbol | string | true   | Token symbol| |
+| nonce | string | true   | nonce signature| |
+| status | string | true   | There are different type of status, which include FREEZE_ACCOUNT, UNFREEZE_ACCOUNT. All this keywords must be matched while come to this message type | |
+| symbol | string | true   | Token-symbol| |
 | to | string | true   | Token account address| |
 
+`status`
+
+| status | Details                 |
+| -------- | --------------------------- |
+| FREEZE_ACCOUNT  | A valid token which already been approved must be signed by authorised KYC Signer with valid signature will be proceed. Token which already been frozen is not allowed to do re-submit.| | 
+| UNFREEZE_ACCOUNT  | A valid token which already been approved and frozen must be signed by authorised KYC Signer with valid signature will be proceed. Token which already been unfreeze is not allowed to do re-submit.| | 
 
 
-#### Example
+Example
 ```
 {
     "type": "token/setFungibleTokenAccountStatus",
@@ -63,53 +71,171 @@ The message type contains the following parameters:
 }
 ```
 
-## Handler
+`Handler`
 
-The role of the handler is to define what action(s) needs to be taken when this `MsgTypeSetFungibleTokenAccountStatus` message is received.
+The role of the handler is to define what action(s) needs to be taken when this `MsgSetFungibleTokenAccountStatus` message is received.
 
 In the file (./x/token/fungible/handler.go) start with the following code:
 
-![Image-1](../pic/AcceptFungibleTokenOwnership_01.png)
+```
+func NewHandler(keeper *Keeper) sdkTypes.Handler {
+	return func(ctx sdkTypes.Context, msg sdkTypes.Msg) sdkTypes.Result {
+		switch msg := msg.(type) {
+		case MsgCreateFungibleToken:
+			return handleMsgCreateFungibleToken(ctx, keeper, msg)
+		case MsgSetFungibleTokenStatus:
+			return handleMsgSetFungibleTokenStatus(ctx, keeper, msg)
+		case MsgMintFungibleToken:
+			return handleMsgMintFungibleToken(ctx, keeper, msg)
+		case MsgTransferFungibleToken:
+			return handleMsgTransferFungibleToken(ctx, keeper, msg)
+		case MsgBurnFungibleToken:
+			return handleMsgBurnFungibleToken(ctx, keeper, msg)
+		'case MsgSetFungibleTokenAccountStatus:
+			return handleMsgSetFungibleTokenAccountStatus(ctx, keeper, msg)'
+		case MsgTransferFungibleTokenOwnership:
+			return handleMsgTransferTokenOwnership(ctx, keeper, msg)
+		case MsgAcceptFungibleTokenOwnership:
+			return handleMsgAcceptTokenOwnership(ctx, keeper, msg)
+		default:
+			errMsg := fmt.Sprintf("Unrecognized fungible Msg type: %v", msg.Type())
+			return sdkTypes.ErrUnknownRequest(errMsg).Result()
+		}
+	}
+}
+```
 
 
 NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
 
 First, you define the actual logic for handling the MsgTypeSetFungibleTokenAccountStatus-FreezeTokenAccount message in `handleMsgSetFungibleTokenAccountStatus`:
 
-![Image-2](../pic/SetFungibleTokenAccountStatus_02.png)
+```
+func (k *Keeper) FreezeFungibleTokenAccount(ctx sdkTypes.Context, symbol string, owner sdkTypes.AccAddress, tokenAccount sdkTypes.AccAddress, metadata string) sdkTypes.Result {
+	var token = new(Token)
+	if exists := k.getTokenData(ctx, symbol, token); !exists {
+		return sdkTypes.ErrUnknownRequest("No such fungible token.").Result()
+	}
 
+	if !k.IsAuthorised(ctx, owner) {
+		return sdkTypes.ErrUnauthorized("Not authorised to freeze token account.").Result()
+	}
+
+	ownerWalletAccount := k.accountKeeper.GetAccount(ctx, owner)
+	if ownerWalletAccount == nil {
+		return sdkTypes.ErrInvalidSequence("Invalid signer.").Result()
+	}
+
+	fungibleAccount := k.getFungibleAccount(ctx, symbol, tokenAccount)
+	if fungibleAccount == nil {
+		return sdkTypes.ErrUnknownRequest("No such token account to freeze.").Result()
+	}
+
+	if fungibleAccount.Frozen {
+		return sdkTypes.ErrUnknownRequest("Fungible token account already frozen.").Result()
+	}
+
+	fungibleAccount.Frozen = true
+	fungibleAccount.Metadata = metadata
+
+	k.storeFungibleAccount(ctx, symbol, fungibleAccount)
+
+	eventParam := []string{symbol, tokenAccount.String()}
+	eventSignature := "FrozenFungibleTokenAccount(string,string)"
+
+	accountSequence := ownerWalletAccount.GetSequence()
+	resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
+
+	return sdkTypes.Result{
+		Events: types.MakeMxwEvents(eventSignature, owner.String(), eventParam),
+		Log:    resultLog.String(),
+	}
+}
+```
 
 In this function, requirements need to be met before emitted by the network.
 
 * A valid Token.
 * A valid Token account which must not be freeze.
-* Signer must be authorised.
+* Signer must be KYC authorised.
 * Action of Re-freeze-item is not allowed.
 
 
 Last, you define the actual logic for handling the MsgTypeSetFungibleTokenAccountStatus-UnfreezeTokenAccount message in `handleMsgSetFungibleTokenAccountStatus`:
 
-![Image-2](../pic/SetFungibleTokenAccountStatus_03.png)
+```
+func (k *Keeper) UnfreezeFungibleTokenAccount(ctx sdkTypes.Context, symbol string, owner sdkTypes.AccAddress, tokenAccount sdkTypes.AccAddress, metadata string) sdkTypes.Result {
+	if !k.IsAuthorised(ctx, owner) {
+		return sdkTypes.ErrUnauthorized("Not authorised to unfreeze token account.").Result()
+	}
 
+	ownerWalletAccount := k.accountKeeper.GetAccount(ctx, owner)
+	if ownerWalletAccount == nil {
+		return sdkTypes.ErrInvalidSequence("Invalid signer.").Result()
+	}
+
+	var token = new(Token)
+	if exists := k.getTokenData(ctx, symbol, token); !exists {
+		return sdkTypes.ErrUnknownRequest("No such fungible token.").Result()
+	}
+
+	fungibleAccount := k.getFungibleAccount(ctx, symbol, tokenAccount)
+	if fungibleAccount == nil {
+		return sdkTypes.ErrUnknownRequest("No such fungible token account to unfreeze.").Result()
+	}
+
+	if !fungibleAccount.Frozen {
+		return sdkTypes.ErrUnknownRequest("Fungible token account not frozen.").Result()
+	}
+
+	fungibleAccount.Frozen = false
+	fungibleAccount.Metadata = metadata
+
+	k.storeFungibleAccount(ctx, symbol, fungibleAccount)
+
+	eventParam := []string{symbol, tokenAccount.String()}
+	eventSignature := "UnfreezeFungibleTokenAccount(string,string)"
+
+	accountSequence := ownerWalletAccount.GetSequence()
+	resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
+
+	return sdkTypes.Result{
+		Events: types.MakeMxwEvents(eventSignature, owner.String(), eventParam),
+		Log:    resultLog.String(),
+	}
+
+}
+```
 
 In this function, requirements need to be met before emitted by the network.
 
 * A valid Token.
 * A valid Token account which must be freeze.
-* Signer must be authorised.
+* Signer must be KYC authorised.
 * Action of Re-unfreeze-item is not allowed.
 
 
 
-## Events
-#### 1.
-This tutorial describes how to create maxonrow events for scanner base on freeze token account
+`Events`
+
+1.This tutorial describes how to create maxonrow events for scanner base on freeze token account
 after emitted by a network.
 
-![Image-1](../pic/SetFungibleTokenAccountStatus_04.png)
+```
+eventParam := []string{symbol, tokenAccount.String()}
+eventSignature := "FrozenFungibleTokenAccount(string,string)"
 
+accountSequence := ownerWalletAccount.GetSequence()
+resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
 
-#### Usage
+return sdkTypes.Result{
+    Events: types.MakeMxwEvents(eventSignature, owner.String(), eventParam),
+    Log:    resultLog.String(),
+}
+```
+
+Usage
+
 This MakeMxwEvents create maxonrow events, by accepting :
 
 * Custom Event Signature : using FrozenFungibleTokenAccount(string,string)
@@ -123,13 +249,23 @@ This MakeMxwEvents create maxonrow events, by accepting :
 
 
 
-#### 2.
-This tutorial describes how to create maxonrow events for scanner base on unfreeze token account after emitted by a network.
+2.This tutorial describes how to create maxonrow events for scanner base on unfreeze token account after emitted by a network.
 
-![Image-4](../pic/SetFungibleTokenAccountStatus_05.png)
+```
+eventParam := []string{symbol, tokenAccount.String()}
+eventSignature := "UnfreezeFungibleTokenAccount(string,string)"
 
+accountSequence := ownerWalletAccount.GetSequence()
+resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
 
-#### Usage
+return sdkTypes.Result{
+    Events: types.MakeMxwEvents(eventSignature, owner.String(), eventParam),
+    Log:    resultLog.String(),
+}
+```
+
+Usage
+
 This MakeMxwEvents create maxonrow events, by accepting :
 
 * Custom Event Signature : using UnfreezeFungibleTokenAccount(string,string)
@@ -140,3 +276,4 @@ This MakeMxwEvents create maxonrow events, by accepting :
 | ---- | ---- | --------------------------- |
 | symbol | string | Token symbol, which must be unique| |
 | owner | string | Token owner| |
+

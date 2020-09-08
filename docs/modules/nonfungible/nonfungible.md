@@ -2114,6 +2114,7 @@ The message type contains the following parameters:
 | symbol | string | true   | Token symbol, which must be unique| | 
 | from | string | true   | Endorser| | 
 | itemID | string | true   | Item ID, which must be unique| | 
+| metadata | string | true   | metadata of endorsement| | 
 
 
 Example
@@ -2123,7 +2124,8 @@ Example
     "value": {
         "symbol": "TNFT",
         "from": "mxw1k9sxz0h3yeh0uzmxet2rmsj7xe5zg54eq7vhla",
-        "itemID": "ITEM-123"
+        "itemID": "ITEM-123",
+        "metadata": "metadata for endorsement"
     }
 }
 
@@ -2582,7 +2584,7 @@ The message type contains the following parameters:
 | ---- | ---- | -------- | --------------------------- |
 | symbol | string | true   | Token symbol, which must be unique| | 
 | from | string | true   | Token owner| | 
-| endorsers | string | true   | Endorser list| | 
+| endorsers | array of string | true   | Endorser list| | 
 
 Example
 ```
