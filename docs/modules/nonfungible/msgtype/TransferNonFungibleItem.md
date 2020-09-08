@@ -1,19 +1,19 @@
 This is the message type used to transfer the item of a non-fungible token.
 
 
-## Parameters
+`Parameters`
 
 The message type contains the following parameters:
 
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
-| symbol | string | true   | Token symbol, which must be unique| |
-| from | string | true   | Item owner| |
-| to | string | true   | New Item owner| |
-| itemID | string | true   | Properties of token| |
+| symbol | string | true   | Token symbol, which must be unique| | 
+| from | string | true   | Item owner| | 
+| to | string | true   | New Item owner| | 
+| itemID | string | true   | Properties of token| | 
 
 
-#### Example
+Example
 ```
 {
     "type": "nonFungible/transferNonFungibleItem",
@@ -26,22 +26,127 @@ The message type contains the following parameters:
 }
 ```
 
-## Handler
+`Handler`
 
-The role of the handler is to define what action(s) needs to be taken when this `MsgTypeTransferNonFungibleItem` message is received.
+The role of the handler is to define what action(s) needs to be taken when this `MsgTransferNonFungibleItem` message is received.
 
 In the file (./x/token/nonfungible/handler.go) start with the following code:
 
-![Image-1](../pic/MintNonFungibleItem_01.png)
+```
+func NewHandler(keeper *Keeper) sdkTypes.Handler {
+	return func(ctx sdkTypes.Context, msg sdkTypes.Msg) sdkTypes.Result {
+		switch msg := msg.(type) {
+		case MsgCreateNonFungibleToken:
+			return handleMsgCreateNonFungibleToken(ctx, keeper, msg)
+		case MsgSetNonFungibleTokenStatus:
+			return handleMsgSetNonFungibleTokenStatus(ctx, keeper, msg)
+		case MsgMintNonFungibleItem:
+			return handleMsgMintNonFungibleItem(ctx, keeper, msg)
+		'case MsgTransferNonFungibleItem:
+			return handleMsgTransferNonFungibleItem(ctx, keeper, msg)'
+		case MsgBurnNonFungibleItem:
+			return handleMsgBurnNonFungibleItem(ctx, keeper, msg)
+		case MsgSetNonFungibleItemStatus:
+			return handleMsgSetNonFungibleItemStatus(ctx, keeper, msg)
+		case MsgTransferNonFungibleTokenOwnership:
+			return handleMsgTransferNonFungibleTokenOwnership(ctx, keeper, msg)
+		case MsgAcceptNonFungibleTokenOwnership:
+			return handleMsgAcceptTokenOwnership(ctx, keeper, msg)
+		case MsgEndorsement:
+			return handleMsgEndorsement(ctx, keeper, msg)
+		case MsgUpdateItemMetadata:
+			return handleMsgUpdateItemMetadata(ctx, keeper, msg)
+		case MsgUpdateNFTMetadata:
+			return handleMsgUpdateNFTMetadata(ctx, keeper, msg)
+    case MsgUpdateEndorserList:
+			return handleMsgUpdateEndorserList(ctx, keeper, msg)
+		default:
+			errMsg := fmt.Sprintf("Unrecognized fungible token Msg type: %v", msg.Type())
+			return sdkTypes.ErrUnknownRequest(errMsg).Result()
+		}
+	}
+
+}
+```
+
 
 
 NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
-Now, you need to define the actual logic for handling the MsgTypeTransferNonFungibleItem message in `handleMsgTransferNonFungibleItem`:
+Now, you need to define the actual logic for handling the `MsgTransferNonFungibleItem` message in `handleMsgTransferNonFungibleItem`:
 
-![Image-2](../pic/TransferNonFungibleItem_02.png)
+```
+func (k *Keeper) TransferNonFungibleItem(ctx sdkTypes.Context, symbol string, from, to sdkTypes.AccAddress, itemID string) sdkTypes.Result {
+	if !k.IsItemOwner(ctx, symbol, itemID, from) {
+		return types.ErrInvalidItemOwner().Result()
+	}
 
+	var token = new(Token)
+	if exists := k.GetTokenDataInfo(ctx, symbol, token); !exists {
+		return types.ErrTokenInvalid().Result()
+	}
 
-In this function, requirements need to be met before emitted by the network.
+	if !token.Flags.HasFlag(TransferableFlag) {
+		return types.ErrInvalidTokenAction().Result()
+	}
+
+	fromAccount := k.accountKeeper.GetAccount(ctx, from)
+	if fromAccount == nil {
+		return types.ErrInvalidTokenAccount().Result()
+	}
+
+	if token.Flags.HasFlag(FrozenFlag) {
+		return types.ErrTokenFrozen().Result()
+	}
+
+	itemKey := getNonFungibleItemKey(symbol, []byte(itemID))
+	ownerKey := getNonFungibleItemOwnerKey(symbol, []byte(itemID))
+
+	store := ctx.KVStore(k.key)
+
+	ownerValue := store.Get(ownerKey)
+	if ownerValue == nil {
+		return types.ErrInvalidTokenOwner().Result()
+	}
+
+	itemValue := store.Get(itemKey)
+	if itemValue == nil {
+		return types.ErrInvalidTokenOwner().Result()
+	}
+
+	var item = new(Item)
+	k.cdc.MustUnmarshalBinaryLengthPrefixed(itemValue, item)
+	if k.IsItemTransferLimitExceeded(ctx, symbol, itemID) {
+
+		// TO-DO: own error message.
+		return sdkTypes.ErrInternal("Item has existed transfer limit.").Result()
+	}
+
+	// delete old owner
+	store.Delete(ownerKey)
+
+	// set to new owner
+	store.Set(ownerKey, to.Bytes())
+
+	// increase the transfer limit and set
+	item.TransferLimit = item.TransferLimit.Add(sdkTypes.NewUint(1))
+	itemData := k.cdc.MustMarshalBinaryLengthPrefixed(item)
+	store.Set(itemKey, itemData)
+
+	eventParam := []string{symbol, string(itemID), from.String(), to.String()}
+	eventSignature := "TransferredNonFungibleItem(string,string,string,string)"
+
+	accountSequence := fromAccount.GetSequence()
+	resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
+
+	return sdkTypes.Result{
+		Events: types.MakeMxwEvents(eventSignature, from.String(), eventParam),
+		Log:    resultLog.String(),
+	}
+
+}
+```
+
+In this function, requirements need to be met before emitted by the network.  
 
 * A valid Token.
 * Token transferable flag equals to true and not in freeze condition.
@@ -50,22 +155,34 @@ In this function, requirements need to be met before emitted by the network.
 * Action of Re-transfer is not allowed.
 
 
-## Events
+`Events`
+
 This tutorial describes how to create maxonrow events for scanner on this after emitted by a network.
 
-![Image-1](../pic/TransferNonFungibleItem_03.png)
+```
+eventParam := []string{symbol, string(itemID), from.String(), to.String()}
+eventSignature := "TransferredNonFungibleItem(string,string,string,string)"
 
+accountSequence := fromAccount.GetSequence()
+resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
 
-#### Usage
+return sdkTypes.Result{
+    Events: types.MakeMxwEvents(eventSignature, from.String(), eventParam),
+    Log:    resultLog.String(),
+}
+```
+
+Usage
+
 This MakeMxwEvents create maxonrow events, by accepting :
 
 * eventSignature : Custom Event Signature that using TransferredNonFungibleItem(string,string,string,string)
 * from : Item owner
-* eventParam : Event Parameters as below
+* eventParam : Event Parameters as below 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
-| symbol | string | Token symbol, which must be unique| |
-| itemID | string | Item ID| |
-| from | string | Item owner| |
-| to | string | New item owner| |
+| symbol | string | Token symbol, which must be unique| | 
+| itemID | string | Item ID| | 
+| from | string | Item owner| | 
+| to | string | New item owner| | 

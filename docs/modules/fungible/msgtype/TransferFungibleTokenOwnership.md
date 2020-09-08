@@ -1,7 +1,7 @@
 This is the message type used to transfer the ownership of a fungible token.
 
 
-## Parameters
+`Parameters`
 
 The message type contains the following parameters:
 
@@ -12,7 +12,7 @@ The message type contains the following parameters:
 | to | string | true   | New token owner| |
 
 
-#### Example
+Example
 ```
 {
     "type": "token/transferFungibleTokenOwnership",
@@ -25,36 +25,124 @@ The message type contains the following parameters:
 
 ```
 
-## Handler
+`Handler`
 
-The role of the handler is to define what action(s) needs to be taken when this `MsgTypeTransferNonFungibleTokenOwnership` message is received.
+The role of the handler is to define what action(s) needs to be taken when this `MsgTransferFungibleTokenOwnership` message is received.
 
 In the file (./x/token/fungible/handler.go) start with the following code:
 
-![Image-1](../pic/AcceptFungibleTokenOwnership_01.png)
+```
+func NewHandler(keeper *Keeper) sdkTypes.Handler {
+	return func(ctx sdkTypes.Context, msg sdkTypes.Msg) sdkTypes.Result {
+		switch msg := msg.(type) {
+		case MsgCreateFungibleToken:
+			return handleMsgCreateFungibleToken(ctx, keeper, msg)
+		case MsgSetFungibleTokenStatus:
+			return handleMsgSetFungibleTokenStatus(ctx, keeper, msg)
+		case MsgMintFungibleToken:
+			return handleMsgMintFungibleToken(ctx, keeper, msg)
+		case MsgTransferFungibleToken:
+			return handleMsgTransferFungibleToken(ctx, keeper, msg)
+		case MsgBurnFungibleToken:
+			return handleMsgBurnFungibleToken(ctx, keeper, msg)
+		case MsgSetFungibleTokenAccountStatus:
+			return handleMsgSetFungibleTokenAccountStatus(ctx, keeper, msg)
+		'case MsgTransferFungibleTokenOwnership:
+			return handleMsgTransferTokenOwnership(ctx, keeper, msg)'
+		case MsgAcceptFungibleTokenOwnership:
+			return handleMsgAcceptTokenOwnership(ctx, keeper, msg)
+		default:
+			errMsg := fmt.Sprintf("Unrecognized fungible Msg type: %v", msg.Type())
+			return sdkTypes.ErrUnknownRequest(errMsg).Result()
+		}
+	}
+}
+```
 
 
 NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
 Now, you need to define the actual logic for handling the MsgTypeTransferFungibleTokenOwnership message in `handleMsgTransferFungibleTokenOwnership`:
 
-![Image-2](../pic/TransferFungibleTokenOwnership_02.png)
+```
+func (k *Keeper) transferFungibleTokenOwnership(ctx sdkTypes.Context, from sdkTypes.AccAddress, to sdkTypes.AccAddress, token *Token, metadata string) sdkTypes.Result {
 
+	ownerWalletAccount := k.accountKeeper.GetAccount(ctx, token.Owner)
+	if ownerWalletAccount == nil {
+		return types.ErrInvalidTokenOwner().Result()
+	}
+
+	if ownerWalletAccount != nil && !token.Owner.Equals(from) {
+		return types.ErrInvalidTokenOwner().Result()
+	}
+
+	if !token.IsApproved() {
+		// TODO: Please define an error code
+		return sdkTypes.ErrUnknownRequest("Token is not approved.").Result()
+	}
+
+	if token.IsFrozen() {
+		return types.ErrTokenFrozen().Result()
+	}
+
+	newOwnerAccount := k.getFungibleAccount(ctx, token.Symbol, to)
+	if newOwnerAccount == nil {
+		newOwnerAccount = k.createFungibleAccount(ctx, token.Symbol, to)
+	}
+
+	if newOwnerAccount.Frozen {
+		return sdkTypes.ErrUnknownRequest("New owner is frozen").Result()
+	}
+
+	// set token newowner to new owner, pending for accepting by new owner
+	token.NewOwner = to
+	token.Metadata = metadata
+	token.Flags.AddFlag(TransferTokenOwnershipFlag)
+
+	k.storeToken(ctx, token.Symbol, token)
+
+	eventParam := []string{token.Symbol, from.String(), to.String()}
+	eventSignature := "TransferredFungibleTokenOwnership(string,string,string)"
+
+	accountSequence := ownerWalletAccount.GetSequence()
+	resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
+
+	return sdkTypes.Result{
+		Events: types.MakeMxwEvents(eventSignature, from.String(), eventParam),
+		Log:    resultLog.String(),
+	}
+}
+
+```
 
 In this function, requirements need to be met before emitted by the network.
 
 * A valid Token.
 * Token must be approved, and not yet be freeze.
 * Signer must be valid token owner
+* Token with FixedSupply equals to TRUE is not allowed to mint-token but allowed to Transfer-ownership.
+* Dynamic-supply is where FixedSupply equals to FALSE, is allowed to mint-token until the MaxSupply Limit been reached. Dynamic-supply also allowed for to do Transfer-ownership.
 * Action of Re-transfer-ownership is not allowed.
 
 
-## Events
+`Events`
+
 This tutorial describes how to create maxonrow events for scanner on this after emitted by a network.
 
-![Image-1](../pic/TransferFungibleTokenOwnership_03.png)
+```
+eventParam := []string{token.Symbol, from.String(), to.String()}
+eventSignature := "TransferredFungibleTokenOwnership(string,string,string)"
 
+accountSequence := ownerWalletAccount.GetSequence()
+resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
 
-#### Usage
+return sdkTypes.Result{
+    Events: types.MakeMxwEvents(eventSignature, from.String(), eventParam),
+    Log:    resultLog.String(),
+}
+```
+
+Usage
+
 This MakeMxwEvents create maxonrow events, by accepting :
 
 * Custom Event Signature : using TransferredFungibleTokenOwnership(string,string,string)

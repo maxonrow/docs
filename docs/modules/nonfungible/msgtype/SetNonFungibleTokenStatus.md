@@ -1,121 +1,124 @@
-This is the message type used to update the status of a non-fungible token,
-  eg. Approve, Reject, Freeze or unfreeze, Approve-transfer-ownership, Reject-transfer-ownership
+This is the message type used to update the status of a non-fungible token, eg. Approve, Reject, Freeze or unfreeze, Approve-transfer-ownership, Reject-transfer-ownership. This transaction require `issuer`, `provider` and `middleware` signature.
 
 
-## Parameters
+`Parameters`
 
 The message type contains the following parameters:
 
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
-| owner | string | true   | Item owner| |
-| payload | ItemPayload | true   | Item Payload information| |
-| signatures | []Signature | true   | Array of Signature| |
+| owner | string | true   | Item owner| | 
+| payload | ItemPayload | true   | Item Payload information| | 
+| signatures | []Signature | true   | Array of Signature| | 
 
 
-#### Item Payload Information
+Item Payload Information
+
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
-| token | TokenData | true   | Token data| |
-| pub_key | nil | true   | crypto.PubKey| |
-| signature | []byte | true   | signature| |
+| token | TokenData | true   | Token data| | 
+| pub_key | nil | true   | crypto.PubKey| | 
+| signature | []byte | true   | signature| | 
 
 
-#### Token Data Information
+Token Data Information
+
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
-| from | string | true   | Token owner| |
-| nonce | string | true   | nonce signature| |
-| status | string | true   | There are different type of status, which include APPROVE, REJECT, FREEZE, UNFREEZE, APPROVE_TRANFER_TOKEN_OWNERSHIP, REJECT_TRANFER_TOKEN_OWNERSHIP. All this keywords must be matched while come to this message type | |
-| symbol | string | true   | Token-symbol| |
-| transferLimit | string | true   | Item transfer Limit setting| |
-| mintLimit | string | true   | Item mint Limit setting| |
-| burnable | bool | true   | flag of Item burnable setting, either TRUE or FALSE| |
-| transferable | bool | true   | flag of Item transferable setting, either TRUE or FALSE| |
-| modifiable | bool | true   | flag of Item modifiable setting, either TRUE or FALSE| |
-| pub | bool | true   | flag of public setting, either TRUE or FALSE| |
-| tokenFees | []TokenFee | true   | Fee Setting information| |
-| endorserList | []string | true   | Endorser list| |
+| from | string | true   | Token owner| | 
+| nonce | string | true   | nonce signature| | 
+| status | string | true   | There are different type of status, which include `APPROVE`, `REJECT`, `FREEZE`, `UNFREEZE`, `APPROVE_TRANFER_TOKEN_OWNERSHIP`, `REJECT_TRANFER_TOKEN_OWNERSHIP`. All this keywords must be matched while come to this message type | | 
+| symbol | string | true   | Token-symbol| | 
+| transferLimit | string | true   | Item transfer Limit setting| | 
+| mintLimit | string | true   | Item mint Limit setting| | 
+| burnable | bool | true   | flag of Item burnable setting, either `TRUE` or `FALSE`| | 
+| transferable | bool | true   | flag of Item transferable setting, either `TRUE` or `FALSE`| | 
+| modifiable | bool | true   | flag of Item modifiable setting, either `TRUE` or `FALSE`| |
+| pub | bool | true   | flag of public setting, either `TRUE` or `FALSE`| | 
+| tokenFees | []TokenFee | true   | Fee Setting information| | 
+| endorserList | []string | true   | Endorser list| | 
 
 
-#### status details
-* While come to process of set APPROVE, a valid new token which yet to be approved must be signed by authorised Signer
-with valid signature will be proceed along with a valid Fee setting scheme that been provided.
-Token which already been approved is not allowed to do re-submit.
-* While come to process of set REJECT, a valid new token which yet to be approved must be signed by authorised Signer
-with valid signature will be proceed. Token which already been rejected is not allowed to do re-submit.
-* While come to process of set FREEZE, a valid token which already been approved must be signed by authorised Signer
-with valid signature will be proceed. Token which already been frozen is not allowed to do re-submit.
-* While come to process of set UNFREEZE, a valid token which already been approved and frozen must be signed by authorised Signer with valid signature will be proceed. Token which already been unfreeze is not allowed to do re-submit.
-* While come to process of set APPROVE_TRANFER_TOKEN_OWNERSHIP, a valid token which TransferTokenOwnership flag equals to true must be signed by authorised Signer with valid signature will be proceed. Token which already been approved for transfer token-ownership is not allowed to do re-submit.
-* While come to process of set REJECT_TRANFER_TOKEN_OWNERSHIP, a valid token which TransferTokenOwnership flag equals to true must be signed by authorised Signer with valid signature will be proceed.
-Token which already been rejected for transfer token-ownership is not allowed to do re-submit.
+`status`
 
-#### transferLimit details
-For the Item transfer-limit setting, only applicable while come to process of set APPROVE base on this particular token-symbol. Once exceeded this limits, will received an alert said that 'TRANSFER limit existed' and
-is not allowed to proceed the relevant request. However, if transfer-limit is set to ZERO, that means not allowed to transfer for this particular item. Need to be aware while come to this setting.
+| status | Details                 |
+| -------- | --------------------------- |
+| APPROVE  | If status set to `APPROVE`, this is to approve the token. Once approved, only then the token able to perform token action for example: mint, burn, transfer and etc. Additionally, the properties, transferLimit, mintLimit, burnable, transferable, modifiable, pub is mutable.| |
+| REJECT  | If status set to `REJECT`, this is to reject the token. Once rejected, the token NOT allowed to perform any token action like: mint, burn, transfer and etc.| | 
+| FREEZE  | If status set to `FREEZE`, this is to freeze the token. Once frozen, the token NOT allowed to perform any token action like: mint, burn and so on. | | 
+| UNFREEZE  | If status set to `UNFREEZE`, this is to unfreeze the token. Once unfreeze, only then the token allowed to perform token action like mint, burn, transfer and so on.| |
+| APPROVE_TRANFER_TOKEN_OWNERSHIP  | If status set to `APPROVE_TRANFER_TOKEN_OWNERSHIP`, this is to approve the transfer-ownership of the token. Once approved, only then the new owner can accept the ownership of token.| | 
+| REJECT_TRANFER_TOKEN_OWNERSHIP  | If status set to `REJECT_TRANFER_TOKEN_OWNERSHIP`, this is to reject the transfer-ownership of the token. Once rejected, can not do transfer-token-ownership to new party.| |   
 
-#### mintLimit details
-For the Item mint-limit setting, only applicable while come to process of set APPROVE base on this particular token-symbol. Once exceeded this limits, will received an alert said that 'TRANSFER limit existed' and
-is not allowed to proceed the relevant request. However, if mint-limit is set to ZERO, that means is NO LIMITATION on the minting for this particular item. Need to be aware while come to this setting.
+`transferLimit`
 
-#### burnable details
-* For the burnable equals TRUE, system allowed to proceed during burn-item process.
-Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting
-and also will be set as one of the token flag components during approve-token or freeze-token or unfreeze-token process.
-* For the burnable equals FALSE, system NOT allowed to proceed during burn-item process with an alert of 'Invalid token action'. Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting and also will not be set as one of the token flag components during approve-token or freeze-token or unfreeze-token process.
+* User must input the number as string type during the process of set APPROVE of a token-symbol. 
+* Once exceeded this setting limits, will received an alert of `Transfer limit existed`. 
+* If transfer-limit is set to ZERO, that means not allowed to do any transfer. 
+* Upon the process of approval, User NOT allowed to update this setting again.
 
-#### transferable details
-* For the transferable equals TRUE, system allowed to proceed during transfer-item process.
-Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting
-and also will be set as one of the token flag components during approve-token.
-* For the transferable equals FALSE, system NOT allowed to proceed during transfer-item process with an alert of 'Invalid token action'.
-Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting
-and also will not be set as one of the token flag components during approve-token.
+`mintLimit`
+
+* User must input the number as string type during the process of set APPROVE of a token-symbol. 
+* Once exceeded this setting limits, will received an alert of `Mint limit existed`. 
+* If mint-limit is set to ZERO, that means is NO LIMITATION on the minting for this.
+* Upon the process of approval, User NOT allowed to update this setting again.
 
 
-#### modifiable details
-* For the modifiable equals TRUE, system will also validate Item Owner must equals to relevant signer during Update Item Metadata process. If not, with an alert of 'Token item not modifiable'.
-Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting
-and also will be set as one of the token flag components during approve-token or freeze-token or unfreeze-token.
+`burnable`
 
-* For the modifiable equals FALSE, system will also validate signer must equals to token-Owner during Update Item Metadata process. If not, with an alert of 'Token item not modifiable'.
-Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting
-and also will not be set as one of the token flag components during approve-token or freeze-token or unfreeze-token.
+* For the burnable equals `TRUE`, user allowed to proceed during burn-item process. 
+* For the burnable equals `FALSE`, user NOT allowed to proceed during burn-item process with an alert of `Invalid token action`. 
+* Upon the process of approval, User NOT allowed to update this setting again.
 
+`transferable`
 
-#### pub details
-* For the public equals TRUE, system will validate signer must equals to new item-owner during Mint Item process.
-If not, with an alert of 'Public token can only be minted to oneself'.
-Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting
-and also will be set as one of the token flag components during approve-token or freeze-token or unfreeze-token.
-* For the public equals FALSE, system will validate signer must equals to token-owner during Mint Item process.
-If not, with an alert of 'Invalid token minter'.
-Prior to this, this flag will be set inside the tokenPayload of the current token during the message type setting
-and also will not be set as one of the token flag components during approve-token or freeze-token or unfreeze-token.
-
-#### tokenFees details
-While come to process of approve-token, the feeName value will be set for different action
-types which inside the tokenPayload of the current token :
-eg. transfer-item, mint-item, burn-item, transfer-token-Ownership, accept-token-Ownership.
+* For the transferable equals `TRUE`, user allowed to proceed during transfer-item process.
+* For the transferable equals `FALSE`, user NOT allowed to proceed during transfer-item process with an alert of `Invalid token action`.
+* Upon the process of approval, User NOT allowed to update this setting again.
 
 
-#### endorserList details
-For the public equals TRUE, system will do verification on the current signer whether come from the endorser list during Item Endorsement process.
-If not, with an alert of 'Invalid endorser'.
-Howevere if endorser list is set to empty, system will not do this validation during endorsement-item process.
-Prior to this, this endorser list will be set as one of the token flag components during approve-token.
+`modifiable`
+
+* For the modifiable equals `TRUE`, will validate Item Owner must equals to relevant signer during Update Item Metadata process. If not, with an alert of `Token item not modifiable`.
+* For the modifiable equals `FALSE`, will validate signer must equals to token-Owner during Update Item Metadata process. If not, with an alert of `Token item not modifiable`. 
+* Upon the process of approval, User NOT allowed to update this setting again.
 
 
-#### Token Fee Information
+`pub`
+
+* For the public equals `TRUE`, will validate minter must equals to `new item-owner` during Mint Item process.
+If not, with an alert of `Public token can only be minted to oneself`.
+* For the public equals `FALSE`, will validate minter must equals to `token-owner` during Mint Item process. 
+If not, with an alert of `Invalid token minter`.
+* Upon the process of approval, User NOT allowed to update this setting again.
+
+
+
+`tokenFees`
+
+* This input value is compulsory while come to process of approve-token. 
+* The feeName value will be set for different action types which inside the tokenPayload of the current token : eg. transfer-item, mint-item, burn-item, transfer-token-Ownership, accept-token-Ownership. 
+* Example of this can refer to `https://alloys-rpc.maxonrow.com/debug/fee_info?`
+* Upon the process of approval, User NOT allowed to update this setting again.
+
+
+`endorserList`
+
+* User can provide the list with the correct wallet address. Invalid signer that NOT in endorser list will received an alert of `Invalid endorser`. 
+* If endorser list is set to empty, then anyone with valid wallet address can proceed for the endorsement-item process. 
+
+
+Token Fee Information
+
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
-| action | string | true   | action | |
-| feeName | string | true   | fee setting| |
+| action | string | true   | action | | 
+| feeName | string | true   | fee setting| | 
 
 
 
-#### Example
+Example
 ```
 {
     "type": "nonFungible/setNonFungibleTokenStatus",
@@ -180,204 +183,541 @@ Prior to this, this endorser list will be set as one of the token flag component
 
 ```
 
-## Handler
+`Handler`
 
-The role of the handler is to define what action(s) needs to be taken when the `MsgTypeSetNonFungibleTokenStatus` message is received.
+The role of the handler is to define what action(s) needs to be taken when this `MsgSetNonFungibleTokenStatus` message is received.
 
 In the file (./x/token/nonfungible/handler.go) start with the following code:
 
-![Image-1](../pic/MintNonFungibleItem_01.png)
+```
+func NewHandler(keeper *Keeper) sdkTypes.Handler {
+	return func(ctx sdkTypes.Context, msg sdkTypes.Msg) sdkTypes.Result {
+		switch msg := msg.(type) {
+		case MsgCreateNonFungibleToken:
+			return handleMsgCreateNonFungibleToken(ctx, keeper, msg)
+		'case MsgSetNonFungibleTokenStatus:
+			return handleMsgSetNonFungibleTokenStatus(ctx, keeper, msg)'
+		case MsgMintNonFungibleItem:
+			return handleMsgMintNonFungibleItem(ctx, keeper, msg)
+		case MsgTransferNonFungibleItem:
+			return handleMsgTransferNonFungibleItem(ctx, keeper, msg)
+		case MsgBurnNonFungibleItem:
+			return handleMsgBurnNonFungibleItem(ctx, keeper, msg)
+		case MsgSetNonFungibleItemStatus:
+			return handleMsgSetNonFungibleItemStatus(ctx, keeper, msg)
+		case MsgTransferNonFungibleTokenOwnership:
+			return handleMsgTransferNonFungibleTokenOwnership(ctx, keeper, msg)
+		case MsgAcceptNonFungibleTokenOwnership:
+			return handleMsgAcceptTokenOwnership(ctx, keeper, msg)
+		case MsgEndorsement:
+			return handleMsgEndorsement(ctx, keeper, msg)
+		case MsgUpdateItemMetadata:
+			return handleMsgUpdateItemMetadata(ctx, keeper, msg)
+		case MsgUpdateNFTMetadata:
+			return handleMsgUpdateNFTMetadata(ctx, keeper, msg)
+    case MsgUpdateEndorserList:
+			return handleMsgUpdateEndorserList(ctx, keeper, msg)
+		default:
+			errMsg := fmt.Sprintf("Unrecognized fungible token Msg type: %v", msg.Type())
+			return sdkTypes.ErrUnknownRequest(errMsg).Result()
+		}
+	}
+
+}
+```
 
 
 NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
 
-First, you define the actual logic for handling the MsgTypeSetNonFungibleTokenStatus-ApproveToken message in `handleMsgSetNonFungibleTokenStatus`:
+First, you define the actual logic for handling the `MsgSetNonFungibleTokenStatus` - ApproveToken message in `handleMsgSetNonFungibleTokenStatus`:
 
-![Image-2](../pic/SetNonFungibleTokenStatus_07.png)
+```
+func (k *Keeper) approveNonFungibleToken(ctx sdkTypes.Context, symbol string, tokenFees []TokenFee, mintLimit, transferLimit sdkTypes.Uint, signer sdkTypes.AccAddress, endorserList []sdkTypes.AccAddress, burnable, transferable, modifiable, public bool) sdkTypes.Result {
+	var token = new(Token)
+	err := k.mustGetTokenData(ctx, symbol, token)
+	if err != nil {
+		return err.Result()
+	}
 
+	ownerWalletAccount := k.accountKeeper.GetAccount(ctx, token.Owner)
+	if ownerWalletAccount == nil {
+		return sdkTypes.ErrInvalidSequence("Invalid token owner.").Result()
+	}
 
-In this function, requirements need to be met before emitted by the network.
+	if token.Flags.HasFlag(ApprovedFlag) {
+		return types.ErrTokenAlreadyApproved(symbol).Result()
+	}
+
+	// Assign fee to token
+	for _, tokenFee := range tokenFees {
+		if !k.feeKeeper.FeeSettingExists(ctx, tokenFee.FeeName) {
+			return types.ErrFeeSettingNotExists(tokenFee.FeeName).Result()
+		}
+		err := k.feeKeeper.AssignFeeToTokenAction(ctx, tokenFee.FeeName, token.Symbol, tokenFee.Action)
+		if err != nil {
+			return err.Result()
+		}
+	}
+
+	token.Flags.AddFlag(ApprovedFlag)
+	if burnable {
+		token.Flags.AddFlag(BurnFlag)
+	}
+	if transferable {
+		token.Flags.AddFlag(TransferableFlag)
+	}
+	if modifiable {
+		token.Flags.AddFlag(ModifiableFlag)
+	}
+	if public {
+		token.Flags.AddFlag(PubFlag)
+	}
+
+	token.TransferLimit = transferLimit
+	token.MintLimit = mintLimit
+	token.EndorserList = endorserList
+
+	k.storeToken(ctx, symbol, token)
+
+	// Event: Approved fungible token
+	eventParam := []string{symbol, token.Owner.String()}
+	eventSignature := "ApprovedNonFungibleToken(string,string)"
+	events := types.MakeMxwEvents(eventSignature, signer.String(), eventParam)
+
+	accountSequence := ownerWalletAccount.GetSequence()
+	resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
+
+	return sdkTypes.Result{
+		Events: events,
+		Log:    resultLog.String(),
+	}
+
+}
+
+```
+
+In this function, requirements need to be met before emitted by the network.  
 
 * A valid Token.
 * Token must not be approved.
-* Signer must be authorised.
+* Signer must be KYC authorised.
 * Action of Re-approved is not allowed.
 
 
-Second, you define the actual logic for handling the MsgTypeSetNonFungibleTokenStatus-RejectToken message in `handleMsgSetNonFungibleTokenStatus`:
+Second, you define the actual logic for handling the MsgSetNonFungibleTokenStatus-RejectToken message in handleMsgSetNonFungibleTokenStatus:
 
-![Image-2](../pic/SetNonFungibleTokenStatus_08.png)
+```
+func (k *Keeper) RejectToken(ctx sdkTypes.Context, symbol string, signer sdkTypes.AccAddress) sdkTypes.Result {
 
+	var token = new(Token)
 
-In this function, requirements need to be met before emitted by the network.
+	if !k.IsAuthorised(ctx, signer) {
+		return sdkTypes.ErrUnauthorized("Not authorised to reject").Result()
+	}
+
+	err := k.mustGetTokenData(ctx, symbol, token)
+	if err != nil {
+		return err.Result()
+	}
+
+	var isApproved = token.Flags.HasFlag(ApprovedFlag)
+	ownerWalletAccount := k.accountKeeper.GetAccount(ctx, token.Owner)
+	if ownerWalletAccount == nil {
+		return sdkTypes.ErrInvalidSequence("Invalid token owner.").Result()
+	}
+
+	if isApproved {
+		return types.ErrTokenAlreadyApproved(symbol).Result()
+	}
+
+	store := ctx.KVStore(k.key)
+
+	tokenTypeKey := getTokenKey(symbol)
+	store.Delete(tokenTypeKey)
+
+	eventParam := []string{symbol, token.Owner.String()}
+	eventSignature := "RejectedNonFungibleToken(string,string)"
+
+	accountSequence := ownerWalletAccount.GetSequence()
+	resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
+
+	return sdkTypes.Result{
+		Events: types.MakeMxwEvents(eventSignature, signer.String(), eventParam),
+		Log:    resultLog.String(),
+	}
+
+}
+
+```
+
+In this function, requirements need to be met before emitted by the network.  
 
 * A valid Token.
 * Token must not be approved.
-* Signer must be authorised.
+* Signer must be KYC authorised.
 * Action of Re-reject is not allowed.
 
 
-Thirth, you define the actual logic for handling the MsgTypeSetNonFungibleTokenStatus-FreezeToken message in `handleMsgSetNonFungibleTokenStatus`:
+Thirth, you define the actual logic for handling the MsgSetNonFungibleTokenStatus-FreezeToken message in handleMsgSetNonFungibleTokenStatus:
 
-![Image-2](../pic/SetNonFungibleTokenStatus_09.png)
+```
+func (k *Keeper) freezeNonFungibleToken(ctx sdkTypes.Context, symbol string, signer sdkTypes.AccAddress) sdkTypes.Result {
+	var token = new(Token)
+	k.mustGetTokenData(ctx, symbol, token)
 
+	signerAccount := k.accountKeeper.GetAccount(ctx, signer)
+	if signerAccount == nil {
+		return sdkTypes.ErrInvalidSequence("Invalid signer.").Result()
+	}
 
-In this function, requirements need to be met before emitted by the network.
+	if token.Flags.HasFlag(FrozenFlag) {
+		return types.ErrTokenFrozen().Result()
+	}
+
+	token.Flags.AddFlag(FrozenFlag)
+	k.storeToken(ctx, symbol, token)
+
+	eventParam := []string{symbol, token.Owner.String()}
+	eventSignature := "FrozenNonFungibleToken(string,string)"
+
+	accountSequence := signerAccount.GetSequence()
+	resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
+
+	return sdkTypes.Result{
+		Events: types.MakeMxwEvents(eventSignature, signer.String(), eventParam),
+		Log:    resultLog.String(),
+	}
+
+}
+
+```
+
+In this function, requirements need to be met before emitted by the network.  
 
 * A valid Token.
 * Token must not be freeze
-* Signer must be authorised.
+* Signer must be KYC authorised.
 * Action of Re-freeze is not allowed.
 
 
-Next, you define the actual logic for handling the MsgTypeSetNonFungibleTokenStatus-UnfreezeToken message in `handleMsgSetNonFungibleTokenStatus`:
+Next, you define the actual logic for handling the MsgSetNonFungibleTokenStatus-UnfreezeToken message in handleMsgSetNonFungibleTokenStatus:
 
-![Image-2](../pic/SetNonFungibleTokenStatus_10.png)
+```
+func (k *Keeper) unfreezeNonFungibleToken(ctx sdkTypes.Context, symbol string, signer sdkTypes.AccAddress) sdkTypes.Result {
 
+	var token = new(Token)
+	k.mustGetTokenData(ctx, symbol, token)
 
-In this function, requirements need to be met before emitted by the network.
+	signerAccount := k.accountKeeper.GetAccount(ctx, signer)
+	if signerAccount == nil {
+		return sdkTypes.ErrInvalidSequence("Invalid signer.").Result()
+	}
+
+	if !token.Flags.HasFlag(FrozenFlag) {
+		return sdkTypes.ErrUnknownRequest("Fungible token is not frozen.").Result()
+	}
+
+	token.Flags.RemoveFlag(FrozenFlag)
+
+	k.storeToken(ctx, symbol, token)
+
+	eventParam := []string{symbol, token.Owner.String()}
+	eventSignature := "UnfreezeNonFungibleToken(string,string)"
+
+	accountSequence := signerAccount.GetSequence()
+	resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
+
+	return sdkTypes.Result{
+		Events: types.MakeMxwEvents(eventSignature, signer.String(), eventParam),
+		Log:    resultLog.String(),
+	}
+
+}
+```
+
+In this function, requirements need to be met before emitted by the network.  
 
 * A valid Token.
 * Token must be freeze.
-* Signer must be authorised.
+* Signer must be KYC authorised.
 * Action of Re-unfreeze is not allowed.
 
-Next, you define the actual logic for handling the MsgTypeSetNonFungibleTokenStatus-ApproveTransferTokenOwnership message in `handleMsgSetNonFungibleTokenStatus`:
+Next, you define the actual logic for handling the MsgSetNonFungibleTokenStatus-ApproveTransferTokenOwnership message in handleMsgSetNonFungibleTokenStatus:
 
-![Image-2](../pic/SetNonFungibleTokenStatus_11.png)
+```
+func (k *Keeper) ApproveTransferTokenOwnership(ctx sdkTypes.Context, symbol string, from sdkTypes.AccAddress) sdkTypes.Result {
+	if !k.IsAuthorised(ctx, from) {
+		return sdkTypes.ErrUnauthorized("Not authorised to accept transfer token ownership.").Result()
+	}
 
+	fromWalletAccount := k.accountKeeper.GetAccount(ctx, from)
+	if fromWalletAccount == nil {
+		return sdkTypes.ErrInvalidSequence("Invalid signer.").Result()
+	}
 
-In this function, requirements need to be met before emitted by the network.
+	var token = new(Token)
+	err := k.mustGetTokenData(ctx, symbol, token)
+	if err != nil {
+		return err.Result()
+	}
+
+	if !token.Flags.HasFlag(TransferTokenOwnershipFlag) {
+		return types.ErrInvalidTokenAction().Result()
+	}
+
+	token.Flags.AddFlag(AcceptTokenOwnershipFlag)
+	token.Flags.AddFlag(ApproveTransferTokenOwnershipFlag)
+
+	k.storeToken(ctx, symbol, token)
+
+	eventParam := []string{symbol, token.Owner.String(), token.NewOwner.String()}
+	eventSignature := "ApprovedTransferNonFungibleTokenOwnership(string,string,string)"
+
+	accountSequence := fromWalletAccount.GetSequence()
+	resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
+
+	return sdkTypes.Result{
+		Events: types.MakeMxwEvents(eventSignature, from.String(), eventParam),
+		Log:    resultLog.String(),
+	}
+}
+```
+
+In this function, requirements need to be met before emitted by the network.  
 
 * A valid Token.
 * Token with TransferTokenOwnership flag equals to true.
-* Signer must be authorised.
+* Signer must be KYC authorised.
 * Action of Re-approve transfer token-ownership is not allowed.
 
-Last, you define the actual logic for handling the MsgTypeSetNonFungibleTokenStatus-RejectTransferTokenOwnership message in `handleMsgSetNonFungibleTokenStatus`:
+Last, you define the actual logic for handling the MsgSetNonFungibleTokenStatus-RejectTransferTokenOwnership message in handleMsgSetNonFungibleTokenStatus:
 
-![Image-2](../pic/SetNonFungibleTokenStatus_12.png)
+```
+func (k *Keeper) RejectTransferTokenOwnership(ctx sdkTypes.Context, symbol string, from sdkTypes.AccAddress) sdkTypes.Result {
+	if !k.IsAuthorised(ctx, from) {
+		return sdkTypes.ErrUnauthorized("Not authorised to accept transfer token ownership.").Result()
+	}
 
+	fromWalletAccount := k.accountKeeper.GetAccount(ctx, from)
+	if fromWalletAccount == nil {
+		return sdkTypes.ErrInvalidSequence("Invalid signer.").Result()
+	}
 
-In this function, requirements need to be met before emitted by the network.
+	var token = new(Token)
+	err := k.mustGetTokenData(ctx, symbol, token)
+	if err != nil {
+		return err.Result()
+	}
+
+	if !token.Flags.HasFlag(TransferTokenOwnershipFlag) {
+		return types.ErrInvalidTokenAction().Result()
+	}
+
+	token.Flags.RemoveFlag(TransferTokenOwnershipFlag)
+
+	var emptyAccAddr sdkTypes.AccAddress
+	token.NewOwner = emptyAccAddr
+
+	k.storeToken(ctx, symbol, token)
+
+	eventParam := []string{symbol, token.Owner.String(), token.NewOwner.String()}
+	eventSignature := "RejectedTransferNonFungibleTokenOwnership(string,string,string)"
+
+	accountSequence := fromWalletAccount.GetSequence()
+	resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
+
+	return sdkTypes.Result{
+		Events: types.MakeMxwEvents(eventSignature, from.String(), eventParam),
+		Log:    resultLog.String(),
+	}
+}
+```
+
+In this function, requirements need to be met before emitted by the network.  
 
 * A valid Token.
 * Token TransferTokenOwnership flag equals to true.
-* Signer must be authorised.
+* Signer must be KYC authorised.
 * Action of Re-reject transfer token-ownership is not allowed.
 
 
-## Events
-#### 1.
-This tutorial describes how to create maxonrow events for scanner base on approve token after emitted by a network.
+`Events`
 
-![Image-1](../pic/SetNonFungibleTokenStatus_01.png)
+1.This tutorial describes how to create maxonrow events for scanner base on approve token after emitted by a network.
 
+```
+eventParam := []string{symbol, token.Owner.String()}
+eventSignature := "ApprovedNonFungibleToken(string,string)"
+events := types.MakeMxwEvents(eventSignature, signer.String(), eventParam)
 
-#### Usage
+accountSequence := ownerWalletAccount.GetSequence()
+resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
+
+return sdkTypes.Result{
+    Events: events,
+    Log:    resultLog.String(),
+}
+
+```
+
+Usage
+
 This MakeMxwEvents create maxonrow events, by accepting :
 
 * eventSignature : Custom Event Signature that using ApprovedNonFungibleToken(string,string)
 * signer : Signer
-* eventParam : Event Parameters as below
+* eventParam : Event Parameters as below 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
-| symbol | string | Token symbol, which must be unique| |
-| owner | string | Token owner| |
+| symbol | string | Token symbol, which must be unique| | 
+| owner | string | Token owner| | 
 
 
-#### 2.
-This tutorial describes how to create maxonrow events for scanner base on reject token after emitted by a network.
+2.This tutorial describes how to create maxonrow events for scanner base on reject token after emitted by a network.
 
-![Image-2](../pic/SetNonFungibleTokenStatus_02.png)
+```
+eventParam := []string{symbol, token.Owner.String()}
+eventSignature := "RejectedNonFungibleToken(string,string)"
 
-#### Usage
+accountSequence := ownerWalletAccount.GetSequence()
+resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
+
+return sdkTypes.Result{
+    Events: types.MakeMxwEvents(eventSignature, signer.String(), eventParam),
+    Log:    resultLog.String(),
+}
+```
+Usage
+
 This MakeMxwEvents create maxonrow events, by accepting :
 
 * eventSignature : Custom Event Signature that using RejectedNonFungibleToken(string,string)
 * signer : Signer
-* eventParam : Event Parameters as below
+* eventParam : Event Parameters as below 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
-| symbol | string | Token symbol, which must be unique| |
-| owner | string | Token owner| |
+| symbol | string | Token symbol, which must be unique| | 
+| owner | string | Token owner| | 
 
 
-#### 3.
-This tutorial describes how to create maxonrow events for scanner base on freeze token after emitted by a network.
+3.This tutorial describes how to create maxonrow events for scanner base on freeze token after emitted by a network.
 
-![Image-3](../pic/SetNonFungibleTokenStatus_03.png)
+```
+eventParam := []string{symbol, token.Owner.String()}
+eventSignature := "FrozenNonFungibleToken(string,string)"
 
+accountSequence := signerAccount.GetSequence()
+resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
 
-#### Usage
+return sdkTypes.Result{
+    Events: types.MakeMxwEvents(eventSignature, signer.String(), eventParam),
+    Log:    resultLog.String(),
+}
+```
+
+Usage
+
 This MakeMxwEvents create maxonrow events, by accepting :
 
 * eventSignature : Custom Event Signature that using FrozenNonFungibleToken(string,string)
 * signer : Signer
-* eventParam : Event Parameters as below
+* eventParam : Event Parameters as below 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
-| symbol | string | Token symbol, which must be unique| |
-| owner | string | Token owner| |
+| symbol | string | Token symbol, which must be unique| | 
+| owner | string | Token owner| | 
 
 
-#### 4.
-This tutorial describes how to create maxonrow events for scanner base on unfreeze token after emitted by a network.
+4.This tutorial describes how to create maxonrow events for scanner base on unfreeze token after emitted by a network.
 
-![Image-4](../pic/SetNonFungibleTokenStatus_04.png)
+```
+eventParam := []string{symbol, token.Owner.String()}
+eventSignature := "UnfreezeNonFungibleToken(string,string)"
+
+accountSequence := signerAccount.GetSequence()
+resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
+
+return sdkTypes.Result{
+    Events: types.MakeMxwEvents(eventSignature, signer.String(), eventParam),
+    Log:    resultLog.String(),
+}
+
+```
 
 
-#### Usage
+Usage
+
 This MakeMxwEvents create maxonrow events, by accepting :
 
 * eventSignature : Custom Event Signature that using UnfreezeNonFungibleToken(string,string)
 * signer : Signer
-* eventParam : Event Parameters as below
+* eventParam : Event Parameters as below 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
-| symbol | string | Token symbol, which must be unique| |
-| owner | string | Token owner| |
+| symbol | string | Token symbol, which must be unique| | 
+| owner | string | Token owner| | 
 
 
-#### 5.
-This tutorial describes how to create maxonrow events for scanner base on approve transfer token-ownership after emitted by a network.
 
-![Image-5](../pic/SetNonFungibleTokenStatus_05.png)
+5.This tutorial describes how to create maxonrow events for scanner base on approve transfer token-ownership after emitted by a network.
 
+```
+eventParam := []string{symbol, token.Owner.String(), token.NewOwner.String()}
+eventSignature := "ApprovedTransferNonFungibleTokenOwnership(string,string,string)"
 
-#### Usage
+accountSequence := fromWalletAccount.GetSequence()
+resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
+
+return sdkTypes.Result{
+    Events: types.MakeMxwEvents(eventSignature, from.String(), eventParam),
+    Log:    resultLog.String(),
+}
+```
+
+Usage
+
 This MakeMxwEvents create maxonrow events, by accepting :
 
 * eventSignature : Custom Event Signature that using ApprovedTransferNonFungibleTokenOwnership(string,string,string)
 * from : Signer
-* eventParam : Event Parameters as below
+* eventParam : Event Parameters as below 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
-| symbol | string | Token symbol, which must be unique| |
-| owner | string | Token owner| |
-| newOwner | string | New token owner| |
+| symbol | string | Token symbol, which must be unique| | 
+| owner | string | Token owner| | 
+| newOwner | string | New token owner| | 
 
 
-#### 6.
-This tutorial describes how to create maxonrow events for scanner base on reject transfer token-ownership after emitted by a network.
+6.This tutorial describes how to create maxonrow events for scanner base on reject transfer token-ownership after emitted by a network.
 
-![Image-6](../pic/SetNonFungibleTokenStatus_06.png)
+```
+eventParam := []string{symbol, token.Owner.String(), token.NewOwner.String()}
+eventSignature := "RejectedTransferNonFungibleTokenOwnership(string,string,string)"
 
+accountSequence := fromWalletAccount.GetSequence()
+resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
 
-#### Usage
+return sdkTypes.Result{
+    Events: types.MakeMxwEvents(eventSignature, from.String(), eventParam),
+    Log:    resultLog.String(),
+}
+```
+
+Usage
+
 This MakeMxwEvents create maxonrow events, by accepting :
 
 * eventSignature : Custom Event Signature that using RejectedTransferNonFungibleTokenOwnership(string,string,string)
 * from : Signer
-* eventParam : Event Parameters as below
+* eventParam : Event Parameters as below 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
-| symbol | string | Token symbol, which must be unique| |
-| owner | string | Token owner| |
-| newOwner | string | New token owner| |
+| symbol | string | Token symbol, which must be unique| | 
+| owner | string | Token owner| | 
+| newOwner | string | New token owner| | 

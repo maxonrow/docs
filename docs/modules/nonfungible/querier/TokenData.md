@@ -2,8 +2,24 @@ This query the token data by a given symbol.
 
 After the router is defined, define the inputs and responses for this queryTokenData:
 
-![Image-2](../pic/queryTokenData.png)
+```
+func queryTokenData(cdc *codec.Codec, ctx sdkTypes.Context, path []string, _ abci.RequestQuery, keeper *Keeper) ([]byte, sdkTypes.Error) {
+	if len(path) != 1 {
+		return nil, sdkTypes.ErrUnknownRequest(fmt.Sprintf("Invalid path %s", strings.Join(path, "/")))
+	}
 
+	symbol := path[0]
+
+	tokenData, err := keeper.GetTokenData(ctx, symbol)
+	if err != nil {
+		return nil, err
+	}
+
+	tokenInfo := cdc.MustMarshalJSON(tokenData)
+
+	return tokenInfo, nil
+}
+```
 
 Notes on the above code:
 
@@ -13,7 +29,8 @@ The output type should be something that is both JSON marshalable and stringable
 For the output of TokenData, the normal TokenData struct is already JSON marshalable, but we need to add a .String() method on it.
 
 
-#### Parameters
+`Parameters`
+
 | Name | Type | Default | Required | Description                 |
 | ---- | ---- | ------- | -------- | --------------------------- |
 | path | string | false | false    | Path to the data (eg. "/a/b/c") |
@@ -22,7 +39,8 @@ For the output of TokenData, the normal TokenData struct is already JSON marshal
 | prove | bool | false | false    | Include proofs of the transactions inclusion in the block, if true |
 
 
-#### Example
+`Example`
+
 In this example, we will explain how to query token data with abci_query. 
 
 Run the command with the JSON request body:
@@ -65,4 +83,3 @@ The above command returns JSON structured like this:
     }
 }
 ```
-

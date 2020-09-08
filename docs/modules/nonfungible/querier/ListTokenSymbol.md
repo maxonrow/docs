@@ -2,8 +2,19 @@ This query the available tokens list.
 
 After the router is defined, define the inputs and responses for this queryListTokenSymbol:
 
-![Image-2](../pic/queryListTokenSymbol.png)
+```
+func queryListTokenSymbol(cdc *codec.Codec, ctx sdkTypes.Context, _ []string, _ abci.RequestQuery, keeper *Keeper) ([]byte, sdkTypes.Error) {
+	fungibleToken, nonfungibleToken := keeper.ListTokenData(ctx)
 
+	resp := &listTokenSymbolResponse{
+		Fungible:    fungibleToken,
+		Nonfungible: nonfungibleToken,
+	}
+	respData := cdc.MustMarshalJSON(resp)
+
+	return respData, nil
+}
+```
 
 Notes on the above code:
 
@@ -12,7 +23,8 @@ The output type should be something that is both JSON marshalable and stringable
 For the output of ListTokenSymbol, the normal ListTokenSymbol struct is already JSON marshalable, but we need to add a .String() method on it.
 
 
-#### Parameters
+`Parameters`
+
 | Name | Type | Default | Required | Description                 |
 | ---- | ---- | ------- | -------- | --------------------------- |
 | path | string | false | false    | Path to the data (eg. "/a/b/c") |
@@ -21,7 +33,8 @@ For the output of ListTokenSymbol, the normal ListTokenSymbol struct is already 
 | prove | bool | false | false    | Include proofs of the transactions inclusion in the block, if true |
 
 
-#### Example
+`Example`
+
 In this example, we will explain how to query token list with abci_query. 
 
 Run the command with the JSON request body:
@@ -64,5 +77,3 @@ The above command returns JSON structured like this:
   }
 }
 ```
-
-

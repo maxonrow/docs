@@ -1,44 +1,44 @@
-This is the message type used to update the status of an item of a non-fungible token,
+This is the message type used to update the status of an item of a non-fungible token, 
   eg. Freeze or unfreeze
 
-## Parameters
+`Parameters`
 
 The message type contains the following parameters:
 
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
-| owner | string | true   | Item owner| |
-| payload | ItemPayload | true   | Item Payload information| |
-| signatures | []Signature | true   | Array of Signature| |
+| owner | string | true   | Item owner| | 
+| payload | ItemPayload | true   | Item Payload information| | 
+| signatures | []Signature | true   | Array of Signature| | 
 
 
-#### Item Payload Information
+Item Payload Information
+
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
-| item | ItemDetails | true   | Item details information| |
-| pub_key | type/value | true   | crypto.PubKey| |
-| signature | []byte | true   | signature| |
+| item | ItemDetails | true   | Item details information| | 
+| pub_key | type/value | true   | crypto.PubKey| | 
+| signature | []byte | true   | signature| | 
 
 
-#### Item Details Information
+Item Details Information
+
 | Name | Type | Required | Description                 |
 | ---- | ---- | -------- | --------------------------- |
-| from | string | true   | Item owner| |
-| nonce | string | true   | nonce signature| |
-| status | string | true   | There are two type of status, which include FREEZE_ITEM, UNFREEZE_ITEM. All this keywords must be matched while come to this message type | |
-| symbol | string | true   | Token-symbol| |
-| itemID | string | true   | Item ID| |
+| from | string | true   | Item owner| | 
+| nonce | string | true   | nonce signature| | 
+| status | string | true   | There are two type of status, which include `FREEZE_ITEM`, `UNFREEZE_ITEM`. All this keywords must be matched while come to this message type | | 
+| symbol | string | true   | Token-symbol| | 
+| itemID | string | true   | Item ID| | 
 
-#### status details
-* While come to process of set FREEZE_ITEM, a valid token with a valid Item ID which already been approved
-and yet to be frozen must be signed by authorised Signer with valid signature will be proceed.
-Item ID which already been frozen is not allowed to do re-submit.
-* While come to process of set UNFREEZE_ITEM, a valid token with a valid Item ID which already been
-approved and frozen must be signed by authorised Signer with valid signature will be proceed.
-Item ID which already been unfreeze is not allowed to do re-submit.
+`status`
 
+| status | Details                 |
+| -------- | --------------------------- |
+| FREEZE_ITEM  | A valid token with a valid Item ID which already been approved and yet to be frozen must be signed by authorised KYC Signer with valid signature will be proceed, this also along with the approval from authorised address of issuer and provider parties. Item ID which already been frozen is not allowed to do re-submit.| | 
+| UNFREEZE_ITEM  | A valid token with a valid Item ID which already been approved and frozen must be signed by authorised KYC Signer with valid signature will be proceed, this also along with the approval from authorised address of issuer and provider parties. Item ID which already been unfreeze is not allowed to do re-submit.| | 
 
-#### Example
+Example
 ```
 {
   "type": "nonFungible/setNonFungibleItemStatus",
@@ -72,78 +72,222 @@ Item ID which already been unfreeze is not allowed to do re-submit.
 
 ```
 
-## Handler
+`Handler`
 
-The role of the handler is to define what action(s) needs to be taken when this `MsgTypeSetNonFungibleItemStatus` message is received.
+The role of the handler is to define what action(s) needs to be taken when this `MsgSetNonFungibleItemStatus` message is received.
 
 In the file (./x/token/nonfungible/handler.go) start with the following code:
 
-![Image-1](../pic/MintNonFungibleItem_01.png)
+```
+func NewHandler(keeper *Keeper) sdkTypes.Handler {
+	return func(ctx sdkTypes.Context, msg sdkTypes.Msg) sdkTypes.Result {
+		switch msg := msg.(type) {
+		case MsgCreateNonFungibleToken:
+			return handleMsgCreateNonFungibleToken(ctx, keeper, msg)
+		case MsgSetNonFungibleTokenStatus:
+			return handleMsgSetNonFungibleTokenStatus(ctx, keeper, msg)
+		case MsgMintNonFungibleItem:
+			return handleMsgMintNonFungibleItem(ctx, keeper, msg)
+		case MsgTransferNonFungibleItem:
+			return handleMsgTransferNonFungibleItem(ctx, keeper, msg)
+		case MsgBurnNonFungibleItem:
+			return handleMsgBurnNonFungibleItem(ctx, keeper, msg)
+		'case MsgSetNonFungibleItemStatus:
+			return handleMsgSetNonFungibleItemStatus(ctx, keeper, msg)'
+		case MsgTransferNonFungibleTokenOwnership:
+			return handleMsgTransferNonFungibleTokenOwnership(ctx, keeper, msg)
+		case MsgAcceptNonFungibleTokenOwnership:
+			return handleMsgAcceptTokenOwnership(ctx, keeper, msg)
+		case MsgEndorsement:
+			return handleMsgEndorsement(ctx, keeper, msg)
+		case MsgUpdateItemMetadata:
+			return handleMsgUpdateItemMetadata(ctx, keeper, msg)
+		case MsgUpdateNFTMetadata:
+			return handleMsgUpdateNFTMetadata(ctx, keeper, msg)
+    case MsgUpdateEndorserList:
+			return handleMsgUpdateEndorserList(ctx, keeper, msg)
+		default:
+			errMsg := fmt.Sprintf("Unrecognized fungible token Msg type: %v", msg.Type())
+			return sdkTypes.ErrUnknownRequest(errMsg).Result()
+		}
+	}
+
+}
+```
 
 
 NewHandler is essentially a sub-router that directs messages coming into this module to the proper handler.
-Now, you define the actual logic for handling the MsgTypeSetNonFungibleItemStatus-FreezeNonFungibleItem message in `handleMsgSetNonFungibleItemStatus`:
+Now, you define the actual logic for handling the `MsgSetNonFungibleItemStatus` - FreezeNonFungibleItem message in `handleMsgSetNonFungibleItemStatus`:
 
-![Image-2](../pic/SetNonFungibleItemStatus_03.png)
+```
+func (k *Keeper) FreezeNonFungibleItem(ctx sdkTypes.Context, symbol string, owner, itemOwner sdkTypes.AccAddress, itemID string, metadata string) sdkTypes.Result {
+	var token = new(Token)
+	if exists := k.GetTokenDataInfo(ctx, symbol, token); !exists {
+		return sdkTypes.ErrUnknownRequest("No such non fungible token.").Result()
+	}
 
+	if !k.IsAuthorised(ctx, owner) {
+		return sdkTypes.ErrUnauthorized("Not authorised to freeze non fungible item.").Result()
+	}
 
-In this function, requirements need to be met before emitted by the network.
+	ownerWalletAccount := k.accountKeeper.GetAccount(ctx, owner)
+	if ownerWalletAccount == nil {
+		return sdkTypes.ErrInvalidSequence("Invalid signer.").Result()
+	}
+
+	nonFungibleItem := k.GetNonFungibleItem(ctx, symbol, itemID)
+	if nonFungibleItem == nil {
+		return sdkTypes.ErrUnknownRequest("No such item to freeze.").Result()
+	}
+
+	itemOwner = k.GetNonFungibleItemOwnerInfo(ctx, symbol, itemID)
+	if itemOwner == nil {
+		return sdkTypes.ErrUnknownRequest("Invalid item owner.").Result()
+	}
+
+	if nonFungibleItem.Frozen {
+		return sdkTypes.ErrUnknownRequest("Non Fungible item already frozen.").Result()
+	}
+
+	nonFungibleItem.Frozen = true
+
+	k.storeNonFungibleItem(ctx, symbol, itemOwner, nonFungibleItem)
+
+	eventParam := []string{symbol, itemID, owner.String()}
+	eventSignature := "FrozenNonFungibleItem(string,string,string)"
+
+	accountSequence := ownerWalletAccount.GetSequence()
+	resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
+
+	return sdkTypes.Result{
+		Events: types.MakeMxwEvents(eventSignature, owner.String(), eventParam),
+		Log:    resultLog.String(),
+	}
+}
+```
+
+In this function, requirements need to be met before emitted by the network.  
 
 * A valid Token.
 * A valid Item ID which must not be freeze.
-* Signer must be authorised.
+* Signer must be KYC authorised.
 * Action of Re-freeze-item is not allowed.
 
-Next, you define the actual logic for handling the MsgTypeSetNonFungibleItemStatus-UnfreezeNonFungibleItem message in `handleMsgSetNonFungibleItemStatus`:
+Next, you define the actual logic for handling the MsgSetNonFungibleItemStatus-UnfreezeNonFungibleItem message in handleMsgSetNonFungibleItemStatus:
 
-![Image-2](../pic/SetNonFungibleItemStatus_04.png)
+```
+func (k *Keeper) UnfreezeNonFungibleItem(ctx sdkTypes.Context, symbol string, owner sdkTypes.AccAddress, itemID string, metadata string) sdkTypes.Result {
+	if !k.IsAuthorised(ctx, owner) {
+		return sdkTypes.ErrUnauthorized("Not authorised to unfreeze token account.").Result()
+	}
 
+	ownerWalletAccount := k.accountKeeper.GetAccount(ctx, owner)
+	if ownerWalletAccount == nil {
+		return sdkTypes.ErrInvalidSequence("Invalid signer.").Result()
+	}
 
-In this function, requirements need to be met before emitted by the network.
+	var token = new(Token)
+	if exists := k.GetTokenDataInfo(ctx, symbol, token); !exists {
+		return sdkTypes.ErrUnknownRequest("No such non fungible token.").Result()
+	}
+
+	nonFungibleItem := k.GetNonFungibleItem(ctx, symbol, itemID)
+	if nonFungibleItem == nil {
+		return sdkTypes.ErrUnknownRequest("No such  non fungible item to unfreeze.").Result()
+	}
+
+	itemOwner := k.GetNonFungibleItemOwnerInfo(ctx, symbol, itemID)
+	if itemOwner == nil {
+		return sdkTypes.ErrUnknownRequest("Invalid item owner.").Result()
+	}
+
+	if !nonFungibleItem.Frozen {
+		return sdkTypes.ErrUnknownRequest("Non fungible item not frozen.").Result()
+	}
+
+	nonFungibleItem.Frozen = false
+
+	k.storeNonFungibleItem(ctx, symbol, itemOwner, nonFungibleItem)
+
+	eventParam := []string{symbol, itemID, owner.String()}
+	eventSignature := "UnfreezeNonFungibleItem(string,string,string)"
+
+	accountSequence := ownerWalletAccount.GetSequence()
+	resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
+
+	return sdkTypes.Result{
+		Events: types.MakeMxwEvents(eventSignature, owner.String(), eventParam),
+		Log:    resultLog.String(),
+	}
+
+}
+```
+
+In this function, requirements need to be met before emitted by the network.  
 
 * A valid Token.
 * A valid Item ID which must be freeze.
-* Signer must be authorised.
+* Signer must be KYC authorised.
 * Action of Re-unfreeze-item is not allowed.
 
 
-## Events
+`Events`
 
-#### 1.
-This tutorial describes how to create maxonrow events for scanner base on freeze-item after emitted by a network.
+1.This tutorial describes how to create maxonrow events for scanner base on freeze-item after emitted by a network.
 
-![Image-1](../pic/SetNonFungibleItemStatus_01.png)
+```
+eventParam := []string{symbol, itemID, owner.String()}
+eventSignature := "FrozenNonFungibleItem(string,string,string)"
 
+accountSequence := ownerWalletAccount.GetSequence()
+resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
 
-#### Usage
+return sdkTypes.Result{
+    Events: types.MakeMxwEvents(eventSignature, owner.String(), eventParam),
+    Log:    resultLog.String(),
+}
+```
+
+Usage
+
 This MakeMxwEvents create maxonrow events, by accepting :
 
-* eventSignature : Custom Event Signature that using FrozenNonFungibleItem(string,string,string)
+* eventSignature : Custom Event Signature that using FrozenNonFungibleItem(string,string,string) 
 * owner : Signer
-* eventParam : Event Parameters as below
+* eventParam : Event Parameters as below 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
-| symbol | string | Token symbol, which must be unique| |
-| itemID | string | Item ID| |
-| owner | string | Signer| |
+| symbol | string | Token symbol, which must be unique| | 
+| itemID | string | Item ID| | 
+| owner | string | Signer| | 
 
 
-#### 2.
-This tutorial describes how to create maxonrow events for scanner base on unfreeze-item after emitted by a network.
+2.This tutorial describes how to create maxonrow events for scanner base on unfreeze-item after emitted by a network.
 
-![Image-2](../pic/SetNonFungibleItemStatus_02.png)
+```
+eventParam := []string{symbol, itemID, owner.String()}
+eventSignature := "UnfreezeNonFungibleItem(string,string,string)"
 
+accountSequence := ownerWalletAccount.GetSequence()
+resultLog := types.NewResultLog(accountSequence, ctx.TxBytes())
 
-#### Usage
+return sdkTypes.Result{
+    Events: types.MakeMxwEvents(eventSignature, owner.String(), eventParam),
+    Log:    resultLog.String(),
+}
+```
+
+Usage
+
 This MakeMxwEvents create maxonrow events, by accepting :
 
-* eventSignature : Custom Event Signature that using UnfreezeNonFungibleItem(string,string,string)
+* eventSignature : Custom Event Signature that using UnfreezeNonFungibleItem(string,string,string) 
 * owner : Signer
-* eventParam : Event Parameters as below
+* eventParam : Event Parameters as below 
 
 | Name | Type | Description                 |
 | ---- | ---- | --------------------------- |
-| symbol | string | Token symbol, which must be unique| |
-| itemID | string | Item ID| |
-| owner | string | Signer| |
+| symbol | string | Token symbol, which must be unique| | 
+| itemID | string | Item ID| | 
+| owner | string | Signer| | 

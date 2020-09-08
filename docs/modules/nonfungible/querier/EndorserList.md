@@ -1,31 +1,31 @@
-This query the item data by given of symbol and item ID.
+This query the available endorser list.
 
-After the router is defined, define the inputs and responses for this queryItemData:
+After the router is defined, define the inputs and responses for this queryEndorserList:
 
 ```
-func queryItemData(cdc *codec.Codec, ctx sdkTypes.Context, path []string, _ abci.RequestQuery, keeper *Keeper) ([]byte, sdkTypes.Error) {
-	if len(path) != 2 {
+func queryEndorserList(cdc *codec.Codec, ctx sdkTypes.Context, path []string, _ abci.RequestQuery, keeper *Keeper) ([]byte, sdkTypes.Error) {
+	if len(path) != 1 {
 		return nil, sdkTypes.ErrUnknownRequest(fmt.Sprintf("Invalid path %s", strings.Join(path, "/")))
 	}
 
 	symbol := path[0]
-	itemID := path[1]
 
-	item := keeper.GetNonFungibleItem(ctx, symbol, itemID)
+	endorserList := keeper.GetEndorserList(ctx, symbol)
+	if endorserList != nil {
+		return cdc.MustMarshalJSON(endorserList), nil
+	}
 
-	tokenInfo := cdc.MustMarshalJSON(item)
-
-	return tokenInfo, nil
+	return nil, nil
 }
-
 ```
 
 Notes on the above code:
 
-This query request TWO path-parameters which refer to token-symbol and item-id. 
+This query request ONE path-parameter which refer to token-symbol.
 The output type should be something that is both JSON marshalable and stringable (implements the Golang fmt.Stringer interface). The returned bytes should be the JSON encoding of the output result.
 
-For the output of ItemData, the normal ItemData struct is already JSON marshalable, but we need to add a .String() method on it.
+For the output of EndorserList, the normal EndorserList struct is already JSON marshalable, but we need to add a .String() method on it.
+
 
 `Parameters`
 
@@ -39,7 +39,7 @@ For the output of ItemData, the normal ItemData struct is already JSON marshalab
 
 `Example`
 
-In this example, we will explain how to query item data with abci_query. 
+In this example, we will explain how to query token list with abci_query. 
 
 Run the command with the JSON request body:
 ```
@@ -50,7 +50,7 @@ curl 'http://localhost:26657/'
 {
     "method": "abci_query",
     "params": [
-    	"/custom/nonFungible/item_data/TNFT-E2/770099",
+    	"/custom/nonFungible/get_endorser_list/TNFT-E2",
     	"",
     	"0",
     	false
@@ -73,9 +73,9 @@ The above command returns JSON structured like this:
             "info": "",
             "index": "0",
             "key": null,
-            "value": "eyJJRCI6Ijc3MDA5OSIsIlByb3BlcnRpZXMiOiJwcm9wZXJ0aWVzIiwiTWV0YWRhdGEiOiJtZXRhZGF0YSIsIlRyYW5zZmVyTGltaXQiOiIwIiwiRnJvemVuIjpmYWxzZX0=",
+            "value": "eyJGbGFncyI6MTE1LCJOYW1lIjoiVGVzdE5vbkZ1bmdpYmxlVG9rZW4iLCJTeW1ib2wiOiJUTkZULUUyIiwiT3duZXIiOiJteHcxeDVjZjh5OTludGpjOGNqbTAwejYwM3lmcXd6eHcybWF3ZW1mNzMiLCJOZXdPd25lciI6IiIsIlByb3BlcnRpZXMiOiIiLCJNZXRhZGF0YSI6InRva2VuIG1ldGFkYXRhIiwiVG90YWxTdXBwbHkiOiIxIiwiVHJhbnNmZXJMaW1pdCI6IjIiLCJNaW50TGltaXQiOiIyIiwiRW5kb3JzZXJMaXN0IjpbIm14dzFmOHIwazVwN3M4NWt2N2phdHd2bXBhcnR5eTJqMHMyMHkwcDB5ayIsIm14dzFrOXN4ejBoM3llaDB1em14ZXQycm1zajd4ZTV6ZzU0ZXE3dmhsYSJdfQ==",
             "proof": null,
-            "height": "754",
+            "height": "746",
             "codespace": ""
         }
     }
