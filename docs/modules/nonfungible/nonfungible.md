@@ -2944,10 +2944,15 @@ func queryItemData(cdc *codec.Codec, ctx sdkTypes.Context, path []string, _ abci
 	itemID := path[1]
 
 	item := keeper.GetNonFungibleItem(ctx, symbol, itemID)
+	owner := keeper.GetNonFungibleItemOwnerInfo(ctx, symbol, itemID)
 
-	tokenInfo := cdc.MustMarshalJSON(item)
+	var itemInfo ItemInfo
+	itemInfo.Item = item
+	itemInfo.Owner = owner
 
-	return tokenInfo, nil
+	js := cdc.MustMarshalJSON(itemInfo)
+
+	return js, nil
 }
 
 ```
@@ -2982,7 +2987,7 @@ curl 'http://localhost:26657/'
 {
     "method": "abci_query",
     "params": [
-    	"/custom/nonFungible/item_data/TNFT-E2/770099",
+    	"/custom/nonFungible/item_data/TNFT/334455",
     	"",
     	"0",
     	false
@@ -2990,7 +2995,6 @@ curl 'http://localhost:26657/'
     "id": 0,
     "jsonrpc": "2.0"
 }
-
 ```
 
 The above command returns JSON structured like this: 
@@ -3005,9 +3009,9 @@ The above command returns JSON structured like this:
             "info": "",
             "index": "0",
             "key": null,
-            "value": "eyJJRCI6Ijc3MDA5OSIsIlByb3BlcnRpZXMiOiJwcm9wZXJ0aWVzIiwiTWV0YWRhdGEiOiJtZXRhZGF0YSIsIlRyYW5zZmVyTGltaXQiOiIwIiwiRnJvemVuIjpmYWxzZX0=",
+            "value": "eyJPd25lciI6Im14dzF0Z2ZjZXJ6N2N2eDZzOG5zbHUzNW1nbG16eXFwc2RtcW5mZjI4MCIsIkl0ZW0iOnsiSUQiOiIzMzQ0NTUiLCJQcm9wZXJ0aWVzIjoicHJvcGVydGllcyIsIk1ldGFkYXRhIjoibWV0YWRhdGEiLCJUcmFuc2ZlckxpbWl0IjoiMCIsIkZyb3plbiI6ZmFsc2V9fQ==",
             "proof": null,
-            "height": "754",
+            "height": "1242",
             "codespace": ""
         }
     }
