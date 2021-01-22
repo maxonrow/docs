@@ -26,11 +26,10 @@ Msgs define your application's state transitions.
 They are encoded and passed around the network wrapped in Txs. 
 Messages are "owned" by a single module, meaning they are routed to only one of your applications modules. 
 Each module has its own set of messages that it uses to update its subset of the chain state. 
-Maxonrow SDK relies on Cosmos SDK wraps and unwraps Msgs from Txs, which means developer only have to define the relevant Msgs. 
+Maxonrow SDK relies on Cosmos SDK wraps and unwraps Msgs from Txs, which means developer only have to define the relevant Msgs.<br/><br/>  
 Msgs must satisfy the following interface:
 
-*** Interface type (Testing Purpose)
-![Image-1](pic001.png)  
+![Image-1](pic/node_cli_nameservice-01.png)   
 
 
 
@@ -56,10 +55,9 @@ can send to interact with the application state:
 The main core of a Maxonrow SDK module is a piece called the Keeper. 
 Each module's Keeper is responsible for CRUD operations to the main datastore of the application. 
 With more sophisticated applications, modules may have access to each other's Keepers 
-for cross-module interactions. In MVC terms this would be the "model". 
+for cross-module interactions.<br/>In MVC terms this would be the "model". 
 
-*** Each Get & Set method (Testing Purpose)
-![Image-1](pic001.png)  
+![Image-2](pic/node_cli_nameservice-02.png) 
 
 
 ### Querier
@@ -87,17 +85,17 @@ A Command Line Interface (CLI) will help us interact with our app once it is run
 The CLI for this module is broken into two files called sendtx.go and query.go which are located in ./x/namseservice/client/cli/. One file is for making transactions that contain messages which will ultimately update our state. The other is for making queries which will give us the ability to read information from our state. Both files utilize the Cobra library.
 
 ### sendtx.go
-The sendtx.go file contains SendTxCmd which is a standard method within the Maxonrow SDK. It is referenced later in the module.go file which describes exactly which attributes a modules has. This makes it easier to incorporate different modules for different reasons at the level of the actual application. This function takes parameters from the Cobra CLI tool to create a new msg, sign it and submit it to the application to be processed.
+The sendtx.go (refer module_client.go) file contains SendTxCmd which is a standard method within the Maxonrow SDK. It is referenced later in the module.go file which describes exactly which attributes a modules has. This makes it easier to incorporate different modules for different reasons at the level of the actual application. This function takes parameters from the Cobra CLI tool to create a new msg, sign it and submit it to the application to be processed.
 
-*** Each Get & Set method (Testing Purpose)
-![Image-1](pic001.png)  
+![Image-3](pic/node_cli_nameservice-03.png) 
+
 
 ### query.go
-The query.go file contains similar Cobra commands that reserve a new name space for referencing our nameservice module. Instead of creating and submitting messages however, the query.go file creates queries and returns the results in human readable form, which handles below functions:
+The query.go (refer module_client.go) file contains similar Cobra commands that reserve a new name space for referencing our nameservice module. Instead of creating and submitting messages however, the query.go file creates queries and returns the results in human readable form, which handles below functions:
 
 * GetCmdResolveName
 * GetCmdWhois
 
-*** Each Get & Set method (Testing Purpose)
-![Image-1](pic001.png)  
+![Image-4](pic/node_cli_nameservice-04.png) 
+
 

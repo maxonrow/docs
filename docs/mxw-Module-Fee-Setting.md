@@ -15,114 +15,30 @@ To start the SDK module, define those relevant structs in the ./x/fee/msgs.go fi
 * MsgSysFeeSetting
 -- This is the msg type used to create or update the system fee setting. 
     Eg. “default”, “zero”, “transfer” and etc.  
-```
-Usage :
-mxwcli tx fee create-sysfee --name [fee name] --min [minimum amount] --max [maximum amount] --percentage [percentage] --gas 0 --fees 0cin --from [fee authorised address] --chain-id [chain’s id] --node [remote node you wish to connect to] 
-
-Example :
-
-mxwcli tx fee create-sysfee --name default --min 50000000000000000cin --max 10000000000000000000000000cin --percentage 0.005 --gas 0 --fees 0cin --from feeIssuer --chain-id uatnet --node https://uatnet.usdp.io:443 
-```
-```
-Usage :
-mxwcli tx fee edit-sysfee [fee name] --min [minimum amount] --max [maximum amount] --percentage [percentage] --gas 0 --fees 0cin --from [fee authorised address] --chain-id [chain’s id] --node [remote node you wish to connect to]  
-
-Example :
-
-mxwcli tx fee edit-sysfee default --min 50000000000000000cin --max 10000000000000000000000000cin --percentage 0.005 --gas 0 --fees 0cin --from feeIssuer --chain-id uatnet --node https://uatnet.usdp.io:443  
-```
-
-
 * MsgDeleteSysFeeSetting
 -- This is the msg type used to delete the fee setting. 
-
-```
-Usage :
-mxwcli tx fee delete-sysfee [fee name] --from [fee authorised address] --fees 0cin --gas0 --chain-id [chain’s id] --node [remote node you wish to connect to]  
-
-Example :
-
-mxwcli tx fee delete-sysfee default --from feeAuth --fees 0cin --gas 0 --chain-id uatnet --node https://uatnet.usdp.io:443  
-```
 
 
 * MsgAssignFeeToMsg
 -- This is the msg type used to assign fee setting to message. 
 
-```
-Usage :
-mxwcli tx fee msg [msg type] --name [fee name] --from [fee authorised address] --chain-id [chain’s id] --fees 0cin --gas 0 --node [remote node you wish to connect to]  
-
-Example :
-
-mxwcli tx fee msg fee-updateFeeSetting --name zero --from feeAuth --chain-id uatnet --fees 0cin --gas 0 --node https://uatnet.usdp.io:443  
-```
 
 * MsgAssignFeeToAcc
 -- This is the msg type used to assign fee setting to account. 
-```
-Usage :
-mxwcli tx fee account [account address] --name [fee name] --from [fee authorised address] --chain-id [chain’s id] --gas 0 --fees 0cin --node [remote node you wish to connect to] 
-
-Example :
-
-mxwcli tx fee account mxw16f6dsgrxdk6cfpm9kyz9qdp7v0k2azlrkj95vu --name zero --from foundation --chain-id uatnet --gas 0 --fees 0cin --node https://uatnet.usdp.io:443 
-```
 
 * MsgDeleteAccFeeSetting
 -- This is the msg type used to delete an account of the fee setting. 
-```
-Usage :
-mxwcli tx fee delete-acc-fee [account address] --from [fee authorised address] --fees 0cin --gas 0 --chain-id [chain’s id] --node [remote node you wish to connect to]  
-  
-
-Example :
-
-mxwcli tx fee delete-acc-fee mxw16f6dsgrxdk6cfpm9kyz9qdp7v0k2azlrkj95vu --from feeAuth --gas 0 --fees 0cin --chain-id uatnet --node https://uatnet.usdp.io:443  
-
-```
 
 * MsgMultiplier
 -- This is the msg type used to create, update the system fee multiplier. 
-```
-Usage :
-mxwcli tx fee fee-multiplier [multiplier you wish to set] --from [fee authorised address] --fees 0cin --gas 0 --chain-id [chain’s id] --node [remote node you wish to connect to]  
-
-Example :
-
-mxwcli tx fee fee-multiplier 1 --from feeAuth --fees 0cin --gas 0 --chain-id uatnet --node https://uatnet.usdp.io:443 
-```
 
 
 * MsgTokenMultiplier
 -- This is the msg type used to create, update the token fee multiplier.  
-```
-Usage :
-mxwcli tx fee token-fee-multiplier [multiplier you wish to set] --from [fee authorised address] --fees 0cin --gas 0 --chain-id [chain’s id] --node [remote node you wish to connect to]  
-
-Example :
-
-mxwcli tx fee token-fee-multiplier 1 --from feeAuth --fees 0cin --gas 0 --chain-id uatnet --node https://uatnet.usdp.io:443 
-```
 
 
 * MsgAssignFeeToToken
 -- This is the msg type used to assign fee setting to token by token action and token symbol. 
-```
-Usage :
-mxwcli tx fee token [token symbol] [token action] --name [fee setting name] --from [fee authorised address] --gas 0 --fees 0cin --chain-id [chain’s id] --node [remote node you wish to connect to]  
-
-Example :
-
-mxwcli tx fee token MUL transfer --name default --from feeAuth --gas 0 --fees 0cin --chain-id uatnet --node https://uatnet.usdp.io:443  
-
-Available token action: 
-* transfer 
-* mint 
-* burn 
-* transferOwnership 
-* acceptOwnership 
-```
 
 
 
@@ -132,11 +48,11 @@ Msgs define your application's state transitions.
 They are encoded and passed around the network wrapped in Txs. 
 Messages are "owned" by a single module, meaning they are routed to only one of your applications modules. 
 Each module has its own set of messages that it uses to update its subset of the chain state. 
-Maxonrow SDK relies on Cosmos SDK wraps and unwraps Msgs from Txs, which means developer only have to define the relevant Msgs. 
+Maxonrow SDK relies on Cosmos SDK wraps and unwraps Msgs from Txs, which means developer only have to define the relevant Msgs.<br/><br/>  
 Msgs must satisfy the following interface:
 
-*** Interface type (Testing Purpose)
-![Image-1](pic001.png)  
+![Image-1](/en/latest/pic/node_cli_fee-01.png)  
+  
 
 
 ### Handlers
@@ -166,10 +82,9 @@ can send to interact with the application state:
 The main core of a Maxonrow SDK module is a piece called the Keeper. 
 Each module's Keeper is responsible for CRUD operations to the main datastore of the application. 
 With more sophisticated applications, modules may have access to each other's Keepers 
-for cross-module interactions. In MVC terms this would be the "model". 
+for cross-module interactions.<br/>In MVC terms this would be the "model". 
 
-*** Each Get & Set method (Testing Purpose)
-![Image-1](pic001.png)  
+![Image-2](/en/latest/pic/node_cli_fee-02.png)  
 
 
 ### Querier
@@ -207,11 +122,11 @@ Inside GetTxCmd we create a new module-specific command and call is fee setting.
 Each function takes parameters from the Cobra CLI tool to create a new msg, sign it and submit it to the application to be processed. 
 
 
-*** Each Get & Set method (Testing Purpose)
-![Image-1](pic001.png)  
+![Image-3](/en/latest/pic/node_cli_fee-03.png)  
+
 
 ### query.go
-The query.go file contains similar Cobra commands that reserve a new name space for referencing our maintenance module. Instead of creating and submitting messages however, the query.go file creates queries and returns the results in human readable form, which handles below function:
+The query.go (refer module_client.go) file contains similar Cobra commands that reserve a new name space for referencing our maintenance module. Instead of creating and submitting messages however, the query.go file creates queries and returns the results in human readable form, which handles below function:
 
 * GetSysFeeSetting
 * GetMsgFeeSetting
@@ -220,9 +135,7 @@ The query.go file contains similar Cobra commands that reserve a new name space 
 * GetTokenFeeMultiplier
 * GetAccFeeSetting
 
-*** Each Get & Set method (Testing Purpose)
-![Image-1](pic001.png)  
-
+![Image-4](/en/latest/pic/node_cli_fee-04.png)  
 
 
 

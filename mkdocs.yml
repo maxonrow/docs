@@ -1,14 +1,36 @@
 site_name: Maxonrow Blockchain <br /> v1.0
 nav:
-    - Home: index.md
-    - Node CLI: mxw-Node-CLI.md
-    - Node RPC: mxw-Node-RPC.md
-    - API Reference SDK: mxw-SDKs.md
-    - FAQ: mxw-FAQ.md
-    - Wallets: mxw-Wallets.md
-    - Tutorials: mxw-Tutorials.md
-    - More Help: mxw-More-help.md
-    - Maxonrow RPC client Testnet: https://alloys-rpc.maxonrow.com "Maxonrow RPC client Testnet" 
-    - Blockchain Explorer Testnet: https://max-scan.usdp.io/ "Blockchain Explorer Testnet" 
-theme: readthedocs
+    - Introduction:
+        - 'Overview': 'index.md'
+        - 'Compilation': 'mxw-Installation.md'
+        - 'Quick Start': 'mxw-Quick-Start.md'
+
+    - Modules:
+        - 'List of Modules': 'modules/mxw-Modules.md'
+        - 'Fungible Token': 'modules/fungible/fungible.md'
+        - 'Non-fungible Token': 'modules/nonfungible/nonfungible.md'
+        
+    - Interfaces:
+        - 'Node CLI': 'mxw-Node-CLI.md'
+        - 'Node RPC': 'mxw-Node-RPC.md'
+
+    - Toolkits:
+        - 'API reference SDK': 'mxw-SDKs.md'
+        - 'Block Explorer for Testnet': 'https://scan.maxonrow.com/'
+        - 'Faucet': 'mxw-faucet.md'
+        #- 'Tutorials': 'mxw-Tutorials.md'
+
+    - FAQ: 'mxw-FAQ.md'
+    - Community channels: 'mxw-Community-Channels.md'
+
+theme: 
+    name: readthedocs    
+    features:
+        - tabs
+    navigation_depth: 2
+    collapse_navigation: true
+    titles_only: true
+    sticky_navigation: true    
 use_directory_urls: false
+site_favicon: favicon.ico
+

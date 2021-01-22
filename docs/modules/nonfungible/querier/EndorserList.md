@@ -1,0 +1,83 @@
+This query the available endorser list.
+
+After the router is defined, define the inputs and responses for this queryEndorserList:
+
+```
+func queryEndorserList(cdc *codec.Codec, ctx sdkTypes.Context, path []string, _ abci.RequestQuery, keeper *Keeper) ([]byte, sdkTypes.Error) {
+	if len(path) != 1 {
+		return nil, sdkTypes.ErrUnknownRequest(fmt.Sprintf("Invalid path %s", strings.Join(path, "/")))
+	}
+
+	symbol := path[0]
+
+	endorserList := keeper.GetEndorserList(ctx, symbol)
+	if endorserList != nil {
+		return cdc.MustMarshalJSON(endorserList), nil
+	}
+
+	return nil, nil
+}
+```
+
+Notes on the above code:
+
+This query request ONE path-parameter which refer to token-symbol.
+The output type should be something that is both JSON marshalable and stringable (implements the Golang fmt.Stringer interface). The returned bytes should be the JSON encoding of the output result.
+
+For the output of EndorserList, the normal EndorserList struct is already JSON marshalable, but we need to add a .String() method on it.
+
+
+`Parameters`
+
+| Name | Type | Default | Required | Description                 |
+| ---- | ---- | ------- | -------- | --------------------------- |
+| path | string | false | false    | Path to the data (eg. "/a/b/c") |
+| data | []byte | false | true     | Data |
+| height | int64 | 0 | false    | Height (0 means latest) |
+| prove | bool | false | false    | Include proofs of the transactions inclusion in the block, if true |
+
+
+`Example`
+
+In this example, we will explain how to query token list with abci_query. 
+
+Run the command with the JSON request body:
+```
+curl 'http://localhost:26657/'
+```
+
+```
+{
+    "method": "abci_query",
+    "params": [
+    	"/custom/nonFungible/get_endorser_list/TNFT-E2",
+    	"",
+    	"0",
+    	false
+    	],
+    "id": 0,
+    "jsonrpc": "2.0"
+}
+
+```
+
+The above command returns JSON structured like this: 
+```
+{
+    "jsonrpc": "2.0",
+    "id": 0,
+    "result": {
+        "response": {
+            "code": 0,
+            "log": "",
+            "info": "",
+            "index": "0",
+            "key": null,
+            "value": "eyJGbGFncyI6MTE1LCJOYW1lIjoiVGVzdE5vbkZ1bmdpYmxlVG9rZW4iLCJTeW1ib2wiOiJUTkZULUUyIiwiT3duZXIiOiJteHcxeDVjZjh5OTludGpjOGNqbTAwejYwM3lmcXd6eHcybWF3ZW1mNzMiLCJOZXdPd25lciI6IiIsIlByb3BlcnRpZXMiOiIiLCJNZXRhZGF0YSI6InRva2VuIG1ldGFkYXRhIiwiVG90YWxTdXBwbHkiOiIxIiwiVHJhbnNmZXJMaW1pdCI6IjIiLCJNaW50TGltaXQiOiIyIiwiRW5kb3JzZXJMaXN0IjpbIm14dzFmOHIwazVwN3M4NWt2N2phdHd2bXBhcnR5eTJqMHMyMHkwcDB5ayIsIm14dzFrOXN4ejBoM3llaDB1em14ZXQycm1zajd4ZTV6ZzU0ZXE3dmhsYSJdfQ==",
+            "proof": null,
+            "height": "746",
+            "codespace": ""
+        }
+    }
+}
+```
